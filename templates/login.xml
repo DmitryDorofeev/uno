@@ -1,0 +1,18 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+	<div class="wrap">
+		<div class="login__error">
+			<h3 id="error"></h3>
+		</div>
+		<div class="form login-form">
+			<form action="/api/v1/auth/signin" method="POST" id="login-form">
+				<div>
+					<input type="text" name="login" class="form__input" placeholder="Логин..." required=""/>
+				</div>
+				<div>
+					<input type="password" name="password" class="form__input" placeholder="Пароль..." required=""/>
+				</div>
+				<button type="submit" class="form__button">Войти</button>
+			</form>
+		</div>
+	</div>
+</fest:template>

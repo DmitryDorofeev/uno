@@ -1,0 +1,7 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+  <div id="page" class="page"></div>
+  <div id="toolbar"></div>
+  <div class="left-panel">
+    <div class="left-panel__name">root</div>
+  </div>
+</fest:template>
