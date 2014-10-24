@@ -1,6 +1,6 @@
-<fest:template xmlns:fest="http://fest.mail.ru" template_context="user">
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="user">
     <div class="main">
-    	<div class="main__title">SAMPLE TEXT</div>
+    	<div class="main__title">SAMPLE GAME</div>
     	<fest:choose>
             <fest:when test="user.isLogined()">
                 <a href="#game" class="main__button">Играть</a>

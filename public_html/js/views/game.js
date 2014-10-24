@@ -8,9 +8,11 @@ define([
     id: 'game',
     model: userModel,
     events: {
-      'click': 'moveShip'
+      'click button': 'send'
     },
     initialize: function() {
+      this.ws = new WebSocket('ws://127.0.0.1:8080/gameplay');
+      this.ws.onmessage = this.message;
       this.render();
     },
     template: function() {
@@ -28,6 +30,12 @@ define([
       else {
         userModel.trigger('login:bad');
       }
+    },
+    send: function () {
+        this.ws.send();
+    },
+    message: function (data) {
+        console.log(data);
     }
   });
 
