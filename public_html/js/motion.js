@@ -1,8 +1,6 @@
 define([
     'underscore',
-    'backbone',
-    'views/stage',
-    'views/sun'
+    'backbone'
 ], function (_, Backbone, stageView, sunView) {
 
     var MotionController = function () {

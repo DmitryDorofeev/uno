@@ -1,12 +1,8 @@
 define([
   'backbone',
   'tmpl/game',
-  'models/user',
-  'views/stage',
-  'views/ship',
-  'views/sun',
-  'motion'
-], function (Backbone, tmpl, userModel, stageView, shipView, sunView) {
+  'models/user'
+], function (Backbone, tmpl, userModel) {
   var GameView = Backbone.View.extend({
     className: 'game',
     id: 'game',
@@ -22,9 +18,6 @@ define([
     },
     render: function() {
       this.$el.html(this.template());
-      this.$el.append(stageView.render().$el);
-      this.$el.append(sunView.render().$el);
-      this.$el.append(shipView.render().$el);
       return this;
     },
     show: function () {

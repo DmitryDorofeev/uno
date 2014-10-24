@@ -48,7 +48,7 @@ define([
       scoreboardView.show();
     },
     default: function () {
-      alert('404');
+      alert('404'); // TODO: change to 404 View
     },
     toGame: function () {
       this.navigate('game', {trigger: true});

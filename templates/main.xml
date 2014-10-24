@@ -1,6 +1,16 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
-    <div class="wrap">
-    	<div class="title">SPACE RANGERS</div>
-    	<a href="#game" class="button_play">Играть</a>
+<fest:template xmlns:fest="http://fest.mail.ru" template_context="user">
+    <div class="main">
+    	<div class="main__title">SAMPLE TEXT</div>
+    	<fest:choose>
+            <fest:when test="user.isLogined()">
+                <a href="#game" class="main__button">Играть</a>
+                <a href="#profile" class="main__button">Профиль</a>
+            </fest:when>
+            <fest:otherwise>
+                <a href="#login" class="main__button">Войти</a>
+                <a href="#signup" class="main__button">Регистрация</a>
+            </fest:otherwise>
+    	</fest:choose>
+    	<a href="#scoreboard" class="main__button">Рейтинг</a>
     </div>
 </fest:template>
