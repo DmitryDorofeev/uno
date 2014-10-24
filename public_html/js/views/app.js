@@ -15,13 +15,11 @@ define([
       initialize: function() {
         this.$container = $('body');
         this.render();
-        window.onresize = gameView.render.bind(gameView);
       },
       template: tmpl,
       render: function () {
         this.$el.html(this.template());
         this.$container.html(this.$el);
-        this.$container.append(toolbarView.render().$el);
         this.$container.append(panelView.render().$el);
       },
       subscribe: function (views) {
