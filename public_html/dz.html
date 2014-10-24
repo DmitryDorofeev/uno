@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+<canvas id="cnvs"></canvas>
+	
+</body>
+<script>
+	var canvas = document.getElementById('cnvs');
+	var ctx = canvas.getContext('2d');
+    canvas.width = 700;
+    canvas.height = 700;
+
+    function draw(x, y) {
+      ctx.clearRect(0,0,700,700);
+    	ctx.beginPath();
+    	ctx.arc(x, y, 20, 0, 2*Math.PI);
+	    ctx.fill();
+    }
+
+    (function() {
+      var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                                  window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+      window.requestAnimationFrame = requestAnimationFrame;
+    })();
+
+    var time;
+
+    function step() {
+      time = time || new Date().getTime();
+    	var now = new Date().getTime();
+      dt = now - time;
+      draw(dt/20, Math.sin(dt/400) * 100 + 200);
+      if (dt/20 < 700) {
+        requestAnimationFrame(step);
+      }
+    }
+
+    requestAnimationFrame(step);
+</script>
+</html>
