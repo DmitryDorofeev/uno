@@ -28,7 +28,7 @@ define([
         this.model.set('inGame', true);
       }
       else {
-        userModel.trigger('login:bad');
+        userModel.trigger('login:no');
       }
     },
     send: function () {
