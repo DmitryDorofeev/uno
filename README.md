@@ -8,3 +8,5 @@
 Дорофеев Дмитрий dmitrydorofeev me@dmitrydorofeev.ru
 
 Кобзистый Константин
+
+Халайджи Алексей leshiy1295 aleksei_halaidzh@mail.ru

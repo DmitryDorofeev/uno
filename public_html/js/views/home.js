@@ -10,6 +10,7 @@ define([
     model: userModel,
     initialize: function() {
       this.render();
+      this.listenTo(this.model, 'change', this.render);
     },
     template: function () {
       return tmpl(this.model);
