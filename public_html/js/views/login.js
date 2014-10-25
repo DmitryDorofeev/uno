@@ -31,8 +31,8 @@ define([
     renderServerError: function() {
       this.$error.text('Ошибка соединения с сервером');
     },
-    renderLoginError: function() {
-      this.$error.text('Неверный логин и/или пароль');
+    renderLoginError: function(message) {
+      this.$error.text(message);
     },
     show: function () {
       this.trigger('show', this);

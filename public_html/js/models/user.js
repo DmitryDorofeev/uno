@@ -3,7 +3,7 @@ define([
   'backbone'
 ], function($, Backbone) {
   var UserModel = Backbone.Model.extend({
-    url: '/api/v1/auth/signin',
+    url: '/api/v1/profile',
     initialize: function() {
       this.fetch();
     },
@@ -36,8 +36,8 @@ define([
             });
             that.trigger('login:ok');
           }
-          else if (resp.status === 403) {
-            that.trigger('login:bad');
+          else if (resp.status === 500) {
+            that.trigger('login:bad', resp.message);
           }
         },
         error: function() {
@@ -57,8 +57,8 @@ define([
             that.set(resp);
             that.trigger('signup:ok');
           }
-          else if (resp.status == 404) {
-            that.trigger('signup:bad');
+          else if (resp.status == 500) {
+            that.trigger('signup:bad', resp.message);
           }
         },
         error: function() {

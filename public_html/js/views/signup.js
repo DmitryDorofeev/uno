@@ -35,8 +35,8 @@ define([
     show: function () {
       this.trigger('show', this);
     },
-    renderRegError: function () {
-      this.$error.text('Пользователь с таким именем уже существует');
+    renderRegError: function (message) {
+      this.$error.text(message);
     },
     renderServerError: function () {
       this.$error.text('Ошибка соединения с сервером');

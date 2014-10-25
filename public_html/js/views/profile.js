@@ -7,10 +7,12 @@ define([
     initialize: function() {
       this.render();
     },
-    template: tmpl,
+    model: userModel,
+    template: function () {
+        return tmpl(this.model.toJSON());
+    },
     render: function() {
-      var profile = userModel.toJSON();
-      this.$el.html(this.template(profile));
+      this.$el.html(this.template());
       return this;
     },
     show: function () {
