@@ -369,31 +369,64 @@ html, body {
 .app {
   overflow: hidden;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+  background: radial-gradient(350px, #fa0107, #a00307);
+  font-family: Verdana; }
 
 #page {
   width: 900px;
   margin: 0 auto; }
 
 .main {
-  text-align: center; }
+  position: relative;
+  text-align: center;
+  overflow: hidden; }
 
 .main__title {
   display: inline-block;
-  font-size: 20px;
+  font-size: 70px;
   margin: 0 auto;
-  margin-top: 40px;
-  color: #fff; }
+  margin-top: 130px;
+  color: #ffda2e;
+  font-weight: bold;
+  text-shadow: 3px 3px 1px #a2932b;
+  -webkit-transform-origin: top left;
+  -webkit-transform: rotate(-25deg); }
 
 .main__button {
   display: block;
-  width: 200px;
+  width: 300px;
   margin: 0 auto;
-  background-color: #c8c8c8;
+  background: linear-gradient(#c80307, #b40307);
+  border: 3px solid #a00307;
+  border-radius: 10px;
   padding: 10px 0;
   margin-top: 10px;
   color: #fff;
   text-decoration: none;
-  font-size: 16px; }
+  font-size: 23px; }
+
+.login-form {
+  width: 400px;
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 20%;
+  border: 3px solid #a00307;
+  border-radius: 10px; }
+
+.form__input {
+  width: 100%;
+  height: 30px;
+  border: 3px solid #a00307;
+  border-radius: 5px;
+  margin-bottom: 10px; }
+
+.form__button {
+  color: #fff;
+  margin: 10px;
+  padding: 10px 20px;
+  background: linear-gradient(#c80307, #b40307);
+  border: 3px solid #a00307;
+  border-radius: 10px; }
 
 /*# sourceMappingURL=main.css.map */
