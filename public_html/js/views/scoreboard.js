@@ -9,7 +9,7 @@ define([
     tagName: 'div',
     collection: scoreCollection,
     initialize: function () {
-      this.listenTo(this.collection, 'reset', this.insertInfo)
+      this.listenTo(this.collection, 'reset', this.insertInfo);
     },
     template: function () {
       return tmpl(this.collection.toJSON());
