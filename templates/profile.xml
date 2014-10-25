@@ -1,6 +1,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="profile">
   <div class="wrap">
     <div class="page__title">Профиль пользователя <fest:value>profile.login</fest:value></div>
+    <button class="js-logout">Logout</button>
     <form action="/azaza" enctype="multipart/form-data">
       <div class="profile__email"><fest:value>profile.email</fest:value></div>
       <div class="profile__image"><img src="{profile.avatar}"/></div>

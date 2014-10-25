@@ -23,7 +23,7 @@ define([
     login: function (data) {
       var that = this;
       $.ajax({
-        url: this.url,
+        url: '/api/v1/auth/signin',
         type: 'POST',
         data: data,
         dataType: 'json',
@@ -31,8 +31,7 @@ define([
           if (resp.status === 200) {
             that.set({
               'login': resp.login,
-              'email': resp.email,
-              'avatar': resp.avatar
+              'email': resp.email
             });
             that.trigger('login:ok');
           }
