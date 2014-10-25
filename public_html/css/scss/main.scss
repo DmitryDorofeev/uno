@@ -1,51 +1,3 @@
-<<<<<<< HEAD
-@import 'variables';
-@import 'normalize';
-
-html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.app {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    background-image: url(../images/bg.jpg);
-    background-size: contain;
-}
-
-#page {
-    width: 900px;
-    margin: 0 auto;
-}
-
-.main {
-    text-align: center;
-}
-
-.main__title {
-    display: inline-block;
-    font-size: 20px;
-    margin: 0 auto;
-    margin-top: 40px;
-    color: #fff;
-}
-
-.main__button {
-    display: block;
-    width: 200px;
-    margin: 0 auto;
-    background-color: rgba(200, 200, 200, 1);
-    padding: 10px 0;
-    margin-top: 10px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-}
-=======
 @import 'normalize';
 @import 'variables';
 @import 'game';
@@ -61,8 +13,6 @@ html, body {
     overflow: hidden;
     width: 100%;
     height: 100%;
-    background-image: url(../images/bg.jpg);
-    background-size: contain;
 }
 
 #page {
@@ -93,4 +43,3 @@ html, body {
     text-decoration: none;
     font-size: 16px;
 }
->>>>>>> d9595aee605e85d28a184b45ec8e8111c4aedd3e
