@@ -26,11 +26,10 @@ public class ScoreboardServletImpl extends HttpServlet implements ScoreboardServ
     public void doGet(HttpServletRequest request,
                HttpServletResponse response) throws ServletException, IOException {
         JSONArray jsonArray = new JSONArray();
-        JSONObject jsonObj = new JSONObject();
         Iterator it = authService.getScoreboard().entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, Integer> pair = (Map.Entry) it.next();
-            jsonObj.clear();
+            JSONObject jsonObj = new JSONObject();
             jsonObj.put("login", pair.getKey());
             jsonObj.put("score", pair.getValue());
             jsonArray.add(jsonObj);
