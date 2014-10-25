@@ -42,14 +42,14 @@ public class AdminPageServletImpl extends HttpServlet implements AdminPageServle
                 System.exit(0);
             }
 
-            jsonObj.put("code", 0);
+            jsonObj.put("code", 200);
             jsonObj.put("amountOfRegisteredUsers", authService.getAmountOfRegisteredUsers());
             jsonObj.put("amountOfUsersOnline", authService.getAmountOfUsersOnline());
             response.getWriter().print(jsonObj.toJSONString());
             return;
         }
 
-        jsonObj.put("code", 1);
+        jsonObj.put("code", 500);
         jsonObj.put("message", "Access denied");
         response.getWriter().print(jsonObj.toJSONString());
     }

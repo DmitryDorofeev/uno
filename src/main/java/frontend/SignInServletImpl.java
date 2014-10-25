@@ -66,7 +66,7 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
                 response.getWriter().print(jsonObj.toJSONString());
                 return;
             }
-            jsonObj.put("status", 403);
+            jsonObj.put("status", 500);
             jsonObj.put("message", "Wrong login or password!");
             response.getWriter().print(jsonObj.toJSONString());
             return;
