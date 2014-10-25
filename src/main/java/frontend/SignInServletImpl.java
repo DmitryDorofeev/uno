@@ -25,6 +25,24 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
     }
 
     @Override
+    public void doGet(HttpServletRequest request,
+                       HttpServletResponse response) throws ServletException, IOException {
+        String sessionId = request.getSession().getId();
+
+        JSONObject jsonObj = new JSONObject();
+        if (authService.isLoggedIn(sessionId)) {
+            UserProfile user = authService.getUserProfile(sessionId);
+            jsonObj.put("status", 200);
+            jsonObj.put("login", user.getLogin());
+            response.getWriter().print(jsonObj.toJSONString());
+            return;
+        }
+        jsonObj.put("status", 500);
+        jsonObj.put("message", "User has not logged in");
+        response.getWriter().print(jsonObj.toJSONString());
+    }
+
+        @Override
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
         final String login = request.getParameter("login");
