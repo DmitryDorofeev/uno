@@ -22,7 +22,6 @@ public class Main {
             System.out.println("Error with resource file!");
             System.exit(1);
         }
-
         Server server = new Server(object.getPort());
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 

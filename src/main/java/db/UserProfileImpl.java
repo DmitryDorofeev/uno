@@ -1,11 +1,12 @@
 package db;
 
 import base.UserProfile;
+import java.util.Random;
 
 /**
  * Created by alexey on 25.10.2014.
  */
-public class UserProfileImpl implements UserProfile{
+public class UserProfileImpl implements UserProfile {
     private final String login;
     private final String pass;
     private final String email;
@@ -29,5 +30,11 @@ public class UserProfileImpl implements UserProfile{
     @Override
     public String getPass() {
         return pass;
+    }
+
+    @Override
+    public int getScores() {
+        Random rnd = new Random();
+        return rnd.nextInt(100);
     }
 }

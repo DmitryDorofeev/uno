@@ -5,6 +5,7 @@ import base.UserProfile;
 import db.UserProfileImpl;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class AuthServiceImpl implements AuthService {
@@ -66,5 +67,16 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public int getAmountOfUsersOnline() {
         return sessions.size();
+    }
+
+    @Override
+    public Map<String, Integer> getScoreboard() {
+        Map<String, Integer> result = new HashMap<>();
+        Iterator it = users.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, UserProfile> pair = (Map.Entry) it.next();
+            result.put(pair.getKey(), pair.getValue().getScores());
+        }
+        return result;
     }
 }
