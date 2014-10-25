@@ -1,6 +1,6 @@
 package frontend;
 
-import base.GameUser;
+import mechanics.GameUser;
 import base.WebSocketService;
 
 import java.util.HashMap;

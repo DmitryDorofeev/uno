@@ -1,10 +1,17 @@
 package base;
 
-/**
- * @author v.chibrikov
- */
 public interface AuthService {
-    String getUserName(String sessionId);
+    boolean signIn(String sessionId, String login, String password);
 
-    void saveUserName(String sessionId, String name);
+    boolean signUp(UserProfile user);
+
+    void logOut(String sessionId);
+
+    boolean isLoggedIn(String sessionId);
+
+    UserProfile getUserProfile(String sessionId);
+
+    int getAmountOfRegisteredUsers();
+
+    int getAmountOfUsersOnline();
 }

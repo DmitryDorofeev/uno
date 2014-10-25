@@ -1,19 +1,20 @@
 package base;
 
 import frontend.GameWebSocket;
+import mechanics.GameUser;
 
 /**
  * @author v.chibrikov
  */
 public interface WebSocketService {
 
-    public void addUser(GameWebSocket user);
+    void addUser(GameWebSocket user);
 
-    public void notifyMyNewScore(GameUser user);
+    void notifyMyNewScore(GameUser user);
 
-    public void notifyEnemyNewScore(GameUser user);
+    void notifyEnemyNewScore(GameUser user);
 
-    public void notifyStartGame(GameUser user);
+    void notifyStartGame(GameUser user);
 
-    public void notifyGameOver(GameUser user, boolean win);
+    void notifyGameOver(GameUser user, boolean win);
 }

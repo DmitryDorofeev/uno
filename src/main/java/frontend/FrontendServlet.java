@@ -35,7 +35,10 @@ public class FrontendServlet extends HttpServlet {
         Map<String, Object> pageVariables = new HashMap<>();
         String name = request.getParameter("name");
         String safeName = name == null ? "NoName" : name;
+        /*TODO
         authService.saveUserName(request.getSession().getId(), name);
+
+         */
         pageVariables.put("myName", safeName);
 
         response.getWriter().println(PageGenerator.getPage("game.html", pageVariables));

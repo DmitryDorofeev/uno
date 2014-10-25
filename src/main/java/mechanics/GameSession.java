@@ -1,7 +1,5 @@
 package mechanics;
 
-import base.GameUser;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
