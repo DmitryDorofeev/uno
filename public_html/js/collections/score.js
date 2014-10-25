@@ -6,7 +6,7 @@ define([
 
   var ScoreCollection = Backbone.Collection.extend({
     initialize: function () {
-        this.fetch();
+        this.fetch({reset: true});
     },
     model: ScoreModel,
     url: '/api/v1/scoreboard'
