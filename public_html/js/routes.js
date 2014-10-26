@@ -7,9 +7,10 @@ define([
   'views/signup',
   'views/profile',
   'views/scoreboard',
+  'views/canvas',
   'views/app',
   'models/user'
-], function($, Backbone, homeView, gameView, loginView, signupView, profileView, scoreboardView, manager, userModel) {
+], function($, Backbone, homeView, gameView, loginView, signupView, profileView, scoreboardView, canvasView, manager, userModel) {
   
   manager.subscribe([homeView, gameView, loginView, signupView, profileView, scoreboardView]);
   
@@ -27,6 +28,7 @@ define([
       'signup': 'signup',
       'profile': 'profile',
       'scoreboard': 'scoreboard',
+      'canvas': 'canvas',
       '*other': 'default'
     },
     index: function() {
@@ -46,6 +48,9 @@ define([
     },
     scoreboard: function() {
       scoreboardView.show();
+    },
+    canvas: function () {
+        canvasView.show();
     },
     default: function () {
       alert('404'); // TODO: change to 404 View
