@@ -366,6 +366,11 @@ html, body {
   margin: 0;
   padding: 0; }
 
+.hw {
+  width: 100%;
+  height: 100%;
+  border: 3px solid black; }
+
 .app {
   overflow: hidden;
   width: 100%;
@@ -375,6 +380,7 @@ html, body {
 
 #page {
   width: 900px;
+  height: 100%;
   margin: 0 auto; }
 
 .main {

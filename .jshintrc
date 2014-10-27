@@ -1,0 +1,19 @@
+{
+  "browser": true,
+  "curly": true,
+  "expr": true,
+  "indent": false,
+  "jquery": true,
+  "laxcomma": true,
+  "laxbreak": true,
+  "maxcomplexity": 10,
+  "maxdepth": 3,
+  "maxparams": 10,
+  "node": false,
+  "trailing": true,
+  "quotmark": "single",
+  "strict": false,
+  "undef": true,
+  "predef" : ["define", "require", "module"],
+  "devel" : true
+}
