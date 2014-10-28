@@ -1,6 +1,6 @@
 {
   "name": "uno",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "UNO online",
   "main": "Gruntfile.js",
   "scripts": {
@@ -8,9 +8,9 @@
   },
   "repository": {
     "type": "git",
-    "url": ".git"
+    "url": "https://github.com/DmitryDorofeev/uno.git"
   },
-  "author": "Dmitry Dorofeev, Konstantin Kobzisty",
+  "author": "Dmitry Dorofeev, Konstantin Kobzisty, Halaydzhi Alex",
   "license": "ISC",
   "devDependencies": {
     "grunt": "^0.4.5",
