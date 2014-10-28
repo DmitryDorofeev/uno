@@ -37,6 +37,9 @@ define([
         show: function () {
             this.trigger('show', this);
         },
+        hide: function () {
+            this.$el.hide();
+        },
         move: function () {
             var x,
                 roundPos = this.amplitude * Math.sin(this.dx / this.f) + this.startPoint.y;

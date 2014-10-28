@@ -6,8 +6,6 @@ define([
 ], function ($, Backbone, scoreCollection, tmpl) {
 
     var ScoreboardView = Backbone.View.extend({
-        tagName: 'div',
-        className: 'scoreboard',
         collection: scoreCollection,
         initialize: function () {
             this.listenTo(this.collection, 'reset', this.insertInfo);
@@ -24,6 +22,10 @@ define([
         },
         show: function () {
             this.trigger('show', this);
+            this.$el.show();
+        },
+        hide: function () {
+            this.$el.hide();
         },
         insertInfo: function () {
             this.collection.sort();

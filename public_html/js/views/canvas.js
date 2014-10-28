@@ -32,6 +32,9 @@ define([
         show: function () {
             this.trigger('show', this);
         },
+        hide: function () {
+            this.$el.hide();
+        },
         move: function () {
             this.ctx.clearRect(0, 0, this.el.width, this.el.height);
             

@@ -12,17 +12,21 @@ define([
         model: userModel,
         initialize: function() {
             this.$container = $('body');
-            this.render();
+            this.views = [];
         },
         template: tmpl,
         render: function () {
             this.$el.html(this.template());
             this.$container.html(this.$el);
+            for (var i in this.views) {
+                this.$el.append(this.views[i].$el);
+            }
         },
         subscribe: function (views) {
             if (views instanceof Array) {
                 for (var i in views) {
                     this.listenTo(views[i], 'show', this.add);
+                    this.views.push(views[i]);
                 }
             }
             else {
@@ -33,7 +37,11 @@ define([
             this.stopListening(view);
         },
         add: function (view) {
-            this.$el.find('#page').html(view.$el);
+            for (var i in this.views) {
+                if (view !== this.views[i]) {
+                    this.views[i].hide();
+                }
+            }
         }
     });
 

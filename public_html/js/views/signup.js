@@ -35,6 +35,9 @@ define([
         show: function () {
             this.trigger('show', this);
         },
+        hide: function () {
+            this.$el.hide();
+        },
         renderRegError: function (message) {
             this.$error.text(message);
         },

@@ -12,11 +12,7 @@ module.exports = function (grunt) {
             },
             sass: {
                 files: [
-                  'public_html/css/scss/main.scss',
-                  'public_html/css/scss/variables.scss',
-                  'public_html/css/scss/app.scss',
-                  'public_html/css/scss/game.scss',
-                  'public_html/css/scss/fonts.scss'
+                  'public_html/css/scss/*.scss',
                 ],
                 tasks: ['sass'],
                 options: {

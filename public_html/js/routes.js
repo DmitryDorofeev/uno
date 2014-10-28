@@ -14,11 +14,11 @@ define([
 ], function ($, Backbone, homeView, gameView, loginView, signupView, profileView, scoreboardView, canvasView, canvas2View, app, userModel) {
   
     app.subscribe([homeView, gameView, loginView, signupView, profileView, scoreboardView, canvasView, canvas2View]);
+    app.render();
 
     var Router = Backbone.Router.extend({
         initialize: function () {
             this.on('route', canvas2View.pause, canvas2View);
-            
             this.listenTo(userModel, 'login:ok', this.toGame);
             this.listenTo(userModel, 'signup:ok', this.toLogin);
             this.listenTo(userModel, 'login:no', this.toLogin);

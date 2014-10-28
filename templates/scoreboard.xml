@@ -1,9 +1,11 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="scores">
-    <div class="scoreboard__title">Рейтинг юзеров</div>
-    <fest:each iterate="scores" index="i" value="score">
-      <div class="score">
-        <div class="score__login"><fest:value>score.login</fest:value></div>
-        <div class="score__value"><fest:value>score.score</fest:value></div>
-      </div>
-    </fest:each>
+    <div class="scoreboard">
+        <div class="scoreboard__title">Рейтинг юзеров</div>
+        <fest:each iterate="scores" index="i" value="score">
+          <div class="score">
+            <div class="score__login"><fest:value>score.login</fest:value></div>
+            <div class="score__value"><fest:value>score.score</fest:value></div>
+          </div>
+        </fest:each>
+    </div>
 </fest:template>

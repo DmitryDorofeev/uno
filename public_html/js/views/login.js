@@ -36,7 +36,10 @@ define([
     },
     show: function () {
       this.trigger('show', this);
-    }
+    },
+    hide: function () {
+        this.$el.hide();
+    },
   });
 
   return new LoginView();

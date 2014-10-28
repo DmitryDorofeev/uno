@@ -1,7 +1,6 @@
 require([
-  'jquery',
   'backbone',
   'routes'
-], function($, Backbone, router) {
+], function (Backbone, router) {
     Backbone.history.start();
 });

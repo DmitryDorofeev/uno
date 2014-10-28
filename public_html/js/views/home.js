@@ -6,7 +6,6 @@ define([
 ], function($, Backbone, tmpl, userModel) {
 
   var homeView = Backbone.View.extend({
-    className: 'main-page',
     model: userModel,
     initialize: function() {
       this.render();
@@ -21,6 +20,10 @@ define([
     },
     show: function() {
       this.trigger('show', this);
+      this.$el.show();
+    },
+    hide: function () {
+        this.$el.hide();
     }
   });
 
