@@ -1,0 +1,52 @@
+.profile {
+    text-align: center;
+}
+
+.profile__title {
+    display: inline-block;
+    color: #fff;
+    font-size: 22px;
+    margin-top: 40px;
+}
+
+.email {
+    overflow: hidden;
+    width: 350px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.email__title {
+    float: left;
+    color: #fff;
+    font-size: 18px;
+}
+
+.email__value {
+    float: left;
+    color: #eee;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 40px;
+}
+
+.login {
+    overflow: hidden;
+    width: 350px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.login__title {
+    float: left;
+    color: #fff;
+    font-size: 18px;
+}
+
+.login__input {
+    float: left;
+    color: #c00;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 40px;
+}
