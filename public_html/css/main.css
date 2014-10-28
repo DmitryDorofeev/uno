@@ -435,4 +435,28 @@ html, body {
   border: 3px solid #a00307;
   border-radius: 10px; }
 
+.scoreboard {
+  width: 900px;
+  margin: 0 auto;
+  text-align: center; }
+
+.scoreboard__title {
+  display: inline-block;
+  font-size: 20px;
+  color: #ffffff;
+  margin-top: 40px; }
+
+.score {
+  padding: 20px;
+  overflow: hidden; }
+
+.score__login {
+  color: #fff;
+  float: left; }
+
+.score__value {
+  color: #999;
+  float: left;
+  margin-left: 30px; }
+
 /*# sourceMappingURL=main.css.map */

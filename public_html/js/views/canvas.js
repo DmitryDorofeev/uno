@@ -26,7 +26,7 @@ define([
         },
         render: function () {
             this.ctx.beginPath();
-            this.ctx.arc(400, 400, 20, 0, 2 * Math.PI);
+        this.ctx.arc(400, 400, 20, 0, 2 * Math.PI);
             this.ctx.fill();
         },
         show: function () {
