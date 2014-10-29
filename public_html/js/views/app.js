@@ -7,40 +7,39 @@ define([
 ], function ($, Backbone, tmpl, userModel, gameView) {
 
     var AppView = Backbone.View.extend({
-        className: 'app',
         model: userModel,
         initialize: function() {
-            this.$container = $('body');
+            this.$el = $('body');
             this.views = [];
         },
         template: tmpl,
         render: function () {
             this.$el.html(this.template());
-            this.$container.html(this.$el);
             _.forEach(this.views, function (view) {
-                this.$el.append(view.$el);
+                this.$el.find('.app').append(view.$el);
             }, this);
         },
         subscribe: function (views) {
             if (views instanceof Array) {
-                for (var i in views) {
-                    this.listenTo(views[i], 'show', this.add);
-                    this.views.push(views[i]);
-                }
+                _.forEach(views, function (view) {
+                    this.listenTo(view, 'show', this.add);
+                    this.views.push(view);
+                }, this);
             }
             else {
                 this.listenTo(views, 'show', this.add);
+                this.views.push(views);
             }
         },
         unsubscribe: function (view) {
             this.stopListening(view);
         },
         add: function (view) {
-            for (var i in this.views) {
-                if (view !== this.views[i]) {
-                    this.views[i].hide();
+            _.forEach(this.views, function (v) {
+                if (view !== v) {
+                    v.hide();
                 }
-            }
+            });
         }
     });
 
