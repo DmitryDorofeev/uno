@@ -7,7 +7,6 @@ define([
 ], function ($, Backbone, tmpl, userModel, gameView) {
 
     var AppView = Backbone.View.extend({
-        tagName: 'div',
         className: 'app',
         model: userModel,
         initialize: function() {
@@ -18,9 +17,9 @@ define([
         render: function () {
             this.$el.html(this.template());
             this.$container.html(this.$el);
-            for (var i in this.views) {
-                this.$el.append(this.views[i].$el);
-            }
+            _.forEach(this.views, function (view) {
+                this.$el.append(view.$el);
+            }, this);
         },
         subscribe: function (views) {
             if (views instanceof Array) {
