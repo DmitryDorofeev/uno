@@ -22,12 +22,6 @@ html, body {
     font-family: Verdana;
 }
 
-#page {
-    width: 900px;
-    height: 100%;
-    margin: 0 auto;
-}
-
 .main {
     position: relative;
     text-align: center;
@@ -70,6 +64,15 @@ html, body {
     border-radius: 10px;
 }
 
+.signup-form {
+    width: 400px;
+    padding: 20px;
+    margin: 0 auto;
+    margin-top: 20%;
+    border: 3px solid rgb(160,3,7);
+    border-radius: 10px;
+}
+
 
 .form__input {
     width: 100%;
@@ -83,8 +86,8 @@ html, body {
     color: #fff;
     margin: 10px;
     padding: 10px 20px;
-    background: linear-gradient(rgb(200,3,7), rgb(180,3,7));
-    border: 3px solid rgb(160,3,7);
+    background: $buttonBackground;
+    border: $buttonBorder;
     border-radius: 10px;
 }
 

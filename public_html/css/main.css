@@ -369,7 +369,7 @@ button {
   font-size: 22px;
   margin-top: 40px; }
 
-.email {
+.email-field {
   overflow: hidden;
   width: 350px;
   margin: 0 auto;
@@ -387,7 +387,7 @@ button {
   font-weight: bold;
   margin-left: 40px; }
 
-.login {
+.login-field {
   overflow: hidden;
   width: 350px;
   margin: 0 auto;
@@ -421,11 +421,6 @@ html, body {
   background: radial-gradient(350px, #fa0107, #a00307);
   font-family: Verdana; }
 
-#page {
-  width: 900px;
-  height: 100%;
-  margin: 0 auto; }
-
 .main {
   position: relative;
   text-align: center;
@@ -456,6 +451,14 @@ html, body {
   font-size: 23px; }
 
 .login-form {
+  width: 400px;
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 20%;
+  border: 3px solid #a00307;
+  border-radius: 10px; }
+
+.signup-form {
   width: 400px;
   padding: 20px;
   margin: 0 auto;

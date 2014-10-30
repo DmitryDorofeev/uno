@@ -2,8 +2,7 @@ define([
   'jquery',
   'backbone',
   'tmpl/app',
-  'models/user',
-  'views/game'
+  'models/user'
 ], function ($, Backbone, tmpl, userModel, gameView) {
 
     var AppView = Backbone.View.extend({
@@ -28,6 +27,7 @@ define([
             _.forEach(this.views, function (v) {
                 if (view !== v) {
                     v.hide();
+                    console.log(v.el);
                 }
             });
         },

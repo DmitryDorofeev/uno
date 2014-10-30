@@ -1,12 +1,12 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="profile">
   <div class="profile">
       <div class="profile__title"> Профиль </div> 
-        <div class="email">
+        <div class="email-field">
             <div class="email__title"> E-mail: </div>
             <div class="email__value"> <fest:value>profile.email</fest:value> </div>  
         </div>
         <form method="POST">
-            <div class="login">
+            <div class="login-field">
                 <div class="login__title"> Логин: </div>
                 <div class="login__input"> 
                     <input type="text" value="{profile.login}"/>
