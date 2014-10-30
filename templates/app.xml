@@ -1,3 +1,9 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
     <div class="app"></div>
+    <div class="overlay"></div>
+    <div class="preloader">
+        <div class="preloader__round"></div>
+        <div class="preloader__round"></div>
+        <div class="preloader__round"></div>
+    </div>
 </fest:template>

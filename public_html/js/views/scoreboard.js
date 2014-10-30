@@ -12,13 +12,13 @@ define([
             this.collection.comparator = function (score) {
                 return -score.get('score');
             };
-            this.render();
         },
         template: function () {
             return tmpl(this.collection.toJSON());
         },
         render: function () {
             this.collection.fetch({reset: true});
+            this.trigger('load:start');
             return this;
         },
         show: function () {
@@ -29,9 +29,9 @@ define([
             this.$el.hide();
         },
         insertInfo: function () {
-            console.log('fetched');
             this.collection.sort();
             this.$el.html(this.template());
+            this.trigger('load:done');
         }
     });
 

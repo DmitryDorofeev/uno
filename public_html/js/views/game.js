@@ -9,11 +9,6 @@ define([
       'click button': 'send'
     },
     initialize: function() {
-      /*
-this.ws = new WebSocket('ws://127.0.0.1:8080/gameplay');
-      this.ws.onmessage = this.message;
-*/
-      this.render();
     },
     template: function() {
       return tmpl();
@@ -34,6 +29,7 @@ this.ws = new WebSocket('ws://127.0.0.1:8080/gameplay');
     },
     hide: function () {
         this.$el.hide();
+        this.model.set('inGame', false);
     },
     send: function () {
         this.ws.send();

@@ -9,7 +9,6 @@ define([
     initialize: function() {
       this.listenTo(this.model, 'login:error', this.renderServerError);
       this.listenTo(this.model, 'login:bad', this.renderLoginError);
-      this.render();
     },
     events: {
       'submit #login-form': 'login'

@@ -8,7 +8,6 @@ define([
     var HomeView = Backbone.View.extend({
         model: userModel,
         initialize: function () {
-            this.render();
             this.listenTo(this.model, 'change', this.render);
         },
         template: function () {

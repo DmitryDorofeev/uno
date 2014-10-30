@@ -23,11 +23,9 @@ define([
             }, this);
         },
         hideOther: function (view) {
-            console.log(this.views);
             _.forEach(this.views, function (v) {
                 if (view !== v) {
                     v.hide();
-                    console.log(v.el);
                 }
             });
         },
@@ -35,9 +33,20 @@ define([
             if (this.views[name] === undefined) {
                 this.views[name] = new ViewConstructor();
                 this.listenTo(this.views[name], 'show', this.hideOther);
+                this.listenTo(this.views[name], 'load:start', this.showPreloader);
+                this.listenTo(this.views[name], 'load:done', this.hidePreloader);
+                this.views[name].render();
                 this.$el.find('.app').append(this.views[name].$el);
             }
             return this.views[name];
+        },
+        showPreloader: function () {
+            $('.overlay').show();
+            $('.preloader').show();
+        },
+        hidePreloader: function () {
+            this.$el.find('.overlay').hide();
+            this.$el.find('.preloader').hide();
         }
     });
 
