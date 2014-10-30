@@ -43,5 +43,5 @@ this.ws = new WebSocket('ws://127.0.0.1:8080/gameplay');
     }
   });
 
-  return new GameView();
+  return GameView;
 });

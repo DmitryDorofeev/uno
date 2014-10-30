@@ -27,6 +27,6 @@ define([
         }
     });
 
-    return new HomeView();
+    return HomeView;
 
 });

@@ -46,6 +46,6 @@ define([
         }
     });
     
-    return new SignupView();
+    return SignupView;
 });
     

@@ -31,5 +31,5 @@ define([
     }
   });
 
-  return new ProfileView();
+  return ProfileView;
 });

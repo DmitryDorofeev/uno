@@ -7,18 +7,23 @@ define([
     'views/signup',
     'views/profile',
     'views/scoreboard',
-    'views/canvas',
-    'views/canvas2',
     'views/app',
     'models/user'
-], function ($, Backbone, homeView, gameView, loginView, signupView, profileView, scoreboardView, canvasView, canvas2View, app, userModel) {
+], function ($, Backbone, HomeView, GameView, LoginView, SignupView, ProfileView, ScoreboardView, app, userModel) {
   
-    app.subscribe([homeView, gameView, loginView, signupView, profileView, scoreboardView, canvasView, canvas2View]);
+/*
+    app.register({
+        'game': gameView, 
+        'login':loginView, 
+        'signup': signupView, 
+        'profile': profileView, 
+        'scoreboard': scoreboardView
+    });
+*/
     app.render();
 
     var Router = Backbone.Router.extend({
         initialize: function () {
-            this.on('route', canvas2View.pause, canvas2View);
             this.listenTo(userModel, 'login:ok', this.toGame);
             this.listenTo(userModel, 'signup:ok', this.toLogin);
             this.listenTo(userModel, 'login:no', this.toLogin);
@@ -31,33 +36,25 @@ define([
             'signup': 'signup',
             'profile': 'profile',
             'scoreboard': 'scoreboard',
-            'canvas': 'canvas',
-            'canvas2': 'canvas2',
             '*other': 'defaultRoute'
         },
         index: function () {
-            homeView.show();
+            app.getView('home', HomeView).show();
         },
         game: function () {
-            gameView.show();
+            app.getView('game', GameView).show();
         },
         login: function () {
-            loginView.show();
+            app.getView('login', LoginView).show();
         },
         signup: function () {
-            signupView.show();
+            app.getView('signup', SignupView).show();
         },
         profile: function () {
-            profileView.show();
+            app.getView('profile', ProfileView).show();
         },
         scoreboard: function () {
-            scoreboardView.show();
-        },
-        canvas: function () {
-            canvasView.show();
-        },
-        canvas2: function () {
-            canvas2View.show();
+            app.getView('scoreboard', ScoreboardView).show();
         },
         defaultRoute: function () {
             alert('404'); // TODO: change to 404 View
