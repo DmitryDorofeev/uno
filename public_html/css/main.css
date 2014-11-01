@@ -360,6 +360,51 @@ button {
   display: inline-block;
   margin: 100px; }
 
+.profile {
+  text-align: center; }
+
+.profile__title {
+  display: inline-block;
+  color: #fff;
+  font-size: 22px;
+  margin-top: 40px; }
+
+.email-field {
+  overflow: hidden;
+  width: 350px;
+  margin: 0 auto;
+  margin-top: 20px; }
+
+.email__title {
+  float: left;
+  color: #fff;
+  font-size: 18px; }
+
+.email__value {
+  float: left;
+  color: #eee;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 40px; }
+
+.login-field {
+  overflow: hidden;
+  width: 350px;
+  margin: 0 auto;
+  margin-top: 20px; }
+
+.login__title {
+  float: left;
+  color: #fff;
+  font-size: 18px; }
+
+.login__input {
+  float: left;
+  color: #c00;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 40px; }
+
 html, body {
   width: 100%;
   height: 100%;
@@ -367,8 +412,6 @@ html, body {
   padding: 0; }
 
 .hw {
-  width: 100%;
-  height: 100%;
   border: 3px solid black; }
 
 .app {
@@ -378,11 +421,99 @@ html, body {
   background: radial-gradient(350px, #fa0107, #a00307);
   font-family: Verdana; }
 
-#page {
-  width: 900px;
+.overlay {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
   height: 100%;
-  margin: 0 auto; }
+  background-color: #555;
+  opacity: 0.6;
+  z-index: 99; }
 
+.preloader {
+  display: none;
+  position: absolute;
+  width: 200px;
+  height: 60px;
+  top: 40%;
+  left: 50%;
+  margin-left: -100px;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 10px;
+  opacity: 0.8; }
+
+.preloader__round {
+  background-color: rgba(255, 255, 255, 0);
+  float: left;
+  height: 32px;
+  margin-left: 26px;
+  margin-top: 15px;
+  width: 32px;
+  -moz-animation-name: bounce_circleG;
+  -moz-animation-duration: 1.6500000000000001s;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-direction: linear;
+  -moz-border-radius: 21px;
+  -webkit-animation-name: bounce_circleG;
+  -webkit-animation-duration: 1.6500000000000001s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: linear;
+  -webkit-border-radius: 21px;
+  -ms-animation-name: bounce_circleG;
+  -ms-animation-duration: 1.6500000000000001s;
+  -ms-animation-iteration-count: infinite;
+  -ms-animation-direction: linear;
+  -ms-border-radius: 21px;
+  -o-animation-name: bounce_circleG;
+  -o-animation-duration: 1.6500000000000001s;
+  -o-animation-iteration-count: infinite;
+  -o-animation-direction: linear;
+  -o-border-radius: 21px;
+  animation-name: bounce_circleG;
+  animation-duration: 1.6500000000000001s;
+  animation-iteration-count: infinite;
+  animation-direction: linear;
+  border-radius: 21px; }
+
+.preloader__round:nth-of-type(1) {
+  -moz-animation-delay: 0.33s;
+  -webkit-animation-delay: 0.33s;
+  -ms-animation-delay: 0.33s;
+  -o-animation-delay: 0.33s;
+  animation-delay: 0.33s; }
+
+.preloader__round:nth-of-type(2) {
+  -moz-animation-delay: 0.7700000000000001s;
+  -webkit-animation-delay: 0.7700000000000001s;
+  -ms-animation-delay: 0.7700000000000001s;
+  -o-animation-delay: 0.7700000000000001s;
+  animation-delay: 0.7700000000000001s; }
+
+.preloader__round:nth-of-type(3) {
+  -moz-animation-delay: 0.99s;
+  -webkit-animation-delay: 0.99s;
+  -ms-animation-delay: 0.99s;
+  -o-animation-delay: 0.99s;
+  animation-delay: 0.99s; }
+
+@-moz-keyframes bounce_circleG {
+  50% {
+    background-color: #c80307; } }
+@-webkit-keyframes bounce_circleG {
+  50% {
+    background-color: #c80307; } }
+@-ms-keyframes bounce_circleG {
+  50% {
+    background-color: #c80307; } }
+@-o-keyframes bounce_circleG {
+  50% {
+    background-color: #c80307; } }
+@keyframes bounce_circleG {
+  50% {
+    background-color: #c80307; } }
 .main {
   position: relative;
   text-align: center;
@@ -420,6 +551,14 @@ html, body {
   border: 3px solid #a00307;
   border-radius: 10px; }
 
+.signup-form {
+  width: 400px;
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 20%;
+  border: 3px solid #a00307;
+  border-radius: 10px; }
+
 .form__input {
   width: 100%;
   height: 30px;
@@ -434,5 +573,29 @@ html, body {
   background: linear-gradient(#c80307, #b40307);
   border: 3px solid #a00307;
   border-radius: 10px; }
+
+.scoreboard {
+  width: 900px;
+  margin: 0 auto;
+  text-align: center; }
+
+.scoreboard__title {
+  display: inline-block;
+  font-size: 20px;
+  color: #ffffff;
+  margin-top: 40px; }
+
+.score {
+  padding: 20px;
+  overflow: hidden; }
+
+.score__login {
+  color: #fff;
+  float: left; }
+
+.score__value {
+  color: #999;
+  float: left;
+  margin-left: 30px; }
 
 /*# sourceMappingURL=main.css.map */

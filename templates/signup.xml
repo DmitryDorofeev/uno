@@ -1,9 +1,9 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-  <div class="wrap">
-    <div class="login__error">
+  <div class="signup">
+    <div class="signup__error">
       <h3 id="error"></h3>
     </div>
-    <div class="form signup-form">
+    <div class="signup-form">
       <form action="/api/v1/auth/signup" method="POST" id="signup-form">
         <div>
           <input type="text" name="login" class="form__input" placeholder="Логин..." required=""/>

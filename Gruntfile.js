@@ -12,11 +12,7 @@ module.exports = function (grunt) {
             },
             sass: {
                 files: [
-                  'public_html/css/scss/main.scss',
-                  'public_html/css/scss/variables.scss',
-                  'public_html/css/scss/app.scss',
-                  'public_html/css/scss/game.scss',
-                  'public_html/css/scss/fonts.scss'
+                  'public_html/css/scss/*.scss',
                 ],
                 tasks: ['sass'],
                 options: {
@@ -85,11 +81,28 @@ module.exports = function (grunt) {
                 }
             }
         },
+        shell: {
+            server: {
+                command: 'java -cp target/uno-1.0-jar-with-dependencies.jar main.Main'
+            },
+            compile: {
+                command: 'mvn compile assembly:single'
+            }
+        },
+        concurrent: {
+            target: ['shell:server', 'watch'],
+            options: {
+                logCurrentOutput: true
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-fest');
+    grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('default', ['concurrent']);
 };
+

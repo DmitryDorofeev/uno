@@ -2,7 +2,6 @@ package frontend;
 
 import base.AuthService;
 import base.GameMechanics;
-import utils.PageGenerator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,8 +39,6 @@ public class FrontendServlet extends HttpServlet {
 
          */
         pageVariables.put("myName", safeName);
-
-        response.getWriter().println(PageGenerator.getPage("game.html", pageVariables));
 
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);

@@ -1,30 +1,39 @@
 define([
-  'jquery',
-  'backbone',
-  'collections/score',
-  'tmpl/scoreboard'
-], function($, Backbone, scoreCollection, tmpl) {
+    'jquery',
+    'backbone',
+    'collections/score',
+    'tmpl/scoreboard'
+], function ($, Backbone, scoreCollection, tmpl) {
 
-  var ScoreboardView = Backbone.View.extend({
-    tagName: 'div',
-    collection: scoreCollection,
-    initialize: function () {
-      this.listenTo(this.collection, 'reset', this.insertInfo);
-    },
-    template: function () {
-      return tmpl(this.collection.toJSON());
-    },
-    render: function() {
-      this.collection.fetch({reset: true});
-      return this;
-    },
-    show: function () {
-      this.trigger('show', this);
-    },
-    insertInfo: function () {
-      this.$el.html(this.template());
-    }
-  });
+    var ScoreboardView = Backbone.View.extend({
+        collection: scoreCollection,
+        initialize: function () {
+            this.listenTo(this.collection, 'reset', this.insertInfo);
+            this.collection.comparator = function (score) {
+                return -score.get('score');
+            };
+        },
+        template: function () {
+            return tmpl(this.collection.toJSON());
+        },
+        render: function () {
+            this.collection.fetch({reset: true});
+            this.trigger('load:start');
+            return this;
+        },
+        show: function () {
+            this.trigger('show', this);
+            this.$el.show();
+        },
+        hide: function () {
+            this.$el.hide();
+        },
+        insertInfo: function () {
+            this.collection.sort();
+            this.$el.html(this.template());
+            this.trigger('load:done');
+        }
+    });
 
-  return new ScoreboardView();
+    return ScoreboardView;
 });

@@ -26,11 +26,14 @@ define([
         },
         render: function () {
             this.ctx.beginPath();
-            this.ctx.arc(400, 400, 20, 0, 2 * Math.PI);
+        this.ctx.arc(400, 400, 20, 0, 2 * Math.PI);
             this.ctx.fill();
         },
         show: function () {
             this.trigger('show', this);
+        },
+        hide: function () {
+            this.$el.hide();
         },
         move: function () {
             this.ctx.clearRect(0, 0, this.el.width, this.el.height);

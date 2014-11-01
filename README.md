@@ -7,6 +7,6 @@
 ##Студенты
 Дорофеев Дмитрий dmitrydorofeev me@dmitrydorofeev.ru
 
-Кобзистый Константин
+Кобзистый Константин KPK10 k_kobzisty@mail.ru
 
 Халайджи Алексей leshiy1295 aleksei_halaidzh@mail.ru

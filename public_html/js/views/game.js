@@ -4,18 +4,11 @@ define([
   'models/user'
 ], function (Backbone, tmpl, userModel) {
   var GameView = Backbone.View.extend({
-    className: 'game',
-    id: 'game',
     model: userModel,
     events: {
       'click button': 'send'
     },
     initialize: function() {
-      /*
-this.ws = new WebSocket('ws://127.0.0.1:8080/gameplay');
-      this.ws.onmessage = this.message;
-*/
-      this.render();
     },
     template: function() {
       return tmpl();
@@ -27,11 +20,16 @@ this.ws = new WebSocket('ws://127.0.0.1:8080/gameplay');
     show: function () {
       if (userModel.isLogined()) {
         this.trigger('show', this);
+        this.$el.show();
         this.model.set('inGame', true);
       }
       else {
         userModel.trigger('login:no');
       }
+    },
+    hide: function () {
+        this.$el.hide();
+        this.model.set('inGame', false);
     },
     send: function () {
         this.ws.send();
@@ -41,5 +39,5 @@ this.ws = new WebSocket('ws://127.0.0.1:8080/gameplay');
     }
   });
 
-  return new GameView();
+  return GameView;
 });

@@ -5,7 +5,6 @@ define([
 ], function (Backbone, tmpl, userModel) {
   var ProfileView = Backbone.View.extend({
     initialize: function() {
-        this.render();
         this.listenTo(this.model, 'change', this.render);
     },
     events: {
@@ -21,11 +20,15 @@ define([
     },
     show: function () {
       this.trigger('show', this);
+      this.$el.show();
+    },
+    hide: function () {
+        this.$el.hide();
     },
     logout: function () {
         this.model.logout();
     }
   });
 
-  return new ProfileView();
+  return ProfileView;
 });

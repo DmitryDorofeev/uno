@@ -9,7 +9,6 @@ define([
     initialize: function() {
       this.listenTo(this.model, 'login:error', this.renderServerError);
       this.listenTo(this.model, 'login:bad', this.renderLoginError);
-      this.render();
     },
     events: {
       'submit #login-form': 'login'
@@ -36,8 +35,12 @@ define([
     },
     show: function () {
       this.trigger('show', this);
-    }
+      this.$el.show();
+    },
+    hide: function () {
+        this.$el.hide();
+    },
   });
 
-  return new LoginView();
+  return LoginView;
 });

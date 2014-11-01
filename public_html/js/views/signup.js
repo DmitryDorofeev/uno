@@ -9,7 +9,6 @@ define([
         initialize: function () {
             this.listenTo(this.model, 'signup:bad', this.renderRegError);
             this.listenTo(this.model, 'signup:error', this.renderServerError);
-            this.render();
         },
         events: {
             'submit #signup-form': 'signup'
@@ -34,6 +33,10 @@ define([
         },
         show: function () {
             this.trigger('show', this);
+            this.$el.show();
+        },
+        hide: function () {
+            this.$el.hide();
         },
         renderRegError: function (message) {
             this.$error.text(message);
@@ -43,6 +46,6 @@ define([
         }
     });
     
-    return new SignupView();
+    return SignupView;
 });
     

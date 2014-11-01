@@ -47,7 +47,7 @@ define([
     signup: function(data) {
       var that = this;
       $.ajax({
-        url: '/api/v1/auth/signup', // TODO: url для регистрации
+        url: '/api/v1/auth/signup',
         type: 'POST',
         data: data,
         dataType: 'json',
