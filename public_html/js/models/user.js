@@ -6,6 +6,22 @@ define([
     url: '/api/v1/profile',
     initialize: function() {
       this.fetch();
+      _.bindAll(this, '_onSuccessLogin', '_onErrorLogin');
+    },
+    _onSuccessLogin: function (resp) {
+      if (resp.status === 200) {
+        this.set({
+          'login': resp.login,
+          'email': resp.email
+        });
+        this.trigger('login:ok');
+      }
+      else if (resp.status === 500) {
+        this.trigger('login:bad', resp.message);
+      }
+    },
+    _onErrorLogin: function() {
+        this.trigger('login:error');
     },
     isLogined: function() {
       return (this.get('login') !== undefined);
@@ -21,27 +37,13 @@ define([
       });
     },
     login: function (data) {
-      var that = this;
       $.ajax({
         url: '/api/v1/auth/signin',
         type: 'POST',
         data: data,
         dataType: 'json',
-        success: function(resp) {
-          if (resp.status === 200) {
-            that.set({
-              'login': resp.login,
-              'email': resp.email
-            });
-            that.trigger('login:ok');
-          }
-          else if (resp.status === 500) {
-            that.trigger('login:bad', resp.message);
-          }
-        },
-        error: function() {
-          that.trigger('login:error');
-        }
+        success: this._onSuccessLogin,
+        error: this._onErrorLogin
       });
     },
     signup: function(data) {

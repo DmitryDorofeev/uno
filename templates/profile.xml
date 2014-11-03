@@ -12,7 +12,8 @@
                     <input type="text" value="{profile.login}"/>
                 </div>
             </div>
-            <button type="submit" class="form__button"> Сохранить </button>            
+            <button type="submit" class="form__button"> Сохранить </button>  
+            <button type="submit" class="form__button js-logout"> Logout </button>            
         </form>
   </div>
 </fest:template>

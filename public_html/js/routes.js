@@ -24,10 +24,10 @@ define([
 
     var Router = Backbone.Router.extend({
         initialize: function () {
-            this.listenTo(userModel, 'login:ok', this.toGame);
-            this.listenTo(userModel, 'signup:ok', this.toLogin);
-            this.listenTo(userModel, 'login:no', this.toLogin);
-            this.listenTo(userModel, 'logout', this.toMain);
+            this.listenTo(userModel, 'login:ok', this.afterLogin);
+            this.listenTo(userModel, 'signup:ok', this.afterSignup);
+            this.listenTo(userModel, 'login:no', this.afterSignup);
+            this.listenTo(userModel, 'logout', this.afterLogout);
         },
         routes: {
             '': 'index',
@@ -59,13 +59,13 @@ define([
         defaultRoute: function () {
             alert('404'); // TODO: change to 404 View
         },
-        toGame: function () {
-            this.navigate('game', {trigger: true});
+        afterLogin: function () {
+            this.navigate('', {trigger: true});
         },
-        toLogin: function () {
+        afterSignup: function () {
             this.navigate('login', {trigger: true});
         },
-        toMain: function () {
+        afterLogout: function () {
             this.navigate('', {trigger: true});
         }
     });

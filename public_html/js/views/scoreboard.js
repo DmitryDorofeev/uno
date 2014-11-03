@@ -29,9 +29,12 @@ define([
             this.$el.hide();
         },
         insertInfo: function () {
-            this.collection.sort();
-            this.$el.html(this.template());
-            this.trigger('load:done');
+            setTimeout(function () {
+                this.collection.sort();
+                this.$el.html(this.template());
+                this.trigger('load:done');
+            }.bind(this), 2000)
+            
         }
     });
 
