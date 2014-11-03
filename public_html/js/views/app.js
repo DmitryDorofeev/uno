@@ -10,6 +10,7 @@ define([
         initialize: function() {
             this.$el = $('body');
             this.views = {};
+            this.constructors = {};
         },
         template: tmpl,
         render: function () {
@@ -17,9 +18,7 @@ define([
         },
         register: function (views) {
             _.forEach(views, function (view, name) {
-                this.listenTo(view, 'show', this.hideOther);
-                this.views[name] = view;
-                this.$el.find('.app').append(view.$el);
+                this.constructors[name] = view;
             }, this);
         },
         hideOther: function (view) {
@@ -29,20 +28,22 @@ define([
                 }
             });
         },
-        getView: function (name, ViewConstructor) {
-            if (this.views[name] === undefined) {
-                this.views[name] = new ViewConstructor();
-                this.listenTo(this.views[name], 'show', this.hideOther);
-                this.listenTo(this.views[name], 'load:start', this.showPreloader);
-                this.listenTo(this.views[name], 'load:done', this.hidePreloader);
-                this.views[name].render();
-                this.$el.find('.app').append(this.views[name].$el);
+        getView: function (name) {
+            var view = this.views[name];
+            if (view === undefined) {
+                view = new this.constructors[name]();
+                this.listenTo(view, 'show', this.hideOther);
+                this.listenTo(view, 'load:start', this.showPreloader);
+                this.listenTo(view, 'load:done', this.hidePreloader);
+                view.render();
+                this.$el.find('.app').append(view.$el);
+                this.views[name] = view;
             }
-            return this.views[name];
+            return view;
         },
         showPreloader: function () {
-            $('.overlay').show();
-            $('.preloader').show();
+            this.$el.find('.overlay').show();
+            this.$el.find('.preloader').show();
         },
         hidePreloader: function () {
             this.$el.find('.overlay').hide();

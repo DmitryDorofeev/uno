@@ -11,15 +11,14 @@ define([
     'models/user'
 ], function ($, Backbone, HomeView, GameView, LoginView, SignupView, ProfileView, ScoreboardView, app, userModel) {
   
-/*
     app.register({
-        'game': gameView, 
-        'login':loginView, 
-        'signup': signupView, 
-        'profile': profileView, 
-        'scoreboard': scoreboardView
+        'home': HomeView,
+        'game': GameView, 
+        'login': LoginView, 
+        'signup': SignupView, 
+        'profile': ProfileView, 
+        'scoreboard': ScoreboardView
     });
-*/
     app.render();
 
     var Router = Backbone.Router.extend({
@@ -39,22 +38,22 @@ define([
             '*other': 'defaultRoute'
         },
         index: function () {
-            app.getView('home', HomeView).show();
+            app.getView('home').show();
         },
         game: function () {
-            app.getView('game', GameView).show();
+            app.getView('game').show();
         },
         login: function () {
-            app.getView('login', LoginView).show();
+            app.getView('login').show();
         },
         signup: function () {
-            app.getView('signup', SignupView).show();
+            app.getView('signup').show();
         },
         profile: function () {
-            app.getView('profile', ProfileView).show();
+            app.getView('profile').show();
         },
         scoreboard: function () {
-            app.getView('scoreboard', ScoreboardView).show();
+            app.getView('scoreboard').show();
         },
         defaultRoute: function () {
             alert('404'); // TODO: change to 404 View
