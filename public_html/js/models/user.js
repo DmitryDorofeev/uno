@@ -1,14 +1,65 @@
 define([
-  'jquery',
-  'backbone'
+    'jquery',
+    'backbone'
 ], function($, Backbone) {
   var UserModel = Backbone.Model.extend({
-    url: '/api/v1/profile',
+    loginUrl: '/api/v1/auth/signin',
+    signupUrl: '/api/v1/auth/signup',
+    logoutUrl: '/api/v1/auth/logout',
+    profileUrl: '/api/v1/profile',
     initialize: function() {
       this.fetch();
-      _.bindAll(this, '_onSuccessLogin', '_onErrorLogin');
+      _.bindAll(this, '_onSuccessLogin', '_onErrorLogin', '_onSuccessLogout');
     },
+    
+    // BACKBONE SYNC
+    sync: function(method, model, options) {
+        var methodMap = {
+            'create': {
+                method: 'POST',
+                url: this.sugnupUrl
+            },
+            'read': {
+                method: 'GET',
+                url: this.profileUrl
+            },
+            'update': {
+                method: 'POST',
+                url: model.get('password') ? this.loginUrl : this.logoutUrl
+            }
+        };
+        
+            
+        if(model.loading && model.loading.method == method) {
+            model.loading.xhr.abort();
+        }
+        
+        var type = methodMap[method].method,
+            url = methodMap[method].url;
+        
+        
+        var xhr = $.ajax({
+            type: type,
+            url: url,
+            data: (model instanceof Backbone.Model) ? model.toJSON() : {},
+            success: function(resp) {
+                if (method !== 'read') {
+                    model.clear();  
+                }
+                options.success(resp);
+            },
+            error: options.error ? options.error : function () {},
+            dataType: 'json'
+        });
+        model.loading = {
+            method: method,
+            xhr: xhr
+        }
+    },
+    
+    // CALLBACKS
     _onSuccessLogin: function (resp) {
+        console.log(resp);
       if (resp.status === 200) {
         this.set({
           'login': resp.login,
@@ -23,52 +74,39 @@ define([
     _onErrorLogin: function() {
         this.trigger('login:error');
     },
+    _onSuccessLogout: function () {
+        this.trigger('logout');
+    },
+    _onSuccessSignup: function(resp) {
+      if (resp.status == 200) {
+        this.set(resp);
+        this.trigger('signup:ok');
+      }
+      else if (resp.status == 500) {
+        this.trigger('signup:bad', resp.message);
+      }
+    },
+    _onErrorSignup: function() {
+      this.trigger('signup:error');
+    },
+    // END CALLBACKS
+    
     isLogined: function() {
       return (this.get('login') !== undefined);
     },
     logout: function() {
-      var that = this;
-      $.ajax({
-        type: 'POST',
-        url: '/api/v1/auth/logout'
-      }).done(function() {
-        that.clear();
-        that.trigger('logout');
-      });
+        this.sync('update', this, {success: this._onSuccessLogout});
     },
     login: function (data) {
-      $.ajax({
-        url: '/api/v1/auth/signin',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        success: this._onSuccessLogin,
-        error: this._onErrorLogin
-      });
+        this.set(data);
+        this.sync('update', this, {success: this._onSuccessLogin, error: this._onErrorLogin});
     },
     signup: function(data) {
-      var that = this;
-      $.ajax({
-        url: '/api/v1/auth/signup',
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        success: function(resp) {
-          if (resp.status == 200) {
-            that.set(resp);
-            that.trigger('signup:ok');
-          }
-          else if (resp.status == 500) {
-            that.trigger('signup:bad', resp.message);
-          }
-        },
-        error: function() {
-          that.trigger('signup:error');
-        }
-      });
+        this.set(data);
+        this.sync('create', this, {success: this._onSuccessSignup, error: this._onErrorSignup});
     }
   });
-
+  
   return new UserModel();
 
 });
