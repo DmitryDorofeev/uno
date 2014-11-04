@@ -9,7 +9,7 @@ define([
     profileUrl: '/api/v1/profile',
     initialize: function() {
       this.fetch();
-      _.bindAll(this, '_onSuccessLogin', '_onErrorLogin', '_onSuccessLogout');
+      _.bindAll(this, '_onSuccessLogin', '_onErrorLogin', '_onSuccessLogout', '_onSuccessSignup', '_onErrorSignup');
     },
     
     // BACKBONE SYNC
@@ -69,7 +69,6 @@ define([
     },
     _onSuccessSignup: function(resp) {
       if (resp.status == 200) {
-        this.set(resp);
         this.trigger('signup:ok');
       }
       else if (resp.status == 500) {
