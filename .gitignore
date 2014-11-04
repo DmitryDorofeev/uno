@@ -6,7 +6,6 @@
 .sass-cache
 node_modules/
 # Package Files #
-*.jar
 *.war
 *.ear
 
