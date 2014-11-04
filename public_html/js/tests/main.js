@@ -1,8 +1,8 @@
 require([
     'qunit',
-    'tests/sampleTest'
-], function (qunit, test) {
-    test.run();
+    'tests/userModel'
+], function (qunit, userTest) {
+    userTest.run();
     qunit.load();
     qunit.start();
 });

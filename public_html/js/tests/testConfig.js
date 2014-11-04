@@ -4,7 +4,8 @@ require.config({
         'jquery': 'lib/jquery',
         'underscore': 'lib/underscore',
         'backbone': 'lib/backbone',
-        'qunit': 'lib/qunit'
+        'qunit': 'lib/qunit',
+        'mockjax': 'lib/jquery.mockjax'
     },
     shim: {
         'backbone': {
@@ -20,7 +21,10 @@ require.config({
                QUnit.config.autoload = false;
                QUnit.config.autostart = false;
            }
-       } 
+        },
+        'mockjax': {
+            deps: ['jquery']
+        } 
     }
 });
 

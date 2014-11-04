@@ -29,14 +29,8 @@ define([
             }
         };
         
-            
-        if(model.loading && model.loading.method == method) {
-            model.loading.xhr.abort();
-        }
-        
         var type = methodMap[method].method,
             url = methodMap[method].url;
-        
         
         var xhr = $.ajax({
             type: type,
@@ -51,10 +45,6 @@ define([
             error: options.error ? options.error : function () {},
             dataType: 'json'
         });
-        model.loading = {
-            method: method,
-            xhr: xhr
-        }
     },
     
     // CALLBACKS
