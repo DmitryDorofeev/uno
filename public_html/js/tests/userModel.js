@@ -44,24 +44,24 @@ define([
             listener.listenToOnce(userModel, 'login:ok', function () {
                 start();
                 ok(userModel.get('login') === 'testLogin', 'after login username puts to model');
-                ok(userModel.get('password') === undefined, 'after login password field is empty');
+                ok(!userModel.has('password'), 'after login password field is empty. Now "' + userModel.get('password') + '"');
             }); 
         });
         asyncTest('userModel.signup', function () {
             userModel.signup({login: 'pass', email: 'root@root.ru', password: 'saaa'});
             listener.listenToOnce(userModel, 'signup:ok', function () {
                 start();
-                ok(userModel.get('login') === undefined, 'after signup login field is empty');
-                ok(userModel.get('password') === undefined, 'after signup password field is empty');
+                ok(!userModel.has('login'), 'after signup login field is empty');
+                ok(!userModel.has('password'), 'after signup password field is empty.');
             });
         });
         asyncTest('userModel.logout', function () {
             userModel.logout();
             listener.listenTo(userModel, 'logout', function () {
                 start();
-                ok(userModel.get('login') === undefined, 'after logout login field is empty');
-                ok(userModel.get('email') === undefined, 'after logout email field is empty');
-                ok(userModel.get('password') === undefined, 'after logout password field is empty');
+                ok(!userModel.has('login'), 'after logout login field is empty');
+                ok(!userModel.has('email'), 'after logout email field is empty');
+                ok(!userModel.has('password'), 'after logout password field is empty');
             });
         });
     };
