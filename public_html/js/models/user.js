@@ -17,7 +17,7 @@ define([
         var methodMap = {
             'create': {
                 method: 'POST',
-                url: this.sugnupUrl
+                url: this.signupUrl
             },
             'read': {
                 method: 'GET',
@@ -49,7 +49,6 @@ define([
     
     // CALLBACKS
     _onSuccessLogin: function (resp) {
-        console.log(resp);
       if (resp.status === 200) {
         this.set({
           'login': resp.login,
