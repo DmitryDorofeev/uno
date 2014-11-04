@@ -39,6 +39,8 @@ define([
         
         _.extend(listener, Backbone.Events);
         
+        module('User model tests');
+        
         asyncTest('userModel.login', function () {
             userModel.login({login: 'testLogin', password: 'saaa'});
             listener.listenToOnce(userModel, 'login:ok', function () {

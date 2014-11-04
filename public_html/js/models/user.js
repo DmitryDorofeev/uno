@@ -85,15 +85,15 @@ define([
       return (this.has('isLogined'));
     },
     logout: function() {
-        this.sync('update', this, {success: this._onSuccessLogout});
+        this.sync('update', this);
     },
     login: function (data) {
         this.set(data);
-        this.sync('update', this, {success: this._onSuccessLogin, error: this._onErrorLogin});
+        this.sync('update', this);
     },
     signup: function(data) {
         this.set(data);
-        this.sync('create', this, {success: this._onSuccessSignup, error: this._onErrorSignup});
+        this.sync('create', this);
     }
   });
   

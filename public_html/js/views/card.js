@@ -5,6 +5,12 @@ define([
     var CardView = Backbone.View.extend({
         initialize: function () {
             
+        },
+        events: {
+            'click': 'selectCard'
+        },
+        selectCard: function (event) {
+            this.model.select();
         }
     });
     
