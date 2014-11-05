@@ -41,13 +41,16 @@ define([
             }
             return view;
         },
-        showPreloader: function () {
+        showPreloader: function (text) {
             this.$el.find('.overlay').show();
             this.$el.find('.preloader').show();
+            this.$el.find('.js-text').text(text);
+            this.$el.find('.preload-text').show();
         },
         hidePreloader: function () {
             this.$el.find('.overlay').hide();
             this.$el.find('.preloader').hide();
+            this.$el.find('.preload-text').hide();
         }
     });
 
