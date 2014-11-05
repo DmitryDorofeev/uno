@@ -30,7 +30,16 @@ define([
             },
             'read': {
                 method: 'GET',
-                url: model.profileUrl
+                url: model.profileUrl,
+                success: function (resp) {
+                    if (resp.status === 200) {
+                        model.set({
+                            'login': resp.login,
+                            'email': resp.email,
+                            'isLogined': true
+                        });
+                    }
+                }
             },
             'update': {
                 method: 'POST',
@@ -52,8 +61,8 @@ define([
                         }
                     }
                     else {
-                        model.trigger('logout');
                         model.clear();
+                        model.trigger('logout');
                     }
                 },
                 error: function () {

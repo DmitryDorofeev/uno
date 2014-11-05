@@ -10,7 +10,11 @@ define([
         },
         addCard: function () {
             
-        }
+        },
+        render: function () {
+            return this;
+        },
+        
     });
     
     return CardsView();

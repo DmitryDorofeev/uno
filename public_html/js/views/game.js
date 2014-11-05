@@ -9,6 +9,7 @@ define([
       'click button': 'send'
     },
     initialize: function() {
+
     },
     template: function() {
       return tmpl();
@@ -21,6 +22,7 @@ define([
       if (userModel.isLogined()) {
         this.trigger('show', this);
         this.$el.show();
+        this.trigger('load:start', 'Ожидание игроков');
         this.model.set('inGame', true);
       }
       else {

@@ -18,7 +18,7 @@ define([
         },
         render: function () {
             this.collection.fetch({reset: true});
-            this.trigger('load:start');
+            this.trigger('load:start', 'Загрузка рейтинга');
             return this;
         },
         show: function () {

@@ -6,4 +6,9 @@
         <div class="preloader__round"></div>
         <div class="preloader__round"></div>
     </div>
+    <div class="preload-text">
+    	<div class="preload-text__text js-text">
+    		
+    	</div>
+    </div>
 </fest:template>
