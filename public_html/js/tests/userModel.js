@@ -47,6 +47,7 @@ define([
                 start();
                 ok(userModel.get('login') === 'testLogin', 'after login username puts to model');
                 ok(!userModel.has('password'), 'after login password field is empty. Now "' + userModel.get('password') + '"');
+                ok(userModel.has('isLogined'), 'if logined isLogined exists');
             }); 
         });
         asyncTest('userModel.signup', function () {
