@@ -38,6 +38,7 @@ define([
                             'email': resp.email,
                             'isLogined': true
                         });
+                        model.trigger('login:ok');
                     }
                 }
             },

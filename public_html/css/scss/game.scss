@@ -2,3 +2,29 @@ button {
     display: inline-block;
     margin: 100px;
 }
+
+.game-wrap {
+	width: 100%;
+	height: 100%;
+}
+
+.game {
+	width: 100%;
+	height: 100%;
+	background-color: rgb(254, 246, 212);
+}
+
+.deck {
+	background-image: url(/images/back.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 140px;
+	height: 200px;
+	position: absolute;
+	top: 30%;
+	left: 35%;
+}
+
+.current {
+
+}

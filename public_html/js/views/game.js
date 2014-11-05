@@ -4,6 +4,7 @@ define([
   'models/user'
 ], function (Backbone, tmpl, userModel) {
   var GameView = Backbone.View.extend({
+    className: 'game-wrap',
     model: userModel,
     events: {
       'click button': 'send'
