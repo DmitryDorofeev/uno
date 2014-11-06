@@ -11,6 +11,7 @@ define([
             this.$el = $('body');
             this.views = {};
             this.constructors = {};
+            this.inLoad = false;
         },
         template: tmpl,
         render: function () {
@@ -29,6 +30,8 @@ define([
             });
         },
         getView: function (name) {
+            this.trigger('stopall');
+            this.hidePreloader();
             var view = this.views[name];
             if (view === undefined) {
                 view = new this.constructors[name]();
@@ -42,12 +45,14 @@ define([
             return view;
         },
         showPreloader: function (text) {
+            this.inLoad = true;
             this.$el.find('.overlay').show();
             this.$el.find('.preloader').show();
             this.$el.find('.js-text').text(text);
             this.$el.find('.preload-text').show();
         },
         hidePreloader: function () {
+            this.inLoad = false;
             this.$el.find('.overlay').hide();
             this.$el.find('.preloader').hide();
             this.$el.find('.preload-text').hide();
