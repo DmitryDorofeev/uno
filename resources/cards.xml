@@ -1,0 +1,32 @@
+<class type='sax.Card'>
+	<width>240</width>
+	<height>360</height>
+	<x>0</x>
+	<y>0</y>
+	<color>red</color>
+	<num>0</num>
+</class>
+<class type='sax.Card'>
+	<width>240</width>
+	<height>360</height>
+	<x>241</x>
+	<y>0</y>
+	<color>red</color>
+	<num>1</num>
+</class>
+<class type='sax.Card'>
+	<width>240</width>
+	<height>360</height>
+	<x>0</x>
+	<y>361</y>
+	<color>yellow</color>
+	<num>0</num>
+</class>
+<class type='sax.Card'>
+	<width>240</width>
+	<height>360</height>
+	<x>0</x>
+	<y>721</y>
+	<color>green</color>
+	<num>0</num>
+</class>
