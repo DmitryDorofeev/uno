@@ -33,7 +33,8 @@ public class GameMechanicsImpl implements GameMechanics {
             for (GameUser player : tempList)
                 waiters.remove(player);
             startGame(tempList);
-        }
+        } else
+            waiters.add(newUser);
         tempList.clear();
     }
 
