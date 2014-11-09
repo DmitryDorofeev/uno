@@ -1,6 +1,7 @@
 define([
-	'backbone'
-], function (Backbone) {
+	'backbone',
+    'models/user'
+], function (Backbone, userModel) {
 	var GameModel = Backbone.Model.extend({
 		initialize: function () {
 			this.connection = undefined;
@@ -25,6 +26,7 @@ define([
             var sendObj = {
                 type: 'gameInfo',
                 body: {
+                    login: userModel.get('login'),
                     players: players
                 }
             };
