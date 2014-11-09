@@ -2,8 +2,9 @@ define([
   'jquery',
   'backbone',
   'tmpl/app',
-  'models/user'
-], function ($, Backbone, tmpl, userModel, gameView) {
+  'models/user',
+  'models/game'
+], function ($, Backbone, tmpl, userModel, gameView, gameModel) {
 
     var AppView = Backbone.View.extend({
         model: userModel,

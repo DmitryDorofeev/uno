@@ -9,10 +9,18 @@ define([
     model: userModel,
     game: gameModel,
     initialize: function() {
-      this.listenTo(this.game, 'game:settings', this.showSettings);
-      this.listenTo(gameSettings, 'game:connect', this.sendSettings);
+        this.listenTo(this.game, 'load:start', this.loadStart);
+        this.listenTo(this.game, 'load:done', this.loadDone);
+        this.listenTo(this.game, 'game:settings', this.showSettings);
+        this.listenTo(gameSettings, 'game:connect', this.sendSettings);
     },
-    template: function() {
+    loadStart: function (msg) {
+        this.trigger('load:start', msg);
+    },
+    loadDone: function () {
+        this.trigger('load:done');
+    },
+    template: function () {
       return tmpl();
     },
     render: function() {
@@ -37,12 +45,10 @@ define([
         this.game.close();
     },
     showSettings: function () {
-      this.trigger('load:done');
       gameSettings.show();
     },
     sendSettings: function (val) {
-      this.trigger('load:start', 'Подключение...');
-      this.game.playersNumber = val;
+      this.game.players = val;
       this.game.connect();
     }
   });

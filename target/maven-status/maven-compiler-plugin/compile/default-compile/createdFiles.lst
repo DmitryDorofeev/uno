@@ -2,7 +2,6 @@ sax/SerializationObject.class
 base/AdminPageServlet.class
 frontend/GameWebSocket.class
 base/LogOutServlet.class
-frontend/FrontendServlet.class
 admin/AdminPageServletImpl.class
 frontend/AuthServiceImpl.class
 main/Main.class
