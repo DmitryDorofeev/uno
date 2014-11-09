@@ -36,11 +36,13 @@ define([
             this.trigger('load:start', 'Ожидание игроков...');
 		},
 		onMessage: function (msg) {
-            console.log(msg);
-            if (msg.type === 'start') {
+            var data = JSON.parse(msg.data);
+            console.log('from server: ', data);
+            if (data.type === 'start') {
                 this.trigger('load:done');
+                alert('ИГРАА!');
             }
-			this.trigger('message:' + msg.type, msg.body);
+			this.trigger('message:' + data.type, data.body);
 		}
 	});
 
