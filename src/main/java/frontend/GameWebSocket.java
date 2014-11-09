@@ -22,8 +22,8 @@ public class GameWebSocket {
     private GameMechanics gameMechanics;
     private WebSocketService webSocketService;
 
-    public GameWebSocket(/*String myName, */GameMechanics gameMechanics, WebSocketService webSocketService) {
-//        this.myName = myName;
+    public GameWebSocket(String myName, GameMechanics gameMechanics, WebSocketService webSocketService) {
+        this.myName = myName;
         this.gameMechanics = gameMechanics;
         this.webSocketService = webSocketService;
     }
@@ -60,8 +60,8 @@ public class GameWebSocket {
             JSONObject jsonObject = (JSONObject)new JSONParser().parse(data);
             if (jsonObject.get("type").equals("gameInfo")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                this.myName = (String)jsonBody.get("login");
-                webSocketService.addUser(this);
+//                this.myName = (String)jsonBody.get("login");
+//                webSocketService.addUser(this);
                 gameMechanics.addUser(myName, (Long)jsonBody.get("players"));
             }
         }
@@ -73,7 +73,7 @@ public class GameWebSocket {
     @OnWebSocketConnect
     public void onOpen(Session session) {
         this.session = session;
-//        webSocketService.addUser(this);
+        webSocketService.addUser(this);
     }
 
     @OnWebSocketClose
