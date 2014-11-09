@@ -46,7 +46,6 @@ define([
                             });
                             model.unset('password');
                             model.trigger('login:ok');
-                            console.log(model.toJSON());
                         }
                         else if (resp.status === 500) {
                             model.trigger('login:bad', resp.message);

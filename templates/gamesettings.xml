@@ -1,0 +1,12 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+	<div class="game-settings">
+		<div class="game-settings__title">Выберите желаемое количество игроков</div>
+		<select name="select" id="select" class="game-settings__select">
+			<option value="2">2 игрока</option>
+			<option value="3">3 игрока</option>
+			<option value="4">4 игрока</option>
+			<option value="5">5 игроков</option>
+		</select>
+		<button class="game-settings__send js-send">Готово</button>
+	</div>
+</fest:template>
