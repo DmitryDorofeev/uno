@@ -35,7 +35,12 @@ define([
     },
     show: function () {
       this.trigger('show', this);
-      this.$el.show();
+      if (this.model.has('isLogined')) {
+        this.model.trigger('login:ok');
+      }
+      else {
+        this.$el.show();
+      }
     },
     hide: function () {
         this.$el.hide();

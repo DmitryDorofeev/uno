@@ -1,5 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
     <div class="game">
-    	<button>click</button>
+		<!-- <div class="deck"></div> -->
+		<div class="current"></div>
 	</div>
 </fest:template>

@@ -59,13 +59,13 @@ define([
             alert('404'); // TODO: change to 404 View
         },
         afterLogin: function () {
-            this.navigate('', {trigger: true});
+            this.navigate('/', {trigger: true});
         },
         afterSignup: function () {
             this.navigate('login', {trigger: true});
         },
         afterLogout: function () {
-            this.navigate('', {trigger: true});
+            this.navigate('/', {trigger: true});
         }
     });
 
