@@ -3,8 +3,9 @@ define([
   'tmpl/game',
   'models/user',
   'models/game',
-  'views/gamesettings'
-], function (Backbone, tmpl, userModel, gameModel, gameSettings) {
+  'views/gamesettings',
+  'views/players'
+], function (Backbone, tmpl, userModel, gameModel, gameSettings, playersView) {
   var GameView = Backbone.View.extend({
     model: userModel,
     game: gameModel,
