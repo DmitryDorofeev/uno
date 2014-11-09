@@ -32,7 +32,7 @@ public class GameWebSocket {
         return myName;
     }
 
-    public void startGame(GameUser user, ArrayList<GameUser> players) {
+    public void startGame(ArrayList<GameUser> players) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "start");
@@ -60,8 +60,6 @@ public class GameWebSocket {
             JSONObject jsonObject = (JSONObject)new JSONParser().parse(data);
             if (jsonObject.get("type").equals("gameInfo")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-//                this.myName = (String)jsonBody.get("login");
-//                webSocketService.addUser(this);
                 gameMechanics.addUser(myName, (Long)jsonBody.get("players"));
             }
         }
