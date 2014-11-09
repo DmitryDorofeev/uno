@@ -36,8 +36,8 @@ public class Main {
         Servlet scoreboard = new ScoreboardServletImpl(authService);
         Servlet admin = new AdminPageServletImpl(authService);
 
-        context.addServlet(new ServletHolder(new WebSocketGameServlet(authService, gameMechanics, webSocketService)), "/gameplay");
-        context.addServlet(new ServletHolder(new FrontendServlet(gameMechanics, authService)), "/game.html");
+        context.addServlet(new ServletHolder(new WebSocketGameServlet(authService, gameMechanics, webSocketService)),
+                                                WebSocketGameServlet.WebSocketGameServletURL);
         context.addServlet(new ServletHolder(signIn), SignInServlet.signInPageURL);
         context.addServlet(new ServletHolder(signUp), SignUpServlet.signUpPageURL);
         context.addServlet(new ServletHolder(logOut), LogOutServlet.logOutURL);
@@ -56,6 +56,5 @@ public class Main {
         server.setHandler(handlers);
 
         server.start();
-        gameMechanics.run();
     }
 }
