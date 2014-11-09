@@ -13,3 +13,5 @@ node_modules/
 hs_err_pid*
 
 public_html/dz.html
+
+npm-debug.log

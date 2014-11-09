@@ -19,6 +19,6 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     public void notifyStartGame(GameUser user, ArrayList<GameUser> players) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
-        gameWebSocket.startGame(user, players);
+        gameWebSocket.startGame(players);
     }
 }

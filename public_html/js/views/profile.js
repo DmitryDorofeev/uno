@@ -25,7 +25,8 @@ define([
     hide: function () {
         this.$el.hide();
     },
-    logout: function () {
+    logout: function (event) {
+        event.preventDefault();
         this.model.logout();
     }
   });
