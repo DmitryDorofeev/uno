@@ -1,0 +1,6 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="player">
+	<div class="player">
+		<div class="player__login"><fest:value>player.login</fest:value></div>
+		<div class="player-cards js-cards"></div>
+	</div>
+</fest:template>

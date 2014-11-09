@@ -1,10 +1,10 @@
 define([
 	'backbone'
 ], function (Backbone) {
-	var PlayersModel = Backbone.Model.extend({
+	var PlayerModel = Backbone.Model.extend({
 		initialize: function () {
 		}
 	});
 
-	return PlayersModel;
+	return PlayerModel;
 });

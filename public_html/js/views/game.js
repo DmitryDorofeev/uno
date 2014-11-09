@@ -14,6 +14,7 @@ define([
         this.listenTo(this.game, 'load:done', this.loadDone);
         this.listenTo(this.game, 'game:settings', this.showSettings);
         this.listenTo(gameSettings, 'game:connect', this.sendSettings);
+        this.listenTo(playersView, 'show', this.showView);
     },
     loadStart: function (msg) {
         this.trigger('load:start', msg);
@@ -51,6 +52,9 @@ define([
     sendSettings: function (val) {
       this.game.players = val;
       this.game.connect();
+    },
+    showView: function (view) {
+        this.$el.append(view.$el);
     }
   });
 

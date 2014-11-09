@@ -11,7 +11,10 @@ define([
 		},
 		connect: function () {
             this.trigger('load:start', 'Подключение...');
-			this.connection = new WebSocket('ws://127.0.0.1:8080/game');
+            if (this.connection !== undefined) {
+                this.connection.close();
+            }
+            this.connection = new WebSocket('ws://127.0.0.1:8080/game');
 			this.connection.onopen = this.onConnect;
 			this.connection.onmessage = this.onMessage;
 		},
@@ -40,7 +43,6 @@ define([
             console.log('from server: ', data);
             if (data.type === 'start') {
                 this.trigger('load:done');
-                alert('ИГРАА!');
             }
 			this.trigger('message:' + data.type, data.body);
 		}
