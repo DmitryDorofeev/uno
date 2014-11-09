@@ -19,7 +19,7 @@ public class GameMechanicsImpl implements GameMechanics {
         this.webSocketService = webSocketService;
     }
 
-    public void addUser(String user, Integer playersCount) {
+    public void addUser(String user, long playersCount) {
         GameUser newUser = new GameUser(user, playersCount);
         ArrayList<GameUser> tempList = new ArrayList<>();
         tempList.add(newUser);

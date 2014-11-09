@@ -6,9 +6,9 @@ package mechanics;
 public class GameUser {
     private final String myName;
     private int myScore = 0;
-    private int playersCount;
+    private long playersCount;
 
-    public GameUser(String myName, int playersCount) {
+    public GameUser(String myName, long playersCount) {
         this.myName = myName;
         this.playersCount = playersCount;
     }
@@ -17,7 +17,7 @@ public class GameUser {
         return myName;
     }
 
-    public int getPlayersCount() { return playersCount; }
+    public long getPlayersCount() { return playersCount; }
 
     public int getMyScore() {
         return myScore;

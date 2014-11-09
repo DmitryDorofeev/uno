@@ -5,5 +5,5 @@ package base;
  */
 public interface GameMechanics {
 
-    public void addUser(String user, Integer playersCount);
+    public void addUser(String user, long playersCount);
 }

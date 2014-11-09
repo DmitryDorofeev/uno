@@ -25,8 +25,9 @@ public class CustomWebSocketCreator implements WebSocketCreator {
 
     @Override
     public Object createWebSocket(ServletUpgradeRequest req, ServletUpgradeResponse resp) {
-        String sessionId = req.getHttpServletRequest().getSession().getId();
-        String name = authService.getUserProfile(sessionId).getLogin();
-        return new GameWebSocket(name, gameMechanics, webSocketService);
+//        String sessionId = req.getHttpServletRequest().getSession().getId();
+//        String name = authService.getUserProfile(sessionId).getLogin();
+//        return new GameWebSocket(name, gameMechanics, webSocketService);
+        return new GameWebSocket(gameMechanics, webSocketService);
     }
 }
