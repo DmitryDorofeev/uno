@@ -29,7 +29,7 @@ define([
             var sendObj = {
                 type: 'gameInfo',
                 body: {
-                    login: userModel.get('login'),
+                    // login: userModel.get('login'),
                     players: players
                 }
             };
