@@ -1,6 +1,10 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="player">
 	<div class="player">
 		<div class="player__login"><fest:value>player.login</fest:value></div>
-		<div class="player-cards js-cards"></div>
+		<div class="player-cards js-cards">
+			<fest:for from="1" to="player.cardsCount" index="i">
+				<div class="player-cards__card{i==1?' player-cards__card_first':''}{i==player.cardsCount?' player-cards__card_last':''}"></div>
+			</fest:for>
+		</div>
 	</div>
 </fest:template>

@@ -97,7 +97,7 @@ html, body {
     animation-duration:1.6500000000000001s;
     animation-iteration-count:infinite;
     animation-direction:linear;
-    border-radius:21px; 
+    border-radius:21px;
 }
 
 .preloader__round:nth-of-type(1) {
@@ -127,23 +127,23 @@ html, body {
 @-moz-keyframes bounce_circleG{
     0%{
     }
-    
+
     50%{
     background-color: rgb(200,3,7)
     }
 
     100%{
-    }    
+    }
 }
 
 @-webkit-keyframes bounce_circleG{
     0%{
     }
-    
+
     50%{
         background-color: rgb(200,3,7)
     }
-    
+
     100%{
     }
 }
@@ -151,11 +151,11 @@ html, body {
 @-ms-keyframes bounce_circleG{
     0%{
     }
-    
+
     50%{
         background-color: rgb(200,3,7)
     }
-    
+
     100%{
     }
 
@@ -164,11 +164,11 @@ html, body {
 @-o-keyframes bounce_circleG{
     0%{
     }
-    
+
     50%{
         background-color: rgb(200,3,7)
         }
-    
+
     100%{
     }
 }
@@ -176,10 +176,10 @@ html, body {
 @keyframes bounce_circleG{
     0%{
     }
-    
+
     50%{
     background-color: rgb(200,3,7)}
-    
+
     100%{
     }
 }
@@ -200,6 +200,12 @@ html, body {
     text-shadow: 3px 3px 1px #a2932b;
     -webkit-transform-origin: top left;
     -webkit-transform: rotate(-25deg);
+    -moz-transform-origin: top left;
+    -moz-transform: rotate(-25deg);
+    -ms-transform-origin: top left;
+    -ms-transform: rotate(-25deg);
+    -o-transform-origin: top left;
+    -o-transform: rotate(-25deg);
 }
 
 .main__button {

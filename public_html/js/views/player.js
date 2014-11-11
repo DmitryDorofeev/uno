@@ -4,13 +4,14 @@ define([
 ], function (Backbone, tmpl) {
 	var PlayerView = Backbone.View.extend({
 		initialize: function () {
+			this.listenTo(this.model, 'change', this.render);
 		},
 		template: function () {
 			return tmpl(this.model.toJSON());
 		},
 		render: function () {
-			console.log(this.model.toJSON());
 			this.$el.html(this.template());
+			this.$el.find('.player-cards__card').not('.player-cards__card_first').width(500/this.model.get('cardsCount'));
 			return this;
 		}
 	});
