@@ -409,6 +409,25 @@ button {
   top: 30%;
   left: 35%; }
 
+.player-wrap {
+  position: absolute; }
+
+.player-wrap:nth-child(1) {
+  top: 0;
+  left: 0; }
+
+.player-wrap:nth-child(2) {
+  top: 0;
+  right: 0; }
+
+.player-wrap:nth-child(3) {
+  top: 30%;
+  left: 0; }
+
+.player-wrap:nth-child(4) {
+  top: 30%;
+  right: 0; }
+
 .player-cards {
   overflow: hidden; }
 

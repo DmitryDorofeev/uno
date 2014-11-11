@@ -3,6 +3,7 @@ define([
 	'tmpl/player'
 ], function (Backbone, tmpl) {
 	var PlayerView = Backbone.View.extend({
+		className: 'player-wrap',
 		initialize: function () {
 			this.listenTo(this.model, 'change', this.render);
 		},
