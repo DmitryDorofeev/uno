@@ -3,6 +3,7 @@ package testFrontend;
 import static org.junit.Assert.*;
 
 import base.AuthService;
+import base.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,35 +15,48 @@ import frontend.AuthServiceImpl;
  */
 public class TestAuthService {
     public AuthService testAuthService = new AuthServiceImpl();
-    public UserProfileImpl testUsers[] = new UserProfileImpl[8];
-
+    public UserProfile testUsers[] = new UserProfileImpl[8];
+    public int i1 = 0;
+    public static volatile int i2 = 0;
     @Before
     public void initTestValues() {
-        testUsers[0] = new UserProfileImpl("","123qaz!", "nologin");
-        testUsers[1] = new UserProfileImpl("nopswd","", "nopassword");
-        testUsers[2] = new UserProfileImpl("noemail","12345qaz!", "");
-        testUsers[3] = new UserProfileImpl("test","test", "test");
-        testUsers[4] = new UserProfileImpl("nosuchuser","12345qaz!", "rubicon");
-        testUsers[5] = new UserProfileImpl("test", "", "test");
-        testUsers[6] = new UserProfileImpl("","test", "test");
-        testUsers[7] = new UserProfileImpl("gooduser","qazxswedc123", "good");
+        i1++;
+        i2++;
+        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " init started\n");
+//        testUsers[0] = new UserProfileImpl("","123qaz!", "nologin");
+//        testUsers[1] = new UserProfileImpl("nopswd","", "nopassword");
+//        testUsers[2] = new UserProfileImpl("noemail","12345qaz!", "");
+//        testUsers[3] = new UserProfileImpl("test","test", "test");
+//        testUsers[4] = new UserProfileImpl("nosuchuser","12345qaz!", "rubicon");
+//        testUsers[5] = new UserProfileImpl("test", "", "test");
+//        testUsers[6] = new UserProfileImpl("","test", "test");
+//        testUsers[7] = new UserProfileImpl("gooduser","qazxswedc123", "good");
+        i1++;
+        i2++;
+        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " init finished\n");
     }
 
     @Test
     public void testSignUp() {
-        System.out.append("1\n");
+        i1++;
+        i2++;
+        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test1 started\n");
 //        assertEquals("No registered nologin", false, testAuthService.signUp(testUsers[0]));
 //        assertEquals("No registered nopswd", false, testAuthService.signUp(testUsers[1]));
 //        assertEquals("Registered noemail", true, testAuthService.signUp(testUsers[2]));
 //        assertEquals("Already registered test", false, testAuthService.signUp(testUsers[3]));
 //        assertEquals("Registered gooduser", true, testAuthService.signUp(testUsers[7]));
         for (int i = 0; i < 1000000; ++i);
-        System.out.append("13\n");
+        i1++;
+        i2++;
+        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test1 finished\n");
     }
 
     @Test
     public void testSignInAndSighOut() {
-        System.out.print("2\n");
+        i1++;
+        i2++;
+        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test2 started\n");
 //        assertEquals("Logined" + testUsers[2].getLogin(), true, testAuthService.signIn("1", testUsers[2].getLogin(), testUsers[2].getPass()));
 //        assertEquals("No such user", false, testAuthService.signIn("2", testUsers[4].getLogin(), testUsers[4].getPass()));
 //        assertEquals("No logined: password is empty", false, testAuthService.signIn("3", testUsers[5].getLogin(), testUsers[5].getPass()));
@@ -56,27 +70,41 @@ public class TestAuthService {
 //        assertEquals("Logout" + testUsers[3].getLogin(), false, testAuthService.logOut("5"));
 //        assertEquals("No logined user with this SessionId", false, testAuthService.logOut("6"));
         for (int i = 0; i < 1000000; ++i);
-        System.out.print("23\n");
+        i1++;
+        i2++;
+        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test2 finished\n");
     }
 
     @Test
     public void test3() {
-        System.out.print("6\n");
+        i1++;
+        i2++;
+        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test3 started\n");
         for (int i = 0; i < 1000000; ++i);
-        System.out.print("63\n");
+        i1++;
+        i2++;
+        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test3 finished\n");
     }
 
     @Test
     public void test4() {
-        System.out.print("4\n");
-        for (int i = 0; i < 1000000; ++i) ;
-        System.out.append("43\n");
+        i1++;
+        i2++;
+        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test4 started\n");
+        for (int i = 0; i < 1000000; ++i);
+        i1++;
+        i2++;
+        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test4 finished\n");
     }
 
     @Test
     public void test5() {
-        System.out.print("5\n");
+        i1++;
+        i2++;
+        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test5 started\n");
         for (int i = 0; i < 1000000; ++i);
-        System.out.print("53\n");
+        i1++;
+        i2++;
+        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test5 finished\n");
     }
 }
