@@ -71,5 +71,7 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
             response.getWriter().print(jsonObj.toJSONString());
             return;
         }
+        jsonObj.put("status", 500);
+        jsonObj.put("message", "Not all fields are filled");
     }
 }

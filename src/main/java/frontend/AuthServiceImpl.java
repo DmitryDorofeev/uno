@@ -33,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean signUp(UserProfile user) {
-        if (users.containsKey(user.getLogin()))
+        if (user.getLogin().isEmpty() || user.getEmail().isEmpty() || user.getPass().isEmpty() || users.containsKey(user.getLogin()))
             return false;
         users.put(user.getLogin(), user);
         return true;
@@ -46,8 +46,7 @@ public class AuthServiceImpl implements AuthService {
             sessions.remove(sessionId);
             return true;
         }
-        else
-            return false;
+        return false;
     }
 
     @Override

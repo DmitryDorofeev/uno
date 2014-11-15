@@ -32,15 +32,20 @@ public class SignUpServletImpl extends HttpServlet implements SignUpServlet {
         response.setStatus(HttpServletResponse.SC_OK);
 
         JSONObject jsonObj = new JSONObject();
-
-        UserProfile user = new UserProfileImpl(login, password, email);
-        if (authService.signUp(user)) {
-            jsonObj.put("status", 200);
+        if (!login.isEmpty() && !password.isEmpty() && !password.isEmpty()) {
+            UserProfile user = new UserProfileImpl(login, password, email);
+            if (authService.signUp(user)) {
+                jsonObj.put("status", 200);
+                response.getWriter().print(jsonObj.toJSONString());
+                return;
+            }
+            jsonObj.put("status", 500);
+            jsonObj.put("message", "Player with login " + login + " is already registered");
             response.getWriter().print(jsonObj.toJSONString());
             return;
         }
         jsonObj.put("status", 500);
-        jsonObj.put("message", "Player with login " + login + " is already registered");
+        jsonObj.put("message", "Not all fields are filled");
         response.getWriter().print(jsonObj.toJSONString());
     }
 }

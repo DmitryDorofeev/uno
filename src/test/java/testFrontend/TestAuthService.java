@@ -17,7 +17,7 @@ public class TestAuthService {
     public AuthService testAuthService = new AuthServiceImpl();
     public UserProfile testUsers[] = new UserProfileImpl[8];
     public int i1 = 0;
-    public static volatile int i2 = 0;
+    public static int i2 = 0;
     @Before
     public void initTestValues() {
         i1++;

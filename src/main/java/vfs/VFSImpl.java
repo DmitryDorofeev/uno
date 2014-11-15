@@ -57,25 +57,4 @@ public class VFSImpl implements VFS {
         return new File(root + file).getAbsolutePath();
     }
 
-
-    @Override
-    public boolean isExist(String path) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-
-    @Override
-    public byte[] getBytes(String file) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public String getUFT8Text(String file) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 }
