@@ -40,11 +40,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void logOut(String sessionId) {
+    public boolean logOut(String sessionId) {
         if (isLoggedIn(sessionId)) {
             userSessions.remove(sessions.get(sessionId));
             sessions.remove(sessionId);
+            return true;
         }
+        else
+            return false;
     }
 
     @Override
