@@ -1,9 +1,6 @@
-package sax;
+package resources;
 
-import java.io.Serializable;
-
-public class PortResource implements Serializable {
-    private static final long serialVersionUID = -3895203507200457732L;
+public class PortResource implements Resource {
     private int port;
 
     public PortResource() {

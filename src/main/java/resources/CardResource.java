@@ -1,12 +1,9 @@
-package sax;
-
-import java.io.Serializable;
+package resources;
 
 /**
  * Created by alexey on 15.11.2014.
  */
-public class CardResource implements Serializable {
-    private static final long serialVersionUID = -3895203507200457732L;
+public class CardResource {
     private int id;
     private String color;
     private int num;
