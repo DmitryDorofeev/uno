@@ -10,19 +10,19 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import sax.PortResource;
 import sax.ReadXMLFileSAX;
-import sax.SerializationObject;
 
 import javax.servlet.Servlet;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        SerializationObject object = (SerializationObject) ReadXMLFileSAX.readXML("resources/port.xml");
-        if (object == null) {
+        PortResource portResource = (PortResource) ReadXMLFileSAX.readXML("resources/port.xml");
+        if (portResource == null) {
             System.out.println("Error with resource file!");
             System.exit(1);
         }
-        Server server = new Server(object.getPort());
+        Server server = new Server(portResource.getPort());
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
         WebSocketService webSocketService = new WebSocketServiceImpl();
