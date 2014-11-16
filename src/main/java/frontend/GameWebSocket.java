@@ -15,6 +15,7 @@ import org.json.simple.parser.ParseException;
 import resources.CardResource;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @WebSocket
 public class GameWebSocket {
@@ -56,7 +57,7 @@ public class GameWebSocket {
         }
     }
 
-    public void sendStartCards(CardResource[] cards) {
+    public void sendStartCards(List<CardResource> cards) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "cards");

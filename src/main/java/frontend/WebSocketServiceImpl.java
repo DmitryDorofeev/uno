@@ -6,6 +6,7 @@ import resources.CardResource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,7 +24,7 @@ public class WebSocketServiceImpl implements WebSocketService {
         gameWebSocket.startGame(players);
     }
 
-    public void sendStartCards(GameUser user, CardResource[] cards) {
+    public void sendStartCards(GameUser user, List<CardResource> cards) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
         gameWebSocket.sendStartCards(cards);
     }

@@ -5,6 +5,7 @@ import mechanics.GameUser;
 import resources.CardResource;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -16,5 +17,5 @@ public interface WebSocketService {
 
     void notifyStartGame(GameUser user, ArrayList<GameUser> players);
 
-    void sendStartCards(GameUser user, CardResource[] cards);
+    void sendStartCards(GameUser user, List<CardResource> cards);
 }

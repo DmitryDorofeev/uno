@@ -45,17 +45,12 @@ public class GameMechanicsImpl implements GameMechanics {
             webSocketService.notifyStartGame(player, players);
         Random rnd = new Random();
         for (GameUser player : players) {
-            CardResource[] cards = new CardResource[7];
-            for (CardResource card : cards) {
+            List<CardResource> cards = new ArrayList<>();
+            for (int i = 0; i < 7; ++i) {
                 CardResource temp = ResourceSystem.instance().getCardsResource().getCard(
                         rnd.nextInt(ResourceSystem.instance().getCardsResource().CardsCount()));
-                card.setId(temp.getId());
-                card.setNum(temp.getNum());
-                card.setColor(temp.getColor());
-                card.setWidth(temp.getWidth());
-                card.setHeight(temp.getHeight());
-                card.setX(temp.getX());
-                card.setY(temp.getY());
+                cards.add(new CardResource(temp.getId(), temp.getColor(), temp.getNum(),
+                        temp.getWidth(), temp.getHeight(), temp.getX(), temp.getY()));
             }
             webSocketService.sendStartCards(player, cards);
         }
