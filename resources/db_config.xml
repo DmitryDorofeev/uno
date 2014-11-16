@@ -5,5 +5,5 @@
     <username>uno_admin</username>
     <password>password</password>
     <show_sql>false</show_sql>
-    <hbm2ddl>validate</hbm2ddl>
+    <hbm2ddl>update</hbm2ddl>
 </class>

@@ -1,6 +1,7 @@
 package db;
 
 import base.UserProfile;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -18,6 +19,7 @@ import java.util.Map;
 public class DBService {
     private static DBService dbService;
     private SessionFactory sessionFactory;
+    private boolean status;
 
     public static DBService instance() {
         if (dbService == null)
@@ -60,13 +62,22 @@ public class DBService {
 
     protected DBService() {
         sessionFactory = createSessionFactory();
+        if (sessionFactory == null) {
+            status = false;
+            return;
+        }
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         System.out.append(transaction.getLocalStatus().toString()).append('\n');
         session.close();
+        status = true;
     }
 
-    private SessionFactory createSessionFactory() {
+    public boolean getStatus() {
+        return status;
+    }
+
+    private SessionFactory createSessionFactory() throws HibernateException {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(UserDataSet.class);
         configuration.addAnnotatedClass(GameDataSet.class);
@@ -82,6 +93,13 @@ public class DBService {
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
         builder.applySettings(configuration.getProperties());
         ServiceRegistry serviceRegistry = builder.build();
-        return configuration.buildSessionFactory(serviceRegistry);
+        SessionFactory sessionFactory = null;
+        try {
+             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        }
+        catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return sessionFactory;
     }
 }

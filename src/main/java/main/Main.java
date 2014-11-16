@@ -11,7 +11,6 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import resources.DBConfigResource;
 import resources.ResourceSystem;
 
 import javax.servlet.Servlet;
@@ -24,7 +23,7 @@ public class Main {
             System.exit(1);
         }
         DBService dbService = DBService.instance();
-        if (dbService == null) {
+        if (dbService == null || !dbService.getStatus()) {
             System.out.println("Error with db connection!");
             System.exit(1);
         }
