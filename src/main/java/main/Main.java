@@ -18,10 +18,6 @@ import javax.servlet.Servlet;
 public class Main {
     public static void main(String[] args) throws Exception {
         ResourceSystem resourceSystem = ResourceSystem.instance();
-        if (!resourceSystem.getStatusMessage().equals("OK")) {
-            System.out.println("Error with resource files!\n" + resourceSystem.getStatusMessage());
-            System.exit(1);
-        }
         DBService dbService = DBService.instance();
         if (!dbService.getStatus()) {
             System.out.println("Error with db connection!");

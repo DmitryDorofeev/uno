@@ -14,35 +14,52 @@ import java.util.Map;
 public class ResourceSystem {
     private static ResourceSystem resourceSystem;
     private Map<String, Resource> resourceMap = new HashMap<>();
-    private String statusMessage;
 
     protected ResourceSystem() {
+        System.out.println("Resources loading started");
+
+        PortResource portResource;
         if (!VFS.exists("resources/port.xml")) {
-            statusMessage = "File resources/port.xml does not exist";
-            return;
+            System.out.println("File resources/port.xml does not exist");
+            portResource = new PortResource();
         }
-        PortResource portResource = (PortResource) ReadXMLFileSAX.readXML("resources/port.xml");
+        else
+            portResource = (PortResource) ReadXMLFileSAX.readXML("resources/port.xml");
         resourceMap.put("port", portResource);
+
+        DBConfigResource dbConfigResource;
         if (!VFS.exists("resources/db_config.xml")) {
-            statusMessage = "File resources/db_config.xml does not exist";
-            return;
+            System.out.println("File resources/db_config.xml does not exist");
+            dbConfigResource = new DBConfigResource();
         }
-        DBConfigResource dbConfigResource = (DBConfigResource) ReadXMLFileSAX.readXML("resources/db_config.xml");
+        else
+            dbConfigResource = (DBConfigResource) ReadXMLFileSAX.readXML("resources/db_config.xml");
         resourceMap.put("db_config", dbConfigResource);
+
+        GameParamsResource gameParamsResource;
+        if (!VFS.exists("resources/game.xml")) {
+            System.out.println("File resources/game.xml does not exist");
+            gameParamsResource = new GameParamsResource();
+        }
+        else
+            gameParamsResource = (GameParamsResource) ReadXMLFileSAX.readXML("resources/game.xml");
+        resourceMap.put("game", gameParamsResource);
+
         CardsResource cardsResource = new CardsResource();
         VFS vfs = new VFSImpl("");
         Iterator<String> iter = vfs.getIterator("resources/cards/");
         while (iter.hasNext()) {
             String fileName = iter.next();
             if (!VFS.exists(fileName)) {
-                statusMessage = "File " + fileName + " does not exist";
-                return;
+                System.out.println("File " + fileName + " does not exist");
+                cardsResource.saveCard(new CardResource());
             }
-            if (!VFS.isDirectory(fileName))
+            else if (!VFS.isDirectory(fileName))
                 cardsResource.saveCard((CardResource) ReadXMLFileSAX.readXML(fileName));
         }
         resourceMap.put("cards", cardsResource);
-        statusMessage = "OK";
+
+        System.out.println("Resources loading finished");
     }
 
     public static ResourceSystem instance() {
@@ -51,16 +68,16 @@ public class ResourceSystem {
         return resourceSystem;
     }
 
-    public String getStatusMessage() {
-        return statusMessage;
-    }
-
     public PortResource getPortResource() {
         return (PortResource)resourceMap.get("port");
     }
 
     public CardsResource getCardsResource() {
         return (CardsResource)resourceMap.get("cards");
+    }
+
+    public GameParamsResource getGameParamsResource() {
+        return (GameParamsResource)resourceMap.get("game");
     }
 
     public DBConfigResource getDBConfigResource() {

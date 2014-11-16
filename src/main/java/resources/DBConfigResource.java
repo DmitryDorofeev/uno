@@ -13,6 +13,13 @@ public class DBConfigResource implements Resource {
     private String hbm2ddl;
 
     public DBConfigResource() {
+        setDialect("org.hibernate.dialect.MySQLDialect");
+        setDriver("com.mysql.jdbc.Driver");
+        setUrl("jdbc:mysql://localhost:3306/uno_db");
+        setUsername("uno_admin");
+        setPassword("password");
+        setShow_sql("false");
+        setHbm2ddl("update");
     }
 
     public DBConfigResource(String dialect, String driver, String url,
