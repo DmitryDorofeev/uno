@@ -4,6 +4,6 @@
     <url>jdbc:mysql://localhost:3306/uno_db</url>
     <username>uno_admin</username>
     <password>password</password>
-    <show_sql>true</show_sql>
-    <hbm2ddl>create-drop</hbm2ddl>
+    <show_sql>false</show_sql>
+    <hbm2ddl>validate</hbm2ddl>
 </class>

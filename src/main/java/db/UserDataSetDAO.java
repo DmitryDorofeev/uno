@@ -21,8 +21,10 @@ public class UserDataSetDAO {
     public boolean save(UserProfile user) {
         if (getUserDataByLogin(user.getLogin()) == null) {
             Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
             UserDataSet userDataSet = new UserDataSet(user);
             session.save(userDataSet);
+            transaction.commit();
             session.close();
             return true;
         }
@@ -31,8 +33,10 @@ public class UserDataSetDAO {
 
     public UserDataSet getUserDataByLogin(String login) {
         Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(UserDataSet.class);
         UserDataSet userDataSet = (UserDataSet) criteria.add(Restrictions.eq("login", login)).uniqueResult();
+        transaction.commit();
         session.close();
         return userDataSet;
     }
