@@ -17,5 +17,5 @@ public interface WebSocketService {
 
     void notifyStartGame(GameUser user, ArrayList<GameUser> players);
 
-    void sendStartCards(GameUser user, List<CardResource> cards);
+    void sendStartCards(GameUser user);
 }

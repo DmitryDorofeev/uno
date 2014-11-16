@@ -24,8 +24,8 @@ public class WebSocketServiceImpl implements WebSocketService {
         gameWebSocket.startGame(players);
     }
 
-    public void sendStartCards(GameUser user, List<CardResource> cards) {
+    public void sendStartCards(GameUser user) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
-        gameWebSocket.sendStartCards(cards);
+        gameWebSocket.sendStartCards(user.getCards());
     }
 }

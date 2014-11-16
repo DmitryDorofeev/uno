@@ -1,11 +1,15 @@
 package mechanics;
 
+import resources.CardResource;
+
+import java.util.List;
+
 /**
  * @author alexey
  */
 public class GameUser {
     private final String myName;
-    private int myScore = 0;
+    private List<CardResource> cards;
     private long playersCount;
 
     public GameUser(String myName, long playersCount) {
@@ -17,9 +21,15 @@ public class GameUser {
         return myName;
     }
 
-    public long getPlayersCount() { return playersCount; }
+    public long getPlayersCount() {
+        return playersCount;
+    }
 
-    public int getMyScore() {
-        return myScore;
+    public List<CardResource> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<CardResource> cards) {
+        this.cards = cards;
     }
 }

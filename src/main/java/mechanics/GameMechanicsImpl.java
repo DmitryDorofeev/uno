@@ -52,7 +52,8 @@ public class GameMechanicsImpl implements GameMechanics {
                 cards.add(new CardResource(temp.getId(), temp.getColor(), temp.getNum(),
                         temp.getWidth(), temp.getHeight(), temp.getX(), temp.getY()));
             }
-            webSocketService.sendStartCards(player, cards);
+            player.setCards(cards);
+            webSocketService.sendStartCards(player);
         }
     }
 }
