@@ -66,6 +66,12 @@ button {
     position: absolute;
 }
 
+.player__login {
+    color: #fff;
+    font-size: 20px;
+    margin: 5px;
+}
+
 .player-wrap:nth-child(1) {
     top: 0;
     left: 0;
@@ -108,4 +114,14 @@ button {
 
 .player-cards__card_last {
     border-radius: 0 5px 5px 0;
+}
+
+.card {
+    background-image: url(/images/cards.png);
+}
+
+.cards {
+    position: absolute;
+    z-index: 10;
+    bottom: 0;
 }
