@@ -33,10 +33,8 @@ public class UserDataSetDAO {
 
     public UserDataSet getUserDataByLogin(String login) {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(UserDataSet.class);
         UserDataSet userDataSet = (UserDataSet) criteria.add(Restrictions.eq("login", login)).uniqueResult();
-        transaction.commit();
         session.close();
         return userDataSet;
     }
@@ -44,10 +42,9 @@ public class UserDataSetDAO {
     public long getUsersCount() {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(UserDataSet.class);
-        Object result = criteria.setProjection(Projections.projectionList()
+        Long result = (long)criteria.setProjection(Projections.projectionList()
                 .add(Projections.count("id"))).uniqueResult();
         session.close();
-        System.out.print(result.toString());
-        return 0;
+        return result;
     }
 }
