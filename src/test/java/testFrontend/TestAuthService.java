@@ -16,8 +16,6 @@ import frontend.AuthServiceImpl;
 public class TestAuthService {
     public AuthService testAuthService = new AuthServiceImpl();
     public UserProfile testUsers[] = new UserProfileImpl[9];
-//    public int i1 = 0;
-//    public static int i2 = 0;
 
     public void initSignUp() {
         testAuthService.signUp(testUsers[8]);
@@ -26,15 +24,12 @@ public class TestAuthService {
     }
 
     public void initSignIn() {
-        testAuthService.signIn("1", testUsers[8].getLogin(), testUsers[8].getPass());
+        testAuthService.signIn("11", testUsers[8].getLogin(), testUsers[8].getPass());
         testAuthService.signIn("5", testUsers[3].getLogin(), testUsers[3].getPass());
     }
 
     @Before
     public void initTestValues() {
-//        i1++;
-//        i2++;
-//        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " init started\n");
         testUsers[0] = new UserProfileImpl("","123qaz!", "nologin");
         testUsers[1] = new UserProfileImpl("nopswd","", "nopassword");
         testUsers[2] = new UserProfileImpl("noemail","12345qaz!", "");
@@ -44,16 +39,10 @@ public class TestAuthService {
         testUsers[6] = new UserProfileImpl("","test", "test");
         testUsers[7] = new UserProfileImpl("gooduser","qazxswedc123", "good");
         testUsers[8] = new UserProfileImpl("goodlogin", "goodpasswd", "goodemail");
-//        i1++;
-//        i2++;
-//        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " init finished\n");
     }
 
     @Test
     public void testSignUp() {
-//        i1++;
-//        i2++;
-//        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test1 started\n");
         assertEquals("No registered nologin", false, testAuthService.signUp(testUsers[0]));
         assertEquals("No registered nopswd", false, testAuthService.signUp(testUsers[1]));
         assertEquals("No registered noemail", false, testAuthService.signUp(testUsers[2]));
@@ -61,19 +50,12 @@ public class TestAuthService {
         assertEquals("Already registered test", false, testAuthService.signUp(testUsers[3]));
         assertEquals("Registered gooduser", true, testAuthService.signUp(testUsers[7]));
         assertEquals("Registered goodlogin", true, testAuthService.signUp(testUsers[8]));
-//        for (int i = 0; i < 1000000; ++i);
-//        i1++;
-//        i2++;
-//        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test1 finished\n");
     }
 
     @Test
     public void testSignIn() {
         initSignUp();
         long usersBT = testAuthService.getAmountOfUsersOnline();
-//        i1++;
-//        i2++;
-//        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test2 started\n");
         assertEquals("No such user " + testUsers[2].getLogin(), false, testAuthService.signIn("1", testUsers[2].getLogin(), testUsers[2].getPass()));
         assertEquals("No such user", false, testAuthService.signIn("2", testUsers[4].getLogin(), testUsers[4].getPass()));
         assertEquals("No logined: password is empty", false, testAuthService.signIn("3", testUsers[5].getLogin(), testUsers[5].getPass()));
@@ -83,10 +65,6 @@ public class TestAuthService {
         assertEquals("Already logined " + testUsers[8].getLogin(), false, testAuthService.signIn("7", testUsers[8].getLogin(), testUsers[8].getPass()));
         assertEquals("Logined " + testUsers[8].getLogin(), true, testAuthService.signIn("11", testUsers[8].getLogin(), testUsers[8].getPass()));
         assertEquals(usersBT + 2, testAuthService.getAmountOfUsersOnline());
-//        for (int i = 0; i < 1000000; ++i);
-//        i1++;
-//        i2++;
-//        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test2 finished\n");
     }
 
     @Test
@@ -104,37 +82,4 @@ public class TestAuthService {
         assertEquals("Logout " + testUsers[8].getLogin(), true, testAuthService.logOut("11"));
         assertEquals(userBT - 2, testAuthService.getAmountOfUsersOnline());
     }
-
-//    @Test
-//    public void test3() {
-//        i1++;
-//        i2++;
-//        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test3 started\n");
-//        for (int i = 0; i < 1000000; ++i);
-//        i1++;
-//        i2++;
-//        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test3 finished\n");
-//    }
-//
-//    @Test
-//    public void test4() {
-//        i1++;
-//        i2++;
-//        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test4 started\n");
-//        for (int i = 0; i < 1000000; ++i);
-//        i1++;
-//        i2++;
-//        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test4 finished\n");
-//    }
-//
-//    @Test
-//    public void test5() {
-//        i1++;
-//        i2++;
-//        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test5 started\n");
-//        for (int i = 0; i < 1000000; ++i);
-//        i1++;
-//        i2++;
-//        System.out.append("i1 = " + Integer.toString(i1) + " i2 = " + Integer.toString(i2) + " test5 finished\n");
-//    }
 }
