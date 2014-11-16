@@ -20,4 +20,8 @@ public class CardsResource implements Resource {
         }
         return false;
     }
+
+    public int CardsCount() {
+        return cardResourceMap.size();
+    }
 }

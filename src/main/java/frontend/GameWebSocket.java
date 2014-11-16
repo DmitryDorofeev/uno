@@ -12,6 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import resources.CardResource;
 
 import java.util.ArrayList;
 
@@ -49,8 +50,34 @@ public class GameWebSocket {
             }
             System.out.println(jsonObject.toJSONString());
             session.getRemote().sendString(jsonObject.toJSONString());
-        } catch (Exception e) {
-            System.out.print(e.toString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendStartCards(CardResource[] cards) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type", "cards");
+            JSONObject jsonBody = new JSONObject();
+            jsonObject.put("body", jsonBody);
+            JSONArray jsonCards = new JSONArray();
+            jsonBody.put("cards", jsonCards);
+            for (CardResource card : cards) {
+                JSONObject jsonCard = new JSONObject();
+                jsonCard.put("id", card.getId());
+                jsonCard.put("x", card.getX());
+                jsonCard.put("y", card.getY());
+                jsonCard.put("width", card.getWidth());
+                jsonCard.put("height", card.getHeight());
+                jsonCards.add(jsonCard);
+            }
+            System.out.println(myName + jsonObject.toJSONString());
+            session.getRemote().sendString(jsonObject.toJSONString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -2,6 +2,7 @@ package frontend;
 
 import mechanics.GameUser;
 import base.WebSocketService;
+import resources.CardResource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,5 +21,10 @@ public class WebSocketServiceImpl implements WebSocketService {
     public void notifyStartGame(GameUser user, ArrayList<GameUser> players) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
         gameWebSocket.startGame(players);
+    }
+
+    public void sendStartCards(GameUser user, CardResource[] cards) {
+        GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
+        gameWebSocket.sendStartCards(cards);
     }
 }
