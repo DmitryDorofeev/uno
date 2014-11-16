@@ -13,12 +13,6 @@ public class VFSImpl implements VFS {
         this.root = root;
     }
 
-
-    public boolean isDirectory(String path) {
-        return new File(root + path).isDirectory();
-    }
-
-
     public Iterator<String> getIterator(String startDir) {
         return new FileIterator(startDir);
     }
@@ -51,10 +45,4 @@ public class VFSImpl implements VFS {
         }
 
     }
-
-    @Override
-    public String getAbsolutePath(String file) {
-        return new File(root + file).getAbsolutePath();
-    }
-
 }
