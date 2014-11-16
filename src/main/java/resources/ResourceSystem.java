@@ -12,12 +12,14 @@ import java.util.Map;
  * Created by alexey on 15.11.2014.
  */
 public class ResourceSystem {
-    public static ResourceSystem resourceSystem;
+    private static ResourceSystem resourceSystem;
     private Map<String, Resource> resourceMap = new HashMap<>();
 
     protected ResourceSystem() {
         PortResource portResource = (PortResource) ReadXMLFileSAX.readXML("resources/port.xml");
         resourceMap.put("port", portResource);
+        DBConfigResource dbConfigResource = (DBConfigResource) ReadXMLFileSAX.readXML("resources/db_config.xml");
+        resourceMap.put("db_config", dbConfigResource);
         CardsResource cardsResource = new CardsResource();
         VFS vfs = new VFSImpl("");
         Iterator<String> iter = vfs.getIterator("resources/cards/");
@@ -29,7 +31,7 @@ public class ResourceSystem {
         resourceMap.put("cards", cardsResource);
     }
 
-    static public ResourceSystem instance() {
+    public static ResourceSystem instance() {
         if (resourceSystem == null)
             resourceSystem = new ResourceSystem();
         return resourceSystem;
@@ -41,5 +43,9 @@ public class ResourceSystem {
 
     public CardsResource getCardsResource() {
         return (CardsResource)resourceMap.get("cards");
+    }
+
+    public DBConfigResource getDBConfigResource() {
+        return (DBConfigResource)resourceMap.get("db_config");
     }
 }

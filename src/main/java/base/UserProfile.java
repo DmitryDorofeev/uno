@@ -9,6 +9,4 @@ public interface UserProfile {
     String getEmail();
 
     String getPass();
-
-    int getScores();
 }

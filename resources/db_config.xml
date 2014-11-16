@@ -1,0 +1,9 @@
+<class type = "resources.DBConfigResource">
+    <dialect>org.hibernate.dialect.MySQLDialect</dialect>
+    <driver>com.mysql.jdbc.Driver</driver>
+    <url>jdbc:mysql://localhost:3306/uno_db</url>
+    <username>uno_admin</username>
+    <password>password</password>
+    <show_sql>true</show_sql>
+    <hbm2ddl>create-drop</hbm2ddl>
+</class>

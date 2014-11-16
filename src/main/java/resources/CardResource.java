@@ -13,7 +13,7 @@ public class CardResource {
     private int y;
 
     public CardResource() {
-        id = -1;
+        setId(-1);
     }
 
     public CardResource(int id, String color, int num, int width, int height, int x, int y) {
@@ -52,7 +52,6 @@ public class CardResource {
 
     public int getWidth() {
         return width;
-
     }
 
     public void setWidth(int width) {

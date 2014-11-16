@@ -13,9 +13,5 @@ public interface AuthService {
 
     UserProfile getUserProfile(String sessionId);
 
-    Map<String, Integer> getScoreboard();
-
-    int getAmountOfRegisteredUsers();
-
-    int getAmountOfUsersOnline();
+    long getAmountOfUsersOnline();
 }

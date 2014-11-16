@@ -4,7 +4,7 @@ public class PortResource implements Resource {
     private int port;
 
     public PortResource() {
-        this.port = 8080;
+        setPort(8080);
     }
 
     public PortResource(int port) {

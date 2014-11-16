@@ -31,10 +31,4 @@ public class UserProfileImpl implements UserProfile {
     public String getPass() {
         return pass;
     }
-
-    @Override
-    public int getScores() {
-        Random rnd = new Random();
-        return rnd.nextInt(100);
-    }
 }

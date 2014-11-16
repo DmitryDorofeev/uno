@@ -3,6 +3,7 @@ package admin;
 import base.AdminPageServlet;
 import base.AuthService;
 import base.UserProfile;
+import db.DBService;
 import org.json.simple.JSONObject;
 import utils.TimeHelper;
 
@@ -43,7 +44,7 @@ public class AdminPageServletImpl extends HttpServlet implements AdminPageServle
             }
 
             jsonObj.put("code", 200);
-            jsonObj.put("amountOfRegisteredUsers", authService.getAmountOfRegisteredUsers());
+            jsonObj.put("amountOfRegisteredUsers", DBService.instance().getAmountOfRegisteredUsers());
             jsonObj.put("amountOfUsersOnline", authService.getAmountOfUsersOnline());
             response.getWriter().print(jsonObj.toJSONString());
             return;

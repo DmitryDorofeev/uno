@@ -2,6 +2,7 @@ package main;
 
 import admin.AdminPageServletImpl;
 import base.*;
+import db.DBService;
 import frontend.*;
 import mechanics.GameMechanicsImpl;
 import org.eclipse.jetty.server.Handler;
@@ -10,6 +11,7 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import resources.DBConfigResource;
 import resources.ResourceSystem;
 
 import javax.servlet.Servlet;
@@ -19,6 +21,11 @@ public class Main {
         ResourceSystem resourceSystem = ResourceSystem.instance();
         if (resourceSystem == null) {
             System.out.println("Error with resource files!");
+            System.exit(1);
+        }
+        DBService dbService = DBService.instance();
+        if (dbService == null) {
+            System.out.println("Error with db connection!");
             System.exit(1);
         }
         Server server = new Server(resourceSystem.getPortResource().getPort());

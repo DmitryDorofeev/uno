@@ -1,4 +1,4 @@
-<class type='resources.CardResource'>
+<class type = "resources.CardResource">
     <id>1</id>
     <color>red</color>
     <num>1</num>
