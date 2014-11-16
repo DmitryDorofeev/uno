@@ -59,6 +59,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public long getAmountOfRegisteredUsers() {
+        return DBService.instance().getAmountOfRegisteredUsers();
+    }
+
+    @Override
     public long getAmountOfUsersOnline() {
         return sessions.size();
     }

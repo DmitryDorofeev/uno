@@ -13,5 +13,7 @@ public interface AuthService {
 
     UserProfile getUserProfile(String sessionId);
 
+    long getAmountOfRegisteredUsers();
+
     long getAmountOfUsersOnline();
 }

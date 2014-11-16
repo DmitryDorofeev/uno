@@ -44,7 +44,7 @@ public class AdminPageServletImpl extends HttpServlet implements AdminPageServle
             }
 
             jsonObj.put("code", 200);
-            jsonObj.put("amountOfRegisteredUsers", DBService.instance().getAmountOfRegisteredUsers());
+            jsonObj.put("amountOfRegisteredUsers", authService.getAmountOfRegisteredUsers());
             jsonObj.put("amountOfUsersOnline", authService.getAmountOfUsersOnline());
             response.getWriter().print(jsonObj.toJSONString());
             return;
