@@ -31,8 +31,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean signUp(UserProfile user) {
-        UserProfile userData = DBService.instance().getUserData(user.getLogin());
-        return !(user.getLogin().isEmpty() || user.getEmail().isEmpty() || user.getPass().isEmpty() || userData != null)
+        return !(user.getLogin().isEmpty() || user.getEmail().isEmpty() || user.getPass().isEmpty())
                 && DBService.instance().saveUser(user);
     }
 
