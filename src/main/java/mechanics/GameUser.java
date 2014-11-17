@@ -11,6 +11,7 @@ public class GameUser {
     private final String myName;
     private List<CardResource> cards;
     private long playersCount;
+    private GameSession gameSession;
 
     public GameUser(String myName, long playersCount) {
         this.myName = myName;
@@ -31,5 +32,13 @@ public class GameUser {
 
     public void setCards(List<CardResource> cards) {
         this.cards = cards;
+    }
+
+    public GameSession getGameSession() {
+        return gameSession;
+    }
+
+    public void setGameSession(GameSession gameSession) {
+        this.gameSession = gameSession;
     }
 }

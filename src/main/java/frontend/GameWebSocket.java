@@ -82,6 +82,32 @@ public class GameWebSocket {
         }
     }
 
+    public void gameStep(boolean correct, long curStepPlayerId, CardResource card, boolean direction) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type", "step");
+            JSONObject jsonBody = new JSONObject();
+            jsonObject.put("body", jsonBody);
+            jsonBody.put("correct", correct);
+            jsonBody.put("curStepPlayerId", curStepPlayerId);
+            jsonBody.put("direction", direction);
+            JSONArray jsonCards = new JSONArray();
+            jsonBody.put("cards", jsonCards);
+            JSONObject jsonCard = new JSONObject();
+            jsonCard.put("id", card.getId());
+            jsonCard.put("x", card.getX());
+            jsonCard.put("y", card.getY());
+            jsonCard.put("width", card.getWidth());
+            jsonCard.put("height", card.getHeight());
+            jsonCards.add(jsonCard);
+            System.out.println(myName + jsonObject.toJSONString());
+            session.getRemote().sendString(jsonObject.toJSONString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @OnWebSocketMessage
     public void onMessage(String data) throws ParseException {
         try {

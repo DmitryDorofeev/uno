@@ -1,21 +1,54 @@
 package mechanics;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import resources.CardResource;
+
+import java.util.ArrayList;
 
 /**
  * @author alexey
  */
 public class GameSession {
-    private Map<String, GameUser> users = new HashMap<>();
+    private ArrayList<GameUser> users = new ArrayList<GameUser>();
+    private boolean direction;
+    private long curStepPlayerId;
+    private CardResource card;
 
-    public GameSession(ConcurrentLinkedQueue<GameUser> players) {
+    public GameSession(ArrayList<GameUser> players) {
         for (GameUser player : players)
-            users.put(player.getMyName(), player);
+            users.add(player);
+        direction = true;
+        curStepPlayerId = 0;
     }
 
-    public GameUser getPlayer(String user) {
-        return users.get(user);
+    public CardResource getCard() {
+        return card;
+    }
+
+    public void setCard(CardResource card) {
+        this.card = card;
+    }
+
+    public ArrayList<GameUser> getPlayersList() {
+        return users;
+    }
+
+    public GameUser getPlayerById(Integer id) {
+        return users.get(id);
+    }
+
+    public boolean getDirection() {
+        return direction;
+    }
+
+    public void changeDirection() {
+        direction = !direction;
+    }
+
+    public long getCurStepPlayerId() {
+        return curStepPlayerId;
+    }
+
+    public void setCurStepPlayerId(long curStepPlayerId) {
+        this.curStepPlayerId = curStepPlayerId;
     }
 }
