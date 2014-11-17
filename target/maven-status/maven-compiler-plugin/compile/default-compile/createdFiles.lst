@@ -6,7 +6,6 @@ main\Main.class
 utils\TimeHelper.class
 mechanics\GameMechanicsImpl.class
 sax\SaxHandler.class
-sax\SerializationObject.class
 frontend\AuthServiceImpl.class
 frontend\UserProfileServletImpl.class
 sax\ReadXMLFileSAX.class
