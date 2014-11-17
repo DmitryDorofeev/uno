@@ -3,19 +3,21 @@ package mechanics;
 import resources.CardResource;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author alexey
  */
 public class GameSession {
-    private ArrayList<GameUser> users = new ArrayList<GameUser>();
+    private Map<String, GameUser> users = new HashMap<>();
     private boolean direction;
     private long curStepPlayerId;
     private CardResource card;
 
     public GameSession(ArrayList<GameUser> players) {
         for (GameUser player : players)
-            users.add(player);
+            users.put(player.getMyName(), player);
         direction = true;
         curStepPlayerId = 0;
     }
@@ -24,16 +26,26 @@ public class GameSession {
         return card;
     }
 
-    public void setCard(CardResource card) {
-        this.card = card;
+    public boolean setCard(CardResource card) {
+        if (this.card == null) {
+            this.card = card;
+            return true;
+        }
+        if (card.getNum() == this.card.getNum() || card.getColor().equals(this.card.getColor())) {
+            this.card = card;
+            return true;
+        }
+        return false;
+    }
+
+    public GameUser getUser(String login) {
+        return users.get(login);
     }
 
     public ArrayList<GameUser> getPlayersList() {
-        return users;
-    }
-
-    public GameUser getPlayerById(Integer id) {
-        return users.get(id);
+        ArrayList<GameUser> result = new ArrayList<>();
+        result.addAll(users.values());
+        return result;
     }
 
     public boolean getDirection() {

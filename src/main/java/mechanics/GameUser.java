@@ -12,10 +12,19 @@ public class GameUser {
     private List<CardResource> cards;
     private long playersCount;
     private GameSession gameSession;
+    private int gamePlayerId;
 
     public GameUser(String myName, long playersCount) {
         this.myName = myName;
         this.playersCount = playersCount;
+    }
+
+    public boolean deleteCard(CardResource card) {
+        if (cards.contains(card)) {
+            cards.remove(card);
+            return true;
+        }
+        return false;
     }
 
     public String getMyName() {
@@ -40,5 +49,13 @@ public class GameUser {
 
     public void setGameSession(GameSession gameSession) {
         this.gameSession = gameSession;
+    }
+
+    public int getGamePlayerId() {
+        return gamePlayerId;
+    }
+
+    public void setGamePlayerId(int gamePlayerId) {
+        this.gamePlayerId = gamePlayerId;
     }
 }

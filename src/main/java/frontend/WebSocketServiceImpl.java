@@ -29,9 +29,9 @@ public class WebSocketServiceImpl implements WebSocketService {
         gameWebSocket.sendStartCards(user.getCards());
     }
 
-    public void notifyGameStep(boolean correct, GameUser user) {
+    public void notifyGameStep(boolean correct, String message, GameUser user) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
-        gameWebSocket.gameStep(correct, user.getGameSession().getCurStepPlayerId(), user.getGameSession().getCard(),
-                user.getGameSession().getDirection());
+        gameWebSocket.gameStep(correct, message, user.getGameSession().getCurStepPlayerId(),
+                user.getGameSession().getCard(), user.getGameSession().getDirection());
     }
 }

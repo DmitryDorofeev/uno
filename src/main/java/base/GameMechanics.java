@@ -1,9 +1,13 @@
 package base;
 
+import resources.CardResource;
+
 /**
  * @author alexey
  */
 public interface GameMechanics {
 
-    public void addUser(String user, long playersCount);
+    void addUser(String user, long playersCount);
+
+    void gameStep(String user, int cartId);
 }

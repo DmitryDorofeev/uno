@@ -42,11 +42,10 @@ public class GameWebSocket {
             jsonObject.put("body", jsonBody);
             JSONArray jsonPlayers = new JSONArray();
             jsonBody.put("players", jsonPlayers);
-            int i = 0;
             for (GameUser player : players) {
                 JSONObject jsonPlayer = new JSONObject();
                 jsonPlayer.put("login", player.getMyName());
-                jsonPlayer.put("id", ++i);
+                jsonPlayer.put("id", player.getGamePlayerId());
                 jsonPlayers.add(jsonPlayer);
             }
             System.out.println(jsonObject.toJSONString());
@@ -82,13 +81,14 @@ public class GameWebSocket {
         }
     }
 
-    public void gameStep(boolean correct, long curStepPlayerId, CardResource card, boolean direction) {
+    public void gameStep(boolean correct, String message, long curStepPlayerId, CardResource card, boolean direction) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "step");
             JSONObject jsonBody = new JSONObject();
             jsonObject.put("body", jsonBody);
             jsonBody.put("correct", correct);
+            jsonBody.put("message", message);
             jsonBody.put("curStepPlayerId", curStepPlayerId);
             jsonBody.put("direction", direction);
             JSONArray jsonCards = new JSONArray();
@@ -115,6 +115,11 @@ public class GameWebSocket {
             if (jsonObject.get("type").equals("gameInfo")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
                 gameMechanics.addUser(myName, (Long)jsonBody.get("players"));
+                return;
+            }
+            if (jsonObject.get("type").equals("card")) {
+                JSONObject jsonBody = (JSONObject)jsonObject.get("body");
+                gameMechanics.gameStep(myName, (Integer)jsonBody.get("cardId"));
             }
         }
         catch (ParseException e) {

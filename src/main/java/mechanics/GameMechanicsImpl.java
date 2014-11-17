@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class GameMechanicsImpl implements GameMechanics {
     private WebSocketService webSocketService;
-
+    private Map<String, GameSession> playerGame = new HashMap<>();
     private ConcurrentLinkedQueue<GameUser> waiters = new ConcurrentLinkedQueue<>();
 
     public GameMechanicsImpl(WebSocketService webSocketService) {
@@ -40,9 +40,35 @@ public class GameMechanicsImpl implements GameMechanics {
         tempList.clear();
     }
 
+    public void gameStep(String username, int cardId) {
+        GameSession gameSession = getPlayerGame(username);
+        ArrayList<GameUser> playersList = gameSession.getPlayersList();
+        GameUser curPlayer = gameSession.getUser(username);
+        CardResource card = ResourceSystem.instance().getCardsResource().getCard(cardId);
+        if (curPlayer.deleteCard(card)) {
+            if (gameSession.setCard(card)) {
+                for (GameUser player : playersList)
+                    webSocketService.notifyGameStep(true, "OK", player);
+            }
+            else
+                for (GameUser player : playersList)
+                    webSocketService.notifyGameStep(false, "You can not put this card!", player);
+        }
+        else
+            for (GameUser player : playersList)
+                webSocketService.notifyGameStep(false, "Player has not that card!", player);
+    }
+
+    public GameSession getPlayerGame(String login) {
+        return playerGame.get(login);
+    }
+
     private void startGame(ArrayList<GameUser> players) {
         GameSession gameSession = new GameSession(players);
+        int j = 0;
         for (GameUser player : players) {
+            playerGame.put(player.getMyName(), gameSession);
+            player.setGamePlayerId(j++);
             player.setGameSession(gameSession);
             webSocketService.notifyStartGame(player);
         }
@@ -62,6 +88,6 @@ public class GameMechanicsImpl implements GameMechanics {
                 rnd.nextInt(ResourceSystem.instance().getCardsResource().CardsCount()));
         gameSession.setCard(temp);
         for (GameUser player : players)
-            webSocketService.notifyGameStep(true, player);
+            webSocketService.notifyGameStep(true, "OK", player);
     }
 }
