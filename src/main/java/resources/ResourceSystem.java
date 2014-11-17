@@ -19,30 +19,30 @@ public class ResourceSystem {
         System.out.println("Resources loading started");
 
         PortResource portResource;
-        if (!VFS.exists("resources/port.xml")) {
+        if (VFS.exists("resources/port.xml"))
+            portResource = (PortResource) ReadXMLFileSAX.readXML("resources/port.xml");
+        else {
             System.out.println("File resources/port.xml does not exist");
             portResource = new PortResource();
         }
-        else
-            portResource = (PortResource) ReadXMLFileSAX.readXML("resources/port.xml");
         resourceMap.put("port", portResource);
 
         DBConfigResource dbConfigResource;
-        if (!VFS.exists("resources/db_config.xml")) {
+        if (VFS.exists("resources/db_config.xml"))
+            dbConfigResource = (DBConfigResource) ReadXMLFileSAX.readXML("resources/db_config.xml");
+        else {
             System.out.println("File resources/db_config.xml does not exist");
             dbConfigResource = new DBConfigResource();
         }
-        else
-            dbConfigResource = (DBConfigResource) ReadXMLFileSAX.readXML("resources/db_config.xml");
         resourceMap.put("db_config", dbConfigResource);
 
         GameParamsResource gameParamsResource;
-        if (!VFS.exists("resources/game.xml")) {
+        if (VFS.exists("resources/game.xml"))
+            gameParamsResource = (GameParamsResource) ReadXMLFileSAX.readXML("resources/game.xml");
+        else {
             System.out.println("File resources/game.xml does not exist");
             gameParamsResource = new GameParamsResource();
         }
-        else
-            gameParamsResource = (GameParamsResource) ReadXMLFileSAX.readXML("resources/game.xml");
         resourceMap.put("game", gameParamsResource);
 
         CardsResource cardsResource = new CardsResource();
@@ -50,12 +50,14 @@ public class ResourceSystem {
         Iterator<String> iter = vfs.getIterator("resources/cards/");
         while (iter.hasNext()) {
             String fileName = iter.next();
-            if (!VFS.exists(fileName)) {
+            if (VFS.exists(fileName)) {
+                if (!VFS.isDirectory(fileName))
+                    cardsResource.saveCard((CardResource) ReadXMLFileSAX.readXML(fileName));
+            }
+            else {
                 System.out.println("File " + fileName + " does not exist");
                 cardsResource.saveCard(new CardResource());
             }
-            else if (!VFS.isDirectory(fileName))
-                cardsResource.saveCard((CardResource) ReadXMLFileSAX.readXML(fileName));
         }
         resourceMap.put("cards", cardsResource);
 
