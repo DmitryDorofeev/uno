@@ -70,8 +70,9 @@ public class GameMechanicsImpl implements GameMechanics {
             playerGame.put(player.getMyName(), gameSession);
             player.setGamePlayerId(j++);
             player.setGameSession(gameSession);
-            webSocketService.notifyStartGame(player);
         }
+        for (GameUser player : players)
+            webSocketService.notifyStartGame(player);
         Random rnd = new Random();
         for (GameUser player : players) {
             List<CardResource> cards = new ArrayList<>();
