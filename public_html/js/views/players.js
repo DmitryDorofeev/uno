@@ -8,23 +8,22 @@ define([
 	var PlayersView = Backbone.View.extend({
 		collection: playersCollection,
 		initialize: function () {
-			this.listenTo(this.collection, 'reset', this.render);
+			this.listenTo(this.collection, 'add', this.addPlayers);
 		},
 		render: function () {
-			console.log('render', this.collection);
-			this.collection.each(function (model) {
-				if (model.get('login') === userModel.get('login')) {
-					console.log('this user');
-					userModel.id = model.get('id');
-				}
-				else {
-					console.log('other');
-					var player = new PlayerView({model: model});
-					this.$el.append(player.render().$el);
-				}
-			}, this);
-			this.show();
 			return this;
+		},
+		addPlayers: function (model) {
+			if (model.get('login') === userModel.get('login')) {
+				console.log('this user');
+				userModel.orderId = model.get('id');
+			}
+			else {
+				console.log('other');
+				var player = new PlayerView({model: model});
+				this.$el.append(player.render().$el);
+			}
+			this.show();
 		},
 		show: function () {
 			this.trigger('show', this);

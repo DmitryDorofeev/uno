@@ -10,7 +10,7 @@ define([
         },
         start: function (msg) {
             console.log(msg);
-            this.reset(msg.players);
+            this.add(msg.players);
         }
 	});
 
