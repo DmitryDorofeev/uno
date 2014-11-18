@@ -79,7 +79,7 @@ public class GameMechanicsImpl implements GameMechanics {
             for (int i = 0; i < ResourceSystem.instance().getGameParamsResource().getStartCardsCount(); ++i) {
                 CardResource temp = ResourceSystem.instance().getCardsResource().getCard(
                         rnd.nextInt(ResourceSystem.instance().getCardsResource().CardsCount()));
-                cards.add(new CardResource(temp.getId(), temp.getColor(), temp.getNum(),
+                cards.add(new CardResource(temp.getCardId(), temp.getColor(), temp.getNum(),
                         temp.getWidth(), temp.getHeight(), temp.getX(), temp.getY()));
             }
             player.setCards(cards);

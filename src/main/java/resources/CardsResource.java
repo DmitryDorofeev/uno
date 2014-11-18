@@ -14,8 +14,8 @@ public class CardsResource implements Resource {
     }
 
     public boolean saveCard(CardResource cardResource) {
-        if (!cardResourceMap.containsKey(cardResource.getId())) {
-            cardResourceMap.put(cardResource.getId(), cardResource);
+        if (!cardResourceMap.containsKey(cardResource.getCardId())) {
+            cardResourceMap.put(cardResource.getCardId(), cardResource);
             return true;
         }
         return false;
