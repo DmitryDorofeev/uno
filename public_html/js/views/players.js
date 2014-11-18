@@ -11,11 +11,14 @@ define([
 			this.listenTo(this.collection, 'reset', this.render);
 		},
 		render: function () {
+			console.log('render', this.collection);
 			this.collection.each(function (model) {
 				if (model.get('login') === userModel.get('login')) {
+					console.log('this user');
 					userModel.id = model.get('id');
 				}
 				else {
+					console.log('other');
 					var player = new PlayerView({model: model});
 					this.$el.append(player.render().$el);
 				}

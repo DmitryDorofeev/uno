@@ -16,6 +16,7 @@ define([
         this.listenTo(this.game, 'game:settings', this.showSettings);
         this.listenTo(gameSettings, 'game:connect', this.sendSettings);
         this.listenTo(playersView, 'show', this.showView);
+        this.listenTo(this.game, 'cards:render', this.renderCards);
     },
     loadStart: function (msg) {
         this.trigger('load:start', msg);
@@ -56,6 +57,9 @@ define([
     },
     showView: function (view) {
         this.$el.append(view.$el);
+    },
+    renderCards: function () {
+      this.$el.append(cardsView.render().$el);
     }
   });
 

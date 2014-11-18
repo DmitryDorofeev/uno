@@ -16,10 +16,8 @@ define([
             this.$el.append(card.render().$el);
         },
         render: function () {
-            this.$el.appendTo('body');
             return this;
-        },
-        
+        }
     });
     
     return new CardsView();

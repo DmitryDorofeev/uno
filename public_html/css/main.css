@@ -454,10 +454,12 @@ button {
   border-radius: 0 5px 5px 0; }
 
 .card {
-  background-image: url(/images/cards.png); }
+  background-image: url(/images/cards.png);
+  display: inline-block; }
 
 .cards {
   position: absolute;
+  overflow: hidden;
   z-index: 10;
   bottom: 0; }
 

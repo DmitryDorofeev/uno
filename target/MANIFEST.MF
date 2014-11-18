@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
-Built-By: BDV
-Created-By: IntelliJ IDEA
 Build-Jdk: 1.8.0_25
+Built-By: dmitrydorofeev
+Created-By: IntelliJ IDEA
+<<<<<<< Updated upstream
+Build-Jdk: 1.8.0_25
+=======
+>>>>>>> Stashed changes
 

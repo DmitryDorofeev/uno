@@ -15,10 +15,11 @@ define([
         },
         render: function () {
             this.$el.css({
-                'background-position': this.model.get('x') + ',' + this.model.get('y')     
+                'background-position': this.model.get('x')/2 + 'px,' + this.model.get('y')/2 + 'px',
+                'background-size': '1681px, 1141px'
             })
-            .width(100)
-            .height(200);
+            .width(this.model.get('width')/2)
+            .height(this.model.get('height')/2);
             return this;
         }
     });

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 frontend\GameWebSocket.class
 frontend\SignInServletImpl.class
 frontend\WebSocketServiceImpl.class
@@ -28,3 +29,19 @@ base\UserProfile.class
 frontend\ScoreboardServletImpl.class
 mechanics\GameSession.class
 base\WebSocketService.class
+=======
+resources/DBConfigResource.class
+db/GameDataSet.class
+resources/ResourceSystem.class
+vfs/VFS.class
+db/GameDataSetDAO.class
+vfs/VFSImpl$FileIterator.class
+resources/PortResource.class
+resources/CardResource.class
+db/UserDataSet.class
+resources/Resource.class
+db/UserDataSetDAO.class
+vfs/VFSImpl.class
+db/DBService.class
+resources/CardsResource.class
+>>>>>>> Stashed changes

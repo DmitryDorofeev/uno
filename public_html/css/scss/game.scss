@@ -118,10 +118,13 @@ button {
 
 .card {
     background-image: url(/images/cards.png);
+    display: inline-block;
 }
 
 .cards {
     position: absolute;
+    overflow: hidden;
     z-index: 10;
     bottom: 0;
 }
+

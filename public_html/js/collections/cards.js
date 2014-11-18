@@ -9,7 +9,8 @@ define([
             this.listenTo(gameModel, 'message:cards', this.addCards);
         },
         addCards: function (cards) {
-            this.add(cards);
+            console.log('adding cards', cards.cards);
+            this.add(cards.cards);
         }
     });
 

@@ -66,7 +66,7 @@ public class GameWebSocket {
             jsonBody.put("cards", jsonCards);
             for (CardResource card : cards) {
                 JSONObject jsonCard = new JSONObject();
-                jsonCard.put("id", card.getId());
+                jsonCard.put("cardId", card.getId());
                 jsonCard.put("x", card.getX());
                 jsonCard.put("y", card.getY());
                 jsonCard.put("width", card.getWidth());

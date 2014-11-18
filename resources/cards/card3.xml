@@ -1,9 +1,9 @@
 <class type = "resources.CardResource">
-    <id>3</id>
+    <cardId>3</cardId>
     <color>green</color>
     <num>0</num>
     <width>240</width>
     <height>360</height>
     <x>0</x>
-    <y>721</y>
+    <y>720</y>
 </class>

@@ -9,6 +9,7 @@ define([
             this.listenTo(gameModel, 'message:start', this.start);
         },
         start: function (msg) {
+            console.log(msg);
             this.reset(msg.players);
         }
 	});
