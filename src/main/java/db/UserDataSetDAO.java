@@ -28,14 +28,6 @@ public class UserDataSetDAO {
         return false;
     }
 
-//    public void drop_db() {
-//        Session session = sessionFactory.openSession();
-//        Transaction transaction = session.beginTransaction();
-//        SQLQuery query = session.createSQLQuery("DROP TABLE user");
-//        transaction.commit();
-//        session.close();
-//    }
-
     public UserDataSet getUserDataByLogin(String login) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(UserDataSet.class);

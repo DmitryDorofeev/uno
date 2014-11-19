@@ -32,11 +32,6 @@ public class DBService {
         return userDataSetDAO.save(user);
     }
 
-//    public void drop_db() {
-//        UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
-//        userDataSetDAO.drop_db();
-//    }
-
     public UserProfile getUserData(String login) {
         UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
         UserDataSet userDataSet = userDataSetDAO.getUserDataByLogin(login);
