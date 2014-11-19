@@ -7,6 +7,8 @@ public interface AuthService {
 
     boolean signUp(UserProfile user);
 
+//    public void drop_db();
+
     boolean logOut(String sessionId);
 
     boolean isLoggedIn(String sessionId);

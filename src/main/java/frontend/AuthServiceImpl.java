@@ -35,6 +35,11 @@ public class AuthServiceImpl implements AuthService {
                 && DBService.instance().saveUser(user);
     }
 
+//    @Override
+//    public void drop_db() {
+//        DBService.instance().drop_db();
+//    }
+
     @Override
     public boolean logOut(String sessionId) {
         if (isLoggedIn(sessionId)) {

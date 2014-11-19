@@ -1,10 +1,7 @@
 package db;
 
 import base.UserProfile;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -30,6 +27,14 @@ public class UserDataSetDAO {
         }
         return false;
     }
+
+//    public void drop_db() {
+//        Session session = sessionFactory.openSession();
+//        Transaction transaction = session.beginTransaction();
+//        SQLQuery query = session.createSQLQuery("DROP TABLE user");
+//        transaction.commit();
+//        session.close();
+//    }
 
     public UserDataSet getUserDataByLogin(String login) {
         Session session = sessionFactory.openSession();
