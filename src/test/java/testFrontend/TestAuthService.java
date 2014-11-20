@@ -28,7 +28,7 @@ import java.sql.*;
  */
 public class TestAuthService {
     public AuthService testAuthService = new AuthServiceImpl();
-    public UserProfile testUsers[] = new UserProfileImpl[9];
+    public static UserProfile testUsers[] = new UserProfileImpl[13];
 
     public void initSignUp() {
         testAuthService.signUp(testUsers[8]);
@@ -41,8 +41,8 @@ public class TestAuthService {
         testAuthService.signIn("5", testUsers[3].getLogin(), testUsers[3].getPass());
     }
 
-    @Before
-    public void initTestValues() {
+    @BeforeClass
+    public static void initTestValues() {
         testUsers[0] = new UserProfileImpl("","123qaz!", "nologin");
         testUsers[1] = new UserProfileImpl("nopswd","", "nopassword");
         testUsers[2] = new UserProfileImpl("noemail","12345qaz!", "");
@@ -52,18 +52,22 @@ public class TestAuthService {
         testUsers[6] = new UserProfileImpl("","test", "test");
         testUsers[7] = new UserProfileImpl("gooduser","qazxswedc123", "good");
         testUsers[8] = new UserProfileImpl("goodlogin", "goodpasswd", "goodemail");
+        testUsers[9] = new UserProfileImpl("testreg1", "testreg1", "testreg1");
+        testUsers[10] = new UserProfileImpl("testreg2", "testreg2", "testreg2");
+        testUsers[11] = new UserProfileImpl("testreg1", "testreg3", "testreg3");
+        testUsers[12] = new UserProfileImpl("testreg4", "testreg4", "testreg1");
     }
 
     @Test
     public void testSignUp() {
-//        testAuthService.drop_db();
         assertEquals("No registered nologin", false, testAuthService.signUp(testUsers[0]));
         assertEquals("No registered nopswd", false, testAuthService.signUp(testUsers[1]));
         assertEquals("No registered noemail", false, testAuthService.signUp(testUsers[2]));
-        assertEquals("Registered test", true, testAuthService.signUp(testUsers[3]));
-        assertEquals("Already registered test", false, testAuthService.signUp(testUsers[3]));
-        assertEquals("Registered gooduser", true, testAuthService.signUp(testUsers[7]));
-        assertEquals("Registered goodlogin", true, testAuthService.signUp(testUsers[8]));
+        assertEquals("Registered testreg1", true, testAuthService.signUp(testUsers[9]));
+        assertEquals("Already registered testreg1", false, testAuthService.signUp(testUsers[9]));
+        assertEquals("Registered testreg2", true, testAuthService.signUp(testUsers[10]));
+        assertEquals("No registered testreg3", false, testAuthService.signUp(testUsers[11]));
+        assertEquals("No registered testreg4", false, testAuthService.signUp(testUsers[12]));
     }
 
     @Test
@@ -96,40 +100,4 @@ public class TestAuthService {
         assertEquals("Logout " + testUsers[8].getLogin() + " SessionId 11", true, testAuthService.logOut("11"));
         assertEquals(userBT - 2, testAuthService.getAmountOfUsersOnline());
     }
-
-//    public void clear_db() {
-//        SessionFactory sessionFactory = createSessionFactory();
-//        Session session = sessionFactory.openSession();
-//        Transaction transaction = session.beginTransaction();
-//        Query query = session.createQuery("DROP TABLE user");
-//        query.executeUpdate();
-//        transaction.commit();
-//        session.close();
-//    }
-//
-//    private SessionFactory createSessionFactory() throws HibernateException {
-//        Configuration configuration = new Configuration();
-//        configuration.addAnnotatedClass(UserDataSet.class);
-//        configuration.addAnnotatedClass(GameDataSet.class);
-//        ResourceSystem resourceSystem = ResourceSystem.instance();
-//        configuration.setProperty("hibernate.dialect", resourceSystem.getDBConfigResource().getDialect());
-//        configuration.setProperty("hibernate.connection.driver_class", resourceSystem.getDBConfigResource().getDriver());
-//        configuration.setProperty("hibernate.connection.url", resourceSystem.getDBConfigResource().getUrl());
-//        configuration.setProperty("hibernate.connection.username", resourceSystem.getDBConfigResource().getUsername());
-//        configuration.setProperty("hibernate.connection.password", resourceSystem.getDBConfigResource().getPassword());
-//        configuration.setProperty("hibernate.show_sql", resourceSystem.getDBConfigResource().getShow_sql());
-//        configuration.setProperty("hibernate.hbm2ddl.auto", resourceSystem.getDBConfigResource().getHbm2ddl());
-//
-//        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
-//        builder.applySettings(configuration.getProperties());
-//        ServiceRegistry serviceRegistry = builder.build();
-//        SessionFactory sessionFactory = null;
-//        try {
-//            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-//        }
-//        catch (HibernateException e) {
-//            e.printStackTrace();
-//        }
-//        return sessionFactory;
-//    }
 }
