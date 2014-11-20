@@ -61,6 +61,7 @@ public class TestAuthService {
 
     @Test
     public void testSignUp() {
+        long userBT = testAuthService.getAmountOfRegisteredUsers();
         assertEquals("No registered nologin", false, testAuthService.signUp(testUsers[0]));
         assertEquals("No registered nopswd", false, testAuthService.signUp(testUsers[1]));
         assertEquals("No registered noemail", false, testAuthService.signUp(testUsers[2]));
@@ -69,6 +70,7 @@ public class TestAuthService {
         assertEquals("Registered testreg2", true, testAuthService.signUp(testUsers[10]));
         assertEquals("No registered testreg3", false, testAuthService.signUp(testUsers[11]));
         assertEquals("No registered testreg4", false, testAuthService.signUp(testUsers[12]));
+        assertEquals(userBT + 2, testAuthService.getAmountOfRegisteredUsers());
     }
 
     @Test
