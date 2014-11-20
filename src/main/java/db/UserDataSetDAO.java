@@ -16,7 +16,7 @@ public class UserDataSetDAO {
     }
 
     public boolean save(UserProfile user) {
-        if (getUserDataByLogin(user.getLogin()) == null) {
+        if (getUserDataByLogin(user.getLogin()) == null && getUserDataByEmail(user.getEmail()) == null) {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
             UserDataSet userDataSet = new UserDataSet(user);
@@ -32,6 +32,14 @@ public class UserDataSetDAO {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(UserDataSet.class);
         UserDataSet userDataSet = (UserDataSet) criteria.add(Restrictions.eq("login", login)).uniqueResult();
+        session.close();
+        return userDataSet;
+    }
+
+    public UserDataSet getUserDataByEmail(String email) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(UserDataSet.class);
+        UserDataSet userDataSet = (UserDataSet) criteria.add(Restrictions.eq("email", email)).uniqueResult();
         session.close();
         return userDataSet;
     }
