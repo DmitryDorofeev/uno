@@ -43,6 +43,7 @@ public class TestAuthService {
 
     @BeforeClass
     public static void initTestValues() {
+        DBService.instance();
         testUsers[0] = new UserProfileImpl("","123qaz!", "nologin");
         testUsers[1] = new UserProfileImpl("nopswd","", "nopassword");
         testUsers[2] = new UserProfileImpl("noemail","12345qaz!", "");
