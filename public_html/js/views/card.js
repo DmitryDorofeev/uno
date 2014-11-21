@@ -11,15 +11,15 @@ define([
             'click': 'selectCard'
         },
         selectCard: function (event) {
-            this.model.select();
+            console.log('cardId: %d', this.model.get('cardId'));
         },
         render: function () {
             this.$el.css({
-                'background-position': '-' + (this.model.get('x')/2) + 'px -' + (this.model.get('y')/2) + 'px',
+                'background-position': '-' + this.model.get('x') + 'px -' + this.model.get('y') + 'px',
                 'background-size': '1681px, 1141px'
             })
-            .width(this.model.get('width')/2)
-            .height(this.model.get('height')/2)
+            .width(this.model.get('width'))
+            .height(this.model.get('height'))
             .data('id', this.model.get('cardId'));
             return this;
         }

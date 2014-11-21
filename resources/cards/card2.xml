@@ -2,8 +2,8 @@
     <cardId>2</cardId>
     <color>yellow</color>
     <num>0</num>
-    <width>240</width>
-    <height>360</height>
+    <width>120</width>
+    <height>180</height>
     <x>0</x>
-    <y>360</y>
+    <y>180</y>
 </class>
