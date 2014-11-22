@@ -3,10 +3,7 @@ package testFrontend;
 import static org.junit.Assert.*;
 
 import base.AuthService;
-import db.UserProfile;
-import db.DBService;
-import db.GameDataSet;
-import db.UserDataSet;
+import db.*;
 import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -42,7 +39,7 @@ public class TestAuthService {
 
     @BeforeClass
     public static void initTestValues() {
-        testAuthService = new AuthServiceImpl(new DBService());
+        testAuthService = new AuthServiceImpl(new DBServiceImpl());
         testUsers[0] = new UserProfile("","123qaz!", "nologin");
         testUsers[1] = new UserProfile("nopswd","", "nopassword");
         testUsers[2] = new UserProfile("noemail","12345qaz!", "");

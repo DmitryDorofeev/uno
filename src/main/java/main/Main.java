@@ -3,6 +3,7 @@ package main;
 import admin.AdminPageServletImpl;
 import base.*;
 import db.DBService;
+import db.DBServiceImpl;
 import frontend.*;
 import mechanics.GameMechanicsImpl;
 import org.eclipse.jetty.server.Handler;
@@ -18,7 +19,7 @@ import javax.servlet.Servlet;
 public class Main {
     public static void main(String[] args) throws Exception {
         ResourceSystem resourceSystem = ResourceSystem.instance();
-        DBService dbService = new DBService();
+        DBService dbService = new DBServiceImpl();
         if (!dbService.getStatus()) {
             System.out.println("Error with db connection!");
             System.exit(1);
