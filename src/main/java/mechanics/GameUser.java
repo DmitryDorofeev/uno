@@ -20,9 +20,11 @@ public class GameUser {
     }
 
     public boolean deleteCard(CardResource card) {
-        if (cards.contains(card)) {
-            cards.remove(card);
-            return true;
+        for (CardResource curCard : cards) {
+            if (curCard.getCardId() == card.getCardId()) {
+                cards.remove(curCard);
+                return true;
+            }
         }
         return false;
     }
