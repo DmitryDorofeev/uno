@@ -1,0 +1,6 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <div class="b-table">
+        <div class="b-table__deck"></div>
+        <div class="b-table__current"></div>
+    </div>
+</fest:template>

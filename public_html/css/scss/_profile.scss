@@ -1,12 +1,12 @@
 .profile {
     text-align: center;
-}
 
-.profile__title {
-    display: inline-block;
-    color: #fff;
-    font-size: 22px;
-    margin-top: 40px;
+    &__title {
+        display: inline-block;
+        color: #fff;
+        font-size: 22px;
+        margin-top: 40px;
+    }
 }
 
 .email-field {

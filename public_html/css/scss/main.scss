@@ -60,10 +60,10 @@ html, body {
     color: #eee;
     z-index: 100;
     text-align: center;
-}
 
-.preload-text__text {
-    display: inline;
+    &__text {
+        display: inline;
+    }
 }
 
 .preloader__round {
@@ -188,38 +188,38 @@ html, body {
     position: relative;
     text-align: center;
     overflow: hidden;
-}
 
-.main__title {
-    display: inline-block;
-    font-size: 70px;
-    margin: 0 auto;
-    margin-top: 130px;
-    color: rgba(255, 218, 46, 1);
-    font-weight: bold;
-    text-shadow: 3px 3px 1px #a2932b;
-    -webkit-transform-origin: top left;
-    -webkit-transform: rotate(-25deg);
-    -moz-transform-origin: top left;
-    -moz-transform: rotate(-25deg);
-    -ms-transform-origin: top left;
-    -ms-transform: rotate(-25deg);
-    -o-transform-origin: top left;
-    -o-transform: rotate(-25deg);
-}
+    &__title {
+        display: inline-block;
+        font-size: 70px;
+        margin: 0 auto;
+        margin-top: 130px;
+        color: rgba(255, 218, 46, 1);
+        font-weight: bold;
+        text-shadow: 3px 3px 1px #a2932b;
+        -webkit-transform-origin: top left;
+        -webkit-transform: rotate(-25deg);
+        -moz-transform-origin: top left;
+        -moz-transform: rotate(-25deg);
+        -ms-transform-origin: top left;
+        -ms-transform: rotate(-25deg);
+        -o-transform-origin: top left;
+        -o-transform: rotate(-25deg);
+    }
 
-.main__button {
-    display: block;
-    width: 300px;
-    margin: 0 auto;
-    background: linear-gradient(rgb(200,3,7), rgb(180,3,7));
-    border: 3px solid rgb(160,3,7);
-    border-radius: 10px;
-    padding: 10px 0;
-    margin-top: 10px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 23px;
+    &__button {
+        display: block;
+        width: 300px;
+        margin: 0 auto;
+        background: linear-gradient(rgb(200,3,7), rgb(180,3,7));
+        border: 3px solid rgb(160,3,7);
+        border-radius: 10px;
+        padding: 10px 0;
+        margin-top: 10px;
+        color: #fff;
+        text-decoration: none;
+        font-size: 23px;
+    }
 }
 
 
@@ -263,27 +263,29 @@ html, body {
     width: 900px;
     margin: 0 auto;
     text-align: center;
+
+    &__title {
+        display: inline-block;
+        font-size: 20px;
+        color: $titleColor;
+        margin-top: 40px;
+    }
 }
 
-.scoreboard__title {
-    display: inline-block;
-    font-size: 20px;
-    color: $titleColor;
-    margin-top: 40px;
-}
 
 .score {
     padding: 20px;
     overflow: hidden;
-}
 
-.score__login {
-    color: #fff;
-    float: left;
-}
+    &__login {
+        color: #fff;
+        float: left;
+    }
 
-.score__value {
-    color: #999;
-    float: left;
-    margin-left: 30px;
+    &__value {
+        color: #999;
+        float: left;
+        margin-left: 30px;
+    }
+
 }

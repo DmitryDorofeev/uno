@@ -7,7 +7,7 @@ define([
             this.listenTo(gameModel, 'message:step', this.step);
         },
         step: function () {
-
+            console.log('step');
         }
     });
 

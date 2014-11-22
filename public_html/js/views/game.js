@@ -1,22 +1,33 @@
 define([
-  'backbone',
-  'tmpl/game',
-  'models/user',
-  'models/game',
-  'views/gamesettings',
-  'views/players',
-  'views/cards'
-], function (Backbone, tmpl, userModel, gameModel, gameSettings, playersView, cardsView) {
+    'jquery',
+    'backbone',
+    'tmpl/game',
+    'models/user',
+    'models/game',
+    'views/gamesettings',
+    'views/players',
+    'views/cards',
+    'views/deck'
+], function ($, Backbone, tmpl, userModel, gameModel, gameSettings, playersView, cardsView, deckView) {
   var GameView = Backbone.View.extend({
     model: userModel,
     game: gameModel,
+    settings: gameSettings,
     initialize: function() {
+        this.views = {};
+        this.register('settings', gameSettings);
+        this.register('players', playersView);
+        this.register('cards', cardsView);
+        this.register('deck', deckView);
         this.listenTo(this.game, 'load:start', this.loadStart);
         this.listenTo(this.game, 'load:done', this.loadDone);
         this.listenTo(this.game, 'game:settings', this.showSettings);
-        this.listenTo(gameSettings, 'game:connect', this.sendSettings);
-        this.listenTo(playersView, 'show', this.showView);
+        this.listenTo(this.settings, 'game:connect', this.sendSettings);
         this.listenTo(this.game, 'cards:render', this.renderCards);
+    },
+    register: function (name, view) {
+        this.views[name] = view;
+        //this.views[name]
     },
     loadStart: function (msg) {
         this.trigger('load:start', msg);
@@ -28,9 +39,11 @@ define([
       return tmpl();
     },
     render: function() {
-      this.$el.html(this.template());
-      this.$el.append(gameSettings.$el);
-      return this;
+        this.$el.html(this.template());
+        _.forEach(this.views, function(view) {
+            this.$el.find('.game').append(view.render().$el);
+        }, this);
+        return this;
     },
     show: function () {
       if (userModel.isLogined()) {
@@ -55,11 +68,9 @@ define([
       this.game.players = val;
       this.game.connect();
     },
-    showView: function (view) {
-        this.$el.append(view.$el);
-    },
     renderCards: function () {
-      this.$el.append(cardsView.render().$el);
+        this.views.cards.render();
+        this.views.deck.show();
     }
   });
 
