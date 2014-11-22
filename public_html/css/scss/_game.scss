@@ -100,13 +100,6 @@ button {
     }
 }
 
-
-.card {
-    background-image: url(/images/cards.png);
-    display: inline-block;
-    cursor: pointer;
-}
-
 .cards {
     position: absolute;
     overflow: hidden;
@@ -116,6 +109,12 @@ button {
     left: 50%;
     margin-left: -430px;
     padding: 30px;
+
+    &__card {
+        background-image: url(/images/cards.png);
+        display: inline-block;
+        cursor: pointer;
+    }
 }
 
 .b-table {

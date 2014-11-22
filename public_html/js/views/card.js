@@ -3,7 +3,7 @@ define([
 ], function (Backbone) {
     
     var CardView = Backbone.View.extend({
-        className: 'card',
+        className: 'cards__card',
         initialize: function () {
             
         },
