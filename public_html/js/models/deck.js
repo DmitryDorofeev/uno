@@ -6,8 +6,10 @@ define([
         initialize: function () {
             this.listenTo(gameModel, 'message:step', this.step);
         },
-        step: function () {
-            console.log('step');
+        step: function (data) {
+            if (data.correct) {
+                this.set(data.cards[0]);
+            }
         }
     });
 

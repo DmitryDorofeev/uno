@@ -5,7 +5,7 @@ define([
     var CardView = Backbone.View.extend({
         className: 'cards__card',
         initialize: function () {
-            
+            this.listenTo(this.model, 'remove', this.remove);
         },
         events: {
             'click': 'selectCard'

@@ -7,7 +7,7 @@ define([
     var DeckView = Backbone.View.extend({
         model: deckModel,
         initialize: function () {
-            this.listenTo(this.model, 'change', this.changeCard);
+            this.listenTo(this.model, 'add change', this.changeCard);
             this.$el.hide();
         },
         template: function () {
@@ -18,8 +18,8 @@ define([
             return this;
         },
         changeCard: function () {
-            this.$el.find('.current').css({
-                'background-position': '-' + this.model.get('x') + 'px ' + this.model.get('y') + 'px'
+            this.$el.find('.b-table__current').css({
+                'background-position': '-' + this.model.get('x') + 'px -' + this.model.get('y') + 'px'
             });
         },
         show: function () {

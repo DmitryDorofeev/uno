@@ -1,7 +1,11 @@
 define([
+	'jquery',
 	'backbone',
     'models/user'
-], function (Backbone, userModel) {
+], function ($, Backbone, userModel) {
+
+	var stepDfd;
+
 	var GameModel = Backbone.Model.extend({
 		initialize: function () {
 			this.connection = undefined;
@@ -45,9 +49,20 @@ define([
 			if (data.type === 'cards') {
 				this.trigger('cards:render');
 			}
+			if (data.type === 'step') {
+				if (stepDfd && stepDfd.state() === 'pending') {
+					if (data.body.correct) {
+						stepDfd.resolve();
+					}
+					else {
+						stepDfd.reject();
+					}
+				}
+			}
 			this.trigger('message:' + data.type, data.body);
 		},
 		sendCard: function (model) {
+			stepDfd = new $.Deferred();
 			var output = {
 				type: 'card',
 				body: {
@@ -55,6 +70,7 @@ define([
 				}
 			}
 			this.connection.send(JSON.stringify(output));
+			return stepDfd.promise();
 		}
 	});
 

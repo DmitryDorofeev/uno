@@ -15,6 +15,9 @@ define([
             var card = new CardView({model: model});
             this.$el.append(card.render().$el);
         },
+        removeCard: function () {
+
+        },
         render: function () {
             return this;
         }
