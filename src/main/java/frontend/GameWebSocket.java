@@ -128,13 +128,13 @@ public class GameWebSocket {
     }
 
     @OnWebSocketConnect
-    public void onOpen(Session session) {
+     public void onOpen(Session session) {
         this.session = session;
         webSocketService.addUser(this);
     }
 
     @OnWebSocketClose
     public void onClose(int statusCode, String reason) {
-
+        webSocketService.removeUser(this);
     }
 }

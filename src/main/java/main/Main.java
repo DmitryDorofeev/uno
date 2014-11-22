@@ -55,8 +55,6 @@ public class Main {
         handlers.setHandlers(new Handler[]{resource_handler, context});
         server.setHandler(handlers);
 
-        server.setHandler(handlers);
-
         server.start();
     }
 }

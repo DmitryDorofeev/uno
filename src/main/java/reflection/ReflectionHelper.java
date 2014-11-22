@@ -3,7 +3,7 @@ package reflection;
 import java.lang.reflect.Field;
 
 public class ReflectionHelper {
-    public static Object createIntance(String className) {
+    public static Object createInstance(String className) {
         try {
             return Class.forName(className).newInstance();
         } catch (IllegalArgumentException e) {

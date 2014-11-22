@@ -22,7 +22,7 @@ public class SaxHandler extends DefaultHandler {
         }
         else{
             String className = attributes.getValue(0);
-            object = ReflectionHelper.createIntance(className);
+            object = ReflectionHelper.createInstance(className);
         }
     }
 

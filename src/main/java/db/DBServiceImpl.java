@@ -29,6 +29,7 @@ public class DBServiceImpl implements DBService {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         System.out.append(transaction.getLocalStatus().toString()).append('\n');
+        transaction.commit();
         session.close();
         status = true;
     }
