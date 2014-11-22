@@ -26,7 +26,7 @@ import java.sql.*;
  * Created by К on 30.10.2014.
  */
 public class TestAuthService {
-    public AuthService testAuthService = new AuthServiceImpl();
+    public static AuthService testAuthService;
     public static UserProfile testUsers[] = new UserProfile[13];
 
     public void initSignUp() {
@@ -42,7 +42,7 @@ public class TestAuthService {
 
     @BeforeClass
     public static void initTestValues() {
-        DBService.instance();
+        testAuthService = new AuthServiceImpl(new DBService());
         testUsers[0] = new UserProfile("","123qaz!", "nologin");
         testUsers[1] = new UserProfile("nopswd","", "nopassword");
         testUsers[2] = new UserProfile("noemail","12345qaz!", "");

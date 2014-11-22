@@ -17,15 +17,8 @@ import java.util.Map;
  * Created by BDV on 16.11.2014.
  */
 public class DBService {
-    private static DBService dbService;
     private SessionFactory sessionFactory;
     private boolean status;
-
-    public static DBService instance() {
-        if (dbService == null)
-            dbService = new DBService();
-        return dbService;
-    }
 
     public boolean saveUser(UserProfile user) {
         UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
@@ -60,7 +53,7 @@ public class DBService {
 //
 //    }
 
-    protected DBService() {
+    public DBService() {
         sessionFactory = createSessionFactory();
         if (sessionFactory == null) {
             status = false;

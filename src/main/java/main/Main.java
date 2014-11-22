@@ -18,7 +18,7 @@ import javax.servlet.Servlet;
 public class Main {
     public static void main(String[] args) throws Exception {
         ResourceSystem resourceSystem = ResourceSystem.instance();
-        DBService dbService = DBService.instance();
+        DBService dbService = new DBService();
         if (!dbService.getStatus()) {
             System.out.println("Error with db connection!");
             System.exit(1);
@@ -28,7 +28,7 @@ public class Main {
 
         WebSocketService webSocketService = new WebSocketServiceImpl();
         GameMechanics gameMechanics = new GameMechanicsImpl(webSocketService);
-        AuthService authService = new AuthServiceImpl();
+        AuthService authService = new AuthServiceImpl(dbService);
 
         Servlet signIn = new SignInServletImpl(authService);
         Servlet signUp = new SignUpServletImpl(authService);

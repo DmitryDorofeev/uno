@@ -11,13 +11,15 @@ import java.util.Map;
 public class AuthServiceImpl implements AuthService {
     private Map<String, String> sessions = new HashMap<>(); // (id, login)
     private Map<String, String> userSessions = new HashMap<>(); // (login, id)
+    private DBService dbService;
 
-    public AuthServiceImpl() {
+    public AuthServiceImpl(DBService dbService) {
+        this.dbService = dbService;
     }
 
     @Override
     public boolean signIn(String sessionId, String login, String password) {
-        UserProfile user = DBService.instance().getUserData(login);
+        UserProfile user = dbService.getUserData(login);
         if (!isLoggedIn(sessionId) && user != null && user.getPass().equals(password)) {
             if (userSessions.containsKey(login))
                 logOut(userSessions.get(login));
@@ -31,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public boolean signUp(UserProfile user) {
         return !(user.getLogin().isEmpty() || user.getEmail().isEmpty() || user.getPass().isEmpty())
-                && DBService.instance().saveUser(user);
+                && dbService.saveUser(user);
     }
 
     @Override
@@ -52,13 +54,13 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserProfile getUserProfile(String sessionId) {
         if (isLoggedIn(sessionId))
-            return DBService.instance().getUserData(sessions.get(sessionId));
+            return dbService.getUserData(sessions.get(sessionId));
         return null;
     }
 
     @Override
     public long getAmountOfRegisteredUsers() {
-        return DBService.instance().getAmountOfRegisteredUsers();
+        return dbService.getAmountOfRegisteredUsers();
     }
 
     @Override
