@@ -32,7 +32,6 @@ define([
                     players: players
                 }
             };
-            console.log(JSON.stringify(sendObj));
 			this.connection.send(JSON.stringify(sendObj));
             this.trigger('load:done');
             this.trigger('load:start', 'Ожидание игроков...');
@@ -47,6 +46,15 @@ define([
 				this.trigger('cards:render');
 			}
 			this.trigger('message:' + data.type, data.body);
+		},
+		sendCard: function (model) {
+			var output = {
+				type: 'card',
+				body: {
+					cardId: model.get('cardId')
+				}
+			}
+			this.connection.send(JSON.stringify(output));
 		}
 	});
 

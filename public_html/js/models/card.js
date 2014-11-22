@@ -1,9 +1,11 @@
 define([
-    'backbone',
-    'models/game'
-], function (Backbone, gameModel) {
+    'backbone'
+], function (Backbone) {
     var CardModel = Backbone.Model.extend({
         initialize: function () {
+        },
+        select: function () {
+            this.collection.sendCard(this);
         }
     });
 

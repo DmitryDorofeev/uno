@@ -12,6 +12,7 @@ define([
         },
         selectCard: function (event) {
             console.log('cardId: %d', this.model.get('cardId'));
+            this.model.select();
         },
         render: function () {
             this.$el.css({
