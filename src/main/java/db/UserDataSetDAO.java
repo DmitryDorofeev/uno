@@ -1,6 +1,6 @@
 package db;
 
-import base.UserProfile;
+import db.UserProfile;
 import org.hibernate.*;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;

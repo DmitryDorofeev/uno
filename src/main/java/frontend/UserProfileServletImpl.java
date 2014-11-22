@@ -1,7 +1,7 @@
 package frontend;
 
 import base.AuthService;
-import base.UserProfile;
+import db.UserProfile;
 import base.UserProfileServlet;
 import org.json.simple.JSONObject;
 

@@ -2,8 +2,7 @@ package frontend;
 
 import base.AuthService;
 import base.SignUpServlet;
-import base.UserProfile;
-import db.UserProfileImpl;
+import db.UserProfile;
 import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;
@@ -33,7 +32,7 @@ public class SignUpServletImpl extends HttpServlet implements SignUpServlet {
 
         JSONObject jsonObj = new JSONObject();
         if (!login.isEmpty() && !password.isEmpty()) {
-            UserProfile user = new UserProfileImpl(login, password, email);
+            UserProfile user = new UserProfile(login, password, email);
             if (authService.signUp(user)) {
                 jsonObj.put("status", 200);
                 response.getWriter().print(jsonObj.toJSONString());

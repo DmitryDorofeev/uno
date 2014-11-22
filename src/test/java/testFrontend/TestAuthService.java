@@ -3,7 +3,7 @@ package testFrontend;
 import static org.junit.Assert.*;
 
 import base.AuthService;
-import base.UserProfile;
+import db.UserProfile;
 import db.DBService;
 import db.GameDataSet;
 import db.UserDataSet;
@@ -16,7 +16,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import db.UserProfileImpl;
 import frontend.AuthServiceImpl;
 import resources.ResourceSystem;
 
@@ -28,7 +27,7 @@ import java.sql.*;
  */
 public class TestAuthService {
     public AuthService testAuthService = new AuthServiceImpl();
-    public static UserProfile testUsers[] = new UserProfileImpl[13];
+    public static UserProfile testUsers[] = new UserProfile[13];
 
     public void initSignUp() {
         testAuthService.signUp(testUsers[8]);
@@ -44,19 +43,19 @@ public class TestAuthService {
     @BeforeClass
     public static void initTestValues() {
         DBService.instance();
-        testUsers[0] = new UserProfileImpl("","123qaz!", "nologin");
-        testUsers[1] = new UserProfileImpl("nopswd","", "nopassword");
-        testUsers[2] = new UserProfileImpl("noemail","12345qaz!", "");
-        testUsers[3] = new UserProfileImpl("test","test", "test");
-        testUsers[4] = new UserProfileImpl("nosuchuser","12345qaz!", "rubicon");
-        testUsers[5] = new UserProfileImpl("test", "", "test");
-        testUsers[6] = new UserProfileImpl("","test", "test");
-        testUsers[7] = new UserProfileImpl("gooduser","qazxswedc123", "good");
-        testUsers[8] = new UserProfileImpl("goodlogin", "goodpasswd", "goodemail");
-        testUsers[9] = new UserProfileImpl("testreg1", "testreg1", "testreg1");
-        testUsers[10] = new UserProfileImpl("testreg2", "testreg2", "testreg2");
-        testUsers[11] = new UserProfileImpl("testreg1", "testreg3", "testreg3");
-        testUsers[12] = new UserProfileImpl("testreg4", "testreg4", "testreg1");
+        testUsers[0] = new UserProfile("","123qaz!", "nologin");
+        testUsers[1] = new UserProfile("nopswd","", "nopassword");
+        testUsers[2] = new UserProfile("noemail","12345qaz!", "");
+        testUsers[3] = new UserProfile("test","test", "test");
+        testUsers[4] = new UserProfile("nosuchuser","12345qaz!", "rubicon");
+        testUsers[5] = new UserProfile("test", "", "test");
+        testUsers[6] = new UserProfile("","test", "test");
+        testUsers[7] = new UserProfile("gooduser","qazxswedc123", "good");
+        testUsers[8] = new UserProfile("goodlogin", "goodpasswd", "goodemail");
+        testUsers[9] = new UserProfile("testreg1", "testreg1", "testreg1");
+        testUsers[10] = new UserProfile("testreg2", "testreg2", "testreg2");
+        testUsers[11] = new UserProfile("testreg1", "testreg3", "testreg3");
+        testUsers[12] = new UserProfile("testreg4", "testreg4", "testreg1");
     }
 
     @Test

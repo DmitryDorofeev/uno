@@ -1,5 +1,7 @@
 package base;
 
+import db.UserProfile;
+
 import java.util.Map;
 
 public interface AuthService {

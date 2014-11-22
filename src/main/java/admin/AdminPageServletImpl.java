@@ -2,7 +2,7 @@ package admin;
 
 import base.AdminPageServlet;
 import base.AuthService;
-import base.UserProfile;
+import db.UserProfile;
 import db.DBService;
 import org.json.simple.JSONObject;
 import utils.TimeHelper;

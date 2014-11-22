@@ -1,6 +1,6 @@
 package db;
 
-import base.UserProfile;
+import db.UserProfile;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -36,7 +36,7 @@ public class DBService {
         UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
         UserDataSet userDataSet = userDataSetDAO.getUserDataByLogin(login);
         if (userDataSet != null)
-            return new UserProfileImpl(userDataSet.getLogin(), userDataSet.getPassword(), userDataSet.getEmail());
+            return new UserProfile(userDataSet.getLogin(), userDataSet.getPassword(), userDataSet.getEmail());
         return null;
     }
 

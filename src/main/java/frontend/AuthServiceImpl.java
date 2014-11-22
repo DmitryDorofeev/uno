@@ -1,9 +1,8 @@
 package frontend;
 
 import base.AuthService;
-import base.UserProfile;
+import db.UserProfile;
 import db.DBService;
-import db.UserProfileImpl;
 
 import java.util.HashMap;
 import java.util.Iterator;
