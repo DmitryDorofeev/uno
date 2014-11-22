@@ -45,18 +45,22 @@ public class GameMechanicsImpl implements GameMechanics {
         ArrayList<GameUser> playersList = gameSession.getPlayersList();
         GameUser curPlayer = gameSession.getUser(username);
         CardResource card = ResourceSystem.instance().getCardsResource().getCard(cardId);
-        if (curPlayer.deleteCard(card)) {
-            if (gameSession.setCard(card)) {
-                for (GameUser player : playersList)
-                    webSocketService.notifyGameStep(true, "OK", player);
+        if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
+            if (curPlayer.deleteCard(card)) {
+                if (gameSession.setCard(card)) {
+                    gameSession.updateCurStepPlayerId();
+                    for (GameUser player : playersList)
+                        webSocketService.notifyGameStep(true, "OK", player);
+                }
+                else
+                    for (GameUser player : playersList)
+                        webSocketService.notifyGameStep(false, "You can not put this card!", player);
             }
             else
                 for (GameUser player : playersList)
-                    webSocketService.notifyGameStep(false, "You can not put this card!", player);
-        }
-        else
-            for (GameUser player : playersList)
-                webSocketService.notifyGameStep(false, "Player has not that card!", player);
+                    webSocketService.notifyGameStep(false, "Player has not that card!", player);
+        } else
+            webSocketService.notifyGameStep(false, "Not your turn!", curPlayer);
     }
 
     public GameSession getPlayerGame(String login) {

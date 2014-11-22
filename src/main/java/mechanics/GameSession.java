@@ -63,4 +63,10 @@ public class GameSession {
     public void setCurStepPlayerId(long curStepPlayerId) {
         this.curStepPlayerId = curStepPlayerId;
     }
+
+    public void updateCurStepPlayerId() {
+        curStepPlayerId = direction ?
+                (curStepPlayerId + 1) % users.size() :
+                (curStepPlayerId == 0 ? users.size() - 1 : curStepPlayerId - 1);
+    }
 }
