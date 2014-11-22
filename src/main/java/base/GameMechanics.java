@@ -9,5 +9,5 @@ public interface GameMechanics {
 
     void addUser(String user, long playersCount);
 
-    void gameStep(String user, int cartId);
+    void gameStep(String user, long cartId);
 }

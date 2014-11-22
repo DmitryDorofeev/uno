@@ -32,8 +32,9 @@ public class ReflectionHelper {
                 field.set(object, value);
             } else if (field.getType().equals(int.class)) {
                 field.set(object, Integer.decode(value));
+            } else if (field.getType().equals(long.class)) {
+                field.set(object, Long.decode(value));
             }
-
             field.setAccessible(false);
         } catch (SecurityException e) {
             e.printStackTrace();

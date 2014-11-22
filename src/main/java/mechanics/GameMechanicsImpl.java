@@ -40,7 +40,7 @@ public class GameMechanicsImpl implements GameMechanics {
         tempList.clear();
     }
 
-    public void gameStep(String username, int cardId) {
+    public void gameStep(String username, long cardId) {
         GameSession gameSession = getPlayerGame(username);
         ArrayList<GameUser> playersList = gameSession.getPlayersList();
         GameUser curPlayer = gameSession.getUser(username);

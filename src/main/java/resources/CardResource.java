@@ -4,7 +4,7 @@ package resources;
  * Created by alexey on 15.11.2014.
  */
 public class CardResource {
-    private int cardId;
+    private long cardId;
     private String color;
     private int num;
     private int width;
@@ -22,7 +22,7 @@ public class CardResource {
         setY(0);
     }
 
-    public CardResource(int cardId, String color, int num, int width, int height, int x, int y) {
+    public CardResource(long cardId, String color, int num, int width, int height, int x, int y) {
         setCardId(cardId);
         setColor(color);
         setNum(num);
@@ -32,11 +32,11 @@ public class CardResource {
         setY(y);
     }
 
-    public int getCardId() {
+    public long getCardId() {
         return cardId;
     }
 
-    public void setCardId(int cardId) {
+    public void setCardId(long cardId) {
         this.cardId = cardId;
     }
 

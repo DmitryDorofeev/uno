@@ -7,9 +7,9 @@ import java.util.Map;
  * Created by alexey on 15.11.2014.
  */
 public class CardsResource implements Resource {
-    private Map<Integer, CardResource> cardResourceMap = new HashMap<>();
+    private Map<Long, CardResource> cardResourceMap = new HashMap<>();
 
-    public CardResource getCard(int id) {
+    public CardResource getCard(long id) {
         return cardResourceMap.get(id);
     }
 

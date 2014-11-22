@@ -119,7 +119,7 @@ public class GameWebSocket {
             }
             if (jsonObject.get("type").equals("card")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                gameMechanics.gameStep(myName, (Integer)jsonBody.get("cardId"));
+                gameMechanics.gameStep(myName, (Long)jsonBody.get("cardId"));
             }
         }
         catch (ParseException e) {
