@@ -26,16 +26,15 @@ public class GameSession {
         return card;
     }
 
-    public boolean setCard(CardResource card) {
-        if (this.card == null) {
-            this.card = card;
+    public boolean canSetCard(CardResource card) {
+        if (this.card == null || card.getNum() == this.card.getNum() || card.getColor().equals(this.card.getColor()))
             return true;
-        }
-        if (card.getNum() == this.card.getNum() || card.getColor().equals(this.card.getColor())) {
-            this.card = card;
-            return true;
-        }
         return false;
+    }
+
+    public void setCard(CardResource card) {
+        if (this.card == null || card.getNum() == this.card.getNum() || card.getColor().equals(this.card.getColor()))
+            this.card = card;
     }
 
     public GameUser getUser(String login) {

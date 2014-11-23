@@ -46,8 +46,10 @@ public class GameMechanicsImpl implements GameMechanics {
         GameUser curPlayer = gameSession.getUser(username);
         CardResource card = ResourceSystem.instance().getCardsResource().getCard(cardId);
         if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
-            if (curPlayer.deleteCard(card)) {
-                if (gameSession.setCard(card)) {
+            if (curPlayer.canDeleteCard(card)) {
+                if (gameSession.canSetCard(card)) {
+                    curPlayer.deleteCard(card);
+                    gameSession.setCard(card);
                     gameSession.updateCurStepPlayerId();
                     for (GameUser player : playersList)
                         webSocketService.notifyGameStep(true, "OK", player);

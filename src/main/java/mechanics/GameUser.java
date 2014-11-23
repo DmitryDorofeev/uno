@@ -19,14 +19,21 @@ public class GameUser {
         this.playersCount = playersCount;
     }
 
-    public boolean deleteCard(CardResource card) {
+    public boolean canDeleteCard(CardResource card) {
+        for (CardResource curCard : cards) {
+            if (curCard.getCardId() == card.getCardId())
+                return true;
+        }
+        return false;
+    }
+
+    public void deleteCard(CardResource card) {
         for (CardResource curCard : cards) {
             if (curCard.getCardId() == card.getCardId()) {
                 cards.remove(curCard);
-                return true;
+                return;
             }
         }
-        return false;
     }
 
     public String getMyName() {
