@@ -19,11 +19,9 @@ define([
             this.game.sendCard(model).done(this.stepDone);
         },
         stepDone: function () {
-            console.log('step done');
             if (this.pending !== undefined) {
                 this.remove(this.pending);
                 console.log('remove: ', this.pending);
-                //this.trigger('reset');
             }
         }
     });

@@ -1,6 +1,7 @@
 define([
+    'jquery',
 	'backbone'
-], function(Backbone) {
+], function($, Backbone) {
 	return function(method, model, options) {
         var methodMap = {
             'create': {
@@ -59,6 +60,7 @@ define([
                 error: function () {
                     if (model.has('password')) {
                         model.trigger('login:error');
+                        model.unset('password')
                     }
                     else {
                         model.trigger('logout:error');
@@ -75,10 +77,10 @@ define([
             type: type,
             url: url,
             data: (model instanceof Backbone.Model) ? model.toJSON() : {},
-            success: success,
-            error: error,
             dataType: 'json'
-        });
+        }).done(success).fail(error);
+
+        return xhr;
 	};
 });
 	

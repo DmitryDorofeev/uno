@@ -1,4 +1,4 @@
-require([
+define([
   'backbone',
   'routes'
 ], function (Backbone, router) {

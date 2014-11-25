@@ -9,7 +9,7 @@ define([
     logoutUrl: '/api/v1/auth/logout',
     profileUrl: '/api/v1/profile',
     initialize: function() {
-      this.fetch();
+      this.fetch(); // this.sync('read', this)
     },
     sync: userSync,
     isLogined: function() {

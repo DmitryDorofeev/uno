@@ -21,6 +21,7 @@ define([
     },
     login: function(event) {
       event.preventDefault();
+      this.$error.hide();
       var form = this.$el.find('#login-form');
       this.model.login({
         login: form.find('input[name=login]').val(),
@@ -29,9 +30,11 @@ define([
     },
     renderServerError: function() {
       this.$error.text('Ошибка соединения с сервером');
+      this.$error.show();
     },
     renderLoginError: function(message) {
       this.$error.text(message);
+      this.$error.show();
     },
     show: function () {
       this.trigger('show', this);
@@ -44,7 +47,7 @@ define([
     },
     hide: function () {
         this.$el.hide();
-    },
+    }
   });
 
   return LoginView;

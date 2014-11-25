@@ -1,5 +1,4 @@
 define([
-    'jquery',
     'backbone',
     'views/home',
     'views/game',
@@ -9,7 +8,7 @@ define([
     'views/scoreboard',
     'views/app',
     'models/user'
-], function ($, Backbone, HomeView, GameView, LoginView, SignupView, ProfileView, ScoreboardView, app, userModel) {
+], function (Backbone, HomeView, GameView, LoginView, SignupView, ProfileView, ScoreboardView, app, userModel) {
   
     app.register({
         'home': HomeView,

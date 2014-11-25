@@ -1,15 +1,16 @@
 define([
   'jquery',
   'backbone',
-  'models/score'
-], function($, Backbone, ScoreModel){
+  'models/score',
+  'scoreSync'
+], function($, Backbone, ScoreModel, scoreSync){
 
   var ScoreCollection = Backbone.Collection.extend({
+    sync: scoreSync,
     initialize: function () {
-        this.fetch({reset: true});
+        this.fetch();
     },
-    model: ScoreModel,
-    url: '/api/v1/scoreboard'
+    model: ScoreModel
   });
 
   return new ScoreCollection();
