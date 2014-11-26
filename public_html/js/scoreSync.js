@@ -22,7 +22,18 @@ define([
                 url: '/api/v1/scoreboard',
                 success: function (resp) {
                     if (resp.status === 200) {
-                        model.reset(resp);
+                        model.reset(resp.body);
+                        try {
+                            localStorage['scores'] = JSON.stringify(resp.body);
+                        }
+                        catch (e) {
+                            console.error(e.message);
+                        }
+                    }
+                },
+                error: function () {
+                    if (localStorage && localStorage['scores']) {
+                        model.reset(JSON.parse(localStorage['scores']));
                     }
                 }
             },
