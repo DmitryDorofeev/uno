@@ -3,6 +3,11 @@ define([
 	'backbone'
 ], function($, Backbone) {
 	return function(method, model, options) {
+
+        if ((method === 'create') && !((model.has('email')) && (model.has('password')))) {
+            method = 'update'
+        }
+
         var methodMap = {
             'create': {
                 method: 'POST',

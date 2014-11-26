@@ -9,22 +9,22 @@ define([
     logoutUrl: '/api/v1/auth/logout',
     profileUrl: '/api/v1/profile',
     initialize: function() {
-      this.fetch(); // this.sync('read', this)
+      this.fetch();
     },
     sync: userSync,
     isLogined: function() {
       return (this.has('isLogined'));
     },
     logout: function() {
-        this.sync('update', this);
+        this.save();
     },
     login: function (data) {
         this.set(data);
-        this.sync('update', this);
+        this.save();
     },
     signup: function(data) {
         this.set(data);
-        this.sync('create', this);
+        this.save();
     }
   });
   
