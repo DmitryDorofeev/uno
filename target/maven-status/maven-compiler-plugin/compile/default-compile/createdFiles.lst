@@ -26,7 +26,6 @@ admin\AdminPageServletImpl.class
 db\UserDataSetDAO.class
 resources\CardsResource.class
 frontend\SignUpServletImpl.class
-resources\PortResource.class
 base\SignUpServlet.class
 db\DBServiceImpl.class
 db\UserDataSet.class
