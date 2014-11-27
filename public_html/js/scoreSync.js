@@ -14,7 +14,7 @@ define([
                     }
                 },
                 error: function () {
-                    model.trigger('signup:error');
+
                 }
             },
             'read': {
@@ -32,7 +32,7 @@ define([
                     }
                 },
                 error: function () {
-                    if (localStorage && localStorage['scores']) {
+                    if (window.localStorage && localStorage['scores']) {
                         model.reset(JSON.parse(localStorage['scores']));
                     }
                 }

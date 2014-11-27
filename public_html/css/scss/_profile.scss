@@ -14,20 +14,20 @@
     width: 350px;
     margin: 0 auto;
     margin-top: 20px;
-}
 
-.email__title {
-    float: left;
-    color: #fff;
-    font-size: 18px;
-}
+    &__title {
+         float: left;
+         color: #fff;
+         font-size: 18px;
+     }
 
-.email__value {
-    float: left;
-    color: #eee;
-    font-size: 18px;
-    font-weight: bold;
-    margin-left: 40px;
+    &__value {
+         float: left;
+         color: #eee;
+         font-size: 18px;
+         font-weight: bold;
+         margin-left: 40px;
+     }
 }
 
 .login-field {
@@ -35,18 +35,18 @@
     width: 350px;
     margin: 0 auto;
     margin-top: 20px;
-}
 
-.login__title {
-    float: left;
-    color: #fff;
-    font-size: 18px;
-}
+    &__title {
+        float: left;
+        color: #fff;
+        font-size: 18px;
+    }
 
-.login__input {
-    float: left;
-    color: #c00;
-    font-size: 18px;
-    font-weight: bold;
-    margin-left: 40px;
+    &__input {
+        float: left;
+        color: #c00;
+        font-size: 18px;
+        font-weight: bold;
+        margin-left: 40px;
+    }
 }
