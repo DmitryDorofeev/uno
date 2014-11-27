@@ -18,14 +18,14 @@ public class ResourceSystem {
     protected ResourceSystem() {
         System.out.println("Resources loading started");
 
-        PortResource portResource;
-        if (VFS.exists("resources/port.xml"))
-            portResource = (PortResource) ReadXMLFileSAX.readXML("resources/port.xml");
+        ServerStartResource serverStartResource;
+        if (VFS.exists("resources/server_start.xml"))
+            serverStartResource = (ServerStartResource) ReadXMLFileSAX.readXML("resources/server_start.xml");
         else {
-            System.out.println("File resources/port.xml does not exist");
-            portResource = new PortResource();
+            System.out.println("File resources/server_start.xml does not exist");
+            serverStartResource = new ServerStartResource();
         }
-        resourceMap.put("port", portResource);
+        resourceMap.put("resources/server_start.xml", serverStartResource);
 
         DBConfigResource dbConfigResource;
         if (VFS.exists("resources/db_config.xml"))
@@ -34,7 +34,7 @@ public class ResourceSystem {
             System.out.println("File resources/db_config.xml does not exist");
             dbConfigResource = new DBConfigResource();
         }
-        resourceMap.put("db_config", dbConfigResource);
+        resourceMap.put("resources/db_config.xml", dbConfigResource);
 
         GameParamsResource gameParamsResource;
         if (VFS.exists("resources/game.xml"))
@@ -43,7 +43,7 @@ public class ResourceSystem {
             System.out.println("File resources/game.xml does not exist");
             gameParamsResource = new GameParamsResource();
         }
-        resourceMap.put("game", gameParamsResource);
+        resourceMap.put("resources/game.xml", gameParamsResource);
 
         CardsResource cardsResource = new CardsResource();
         VFS vfs = new VFSImpl("");
@@ -59,7 +59,7 @@ public class ResourceSystem {
                 cardsResource.saveCard(new CardResource());
             }
         }
-        resourceMap.put("cards", cardsResource);
+        resourceMap.put("resources/cards/", cardsResource);
 
         System.out.println("Resources loading finished");
     }
@@ -70,19 +70,19 @@ public class ResourceSystem {
         return resourceSystem;
     }
 
-    public PortResource getPortResource() {
-        return (PortResource)resourceMap.get("port");
+    public ServerStartResource getServerStartResource() {
+        return (ServerStartResource)resourceMap.get("resources/server_start.xml");
     }
 
     public CardsResource getCardsResource() {
-        return (CardsResource)resourceMap.get("cards");
+        return (CardsResource)resourceMap.get("resources/cards/");
     }
 
     public GameParamsResource getGameParamsResource() {
-        return (GameParamsResource)resourceMap.get("game");
+        return (GameParamsResource)resourceMap.get("resources/game.xml");
     }
 
     public DBConfigResource getDBConfigResource() {
-        return (DBConfigResource)resourceMap.get("db_config");
+        return (DBConfigResource)resourceMap.get("resources/db_config.xml");
     }
 }

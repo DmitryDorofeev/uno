@@ -1,13 +1,13 @@
 package resources;
 
-public class PortResource implements Resource {
+public class ServerStartResource implements Resource {
     private int port;
 
-    public PortResource() {
+    public ServerStartResource() {
         setPort(8080);
     }
 
-    public PortResource(int port) {
+    public ServerStartResource(int port) {
         this.setPort(port);
     }
 

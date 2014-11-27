@@ -24,7 +24,7 @@ public class Main {
             System.out.println("Error with db connection!");
             System.exit(1);
         }
-        Server server = new Server(resourceSystem.getPortResource().getPort());
+        Server server = new Server(resourceSystem.getServerStartResource().getPort());
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
         WebSocketService webSocketService = new WebSocketServiceImpl();
