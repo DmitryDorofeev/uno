@@ -18,6 +18,7 @@ public class CustomWebSocketCreator implements WebSocketCreator {
     public CustomWebSocketCreator(AuthService authService,
                                   GameMechanics gameMechanics,
                                   WebSocketService webSocketService) {
+        System.out.println("CustomWebSocketCreator()");
         this.authService = authService;
         this.gameMechanics = gameMechanics;
         this.webSocketService = webSocketService;
@@ -25,6 +26,7 @@ public class CustomWebSocketCreator implements WebSocketCreator {
 
     @Override
     public Object createWebSocket(ServletUpgradeRequest req, ServletUpgradeResponse resp) {
+        System.out.println("createWebSocket()");
         String sessionId = req.getHttpServletRequest().getSession().getId();
         String name = authService.getUserProfile(sessionId).getLogin();
         return new GameWebSocket(name, gameMechanics, webSocketService);

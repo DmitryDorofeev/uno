@@ -22,6 +22,7 @@ public class WebSocketGameServlet extends WebSocketServlet {
     public WebSocketGameServlet(AuthService authService,
                                 GameMechanics gameMechanics,
                                 WebSocketService webSocketService) {
+        System.out.println("WebSocketGameServlet()");
         this.authService = authService;
         this.gameMechanics = gameMechanics;
         this.webSocketService = webSocketService;
@@ -29,6 +30,7 @@ public class WebSocketGameServlet extends WebSocketServlet {
 
     @Override
     public void configure(WebSocketServletFactory factory) {
+        System.out.println("configure()");
         factory.getPolicy().setIdleTimeout(IDLE_TIME);
         factory.setCreator(new CustomWebSocketCreator(authService, gameMechanics, webSocketService));
     }
