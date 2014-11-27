@@ -10,3 +10,4 @@ hs_err_pid*
 public_html/dz.html
 npm-debug.log
 resources/db_config.xml
+uno.iml
