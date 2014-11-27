@@ -1,3 +1,3 @@
 <class type = "resources.ServerStartResource">
-   <port>8080</port>
+   <port>8000</port>
 </class>

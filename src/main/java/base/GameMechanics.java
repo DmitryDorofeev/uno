@@ -7,7 +7,9 @@ import resources.CardResource;
  */
 public interface GameMechanics {
 
-    void addUser(String user, long playersCount);
+    void addUser(String username, long playersCount);
 
-    void gameStep(String user, long cartId);
+    void removeUser(String username);
+
+    void gameStep(String username, long cartId);
 }

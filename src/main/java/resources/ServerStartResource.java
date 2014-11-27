@@ -4,7 +4,7 @@ public class ServerStartResource implements Resource {
     private int port;
 
     public ServerStartResource() {
-        setPort(8080);
+        setPort(8000);
     }
 
     public ServerStartResource(int port) {

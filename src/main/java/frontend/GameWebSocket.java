@@ -135,6 +135,7 @@ public class GameWebSocket {
 
     @OnWebSocketClose
     public void onClose(int statusCode, String reason) {
+        gameMechanics.removeUser(myName);
         webSocketService.removeUser(this);
     }
 }

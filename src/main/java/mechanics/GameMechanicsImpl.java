@@ -21,8 +21,8 @@ public class GameMechanicsImpl implements GameMechanics {
         this.webSocketService = webSocketService;
     }
 
-    public void addUser(String user, long playersCount) {
-        GameUser newUser = new GameUser(user, playersCount);
+    public void addUser(String username, long playersCount) {
+        GameUser newUser = new GameUser(username, playersCount);
         ArrayList<GameUser> tempList = new ArrayList<>();
         tempList.add(newUser);
         Iterator iter = waiters.iterator();
@@ -40,6 +40,10 @@ public class GameMechanicsImpl implements GameMechanics {
         tempList.clear();
     }
 
+    public void removeUser(String username) {
+        //TODO
+    }
+
     public void gameStep(String username, long cardId) {
         GameSession gameSession = getPlayerGame(username);
         ArrayList<GameUser> playersList = gameSession.getPlayersList();
@@ -55,13 +59,12 @@ public class GameMechanicsImpl implements GameMechanics {
                         webSocketService.notifyGameStep(true, "OK", player);
                 }
                 else
-                    for (GameUser player : playersList)
-                        webSocketService.notifyGameStep(false, "You can not put this card!", player);
+                    webSocketService.notifyGameStep(false, "You can not put this card!", curPlayer);
             }
             else
-                for (GameUser player : playersList)
-                    webSocketService.notifyGameStep(false, "Player has not that card!", player);
-        } else
+                webSocketService.notifyGameStep(false, "Player has not that card!", curPlayer);
+        }
+        else
             webSocketService.notifyGameStep(false, "Not your turn!", curPlayer);
     }
 
