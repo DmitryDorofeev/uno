@@ -20,16 +20,6 @@ module.exports = function (grunt) {
                     livereload: true
                 }
             },
-//            requirejs: {
-//                files: [
-//                    'js/**/*.js',
-//                    'js/*.js'
-//                ],
-//                tasks: ['requirejs'],
-//                options: {
-//                    atBegin: true
-//                }
-//            },
             server: {
                 files: [
                     'public_html/js/**/*.js',
@@ -69,7 +59,7 @@ module.exports = function (grunt) {
         requirejs: {
             compile: {
                 options: {
-                    baseUrl: 'js',
+                    baseUrl: 'public_html/js',
                     mainConfigFile: 'public_html/js/config.js',
                     paths: {
                         'requireLib': 'require'
@@ -104,5 +94,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.registerTask('default', ['concurrent']);
+    grunt.registerTask('build', ['fest', 'requirejs']);
 };
 
