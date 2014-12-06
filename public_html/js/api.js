@@ -13,7 +13,6 @@ define([
 
     var _send = function (method, params) {
         params = params || {};
-        var baseUrl = this.baseUrl;
         $.ajax({
             type: method,
             url: sendUrl,

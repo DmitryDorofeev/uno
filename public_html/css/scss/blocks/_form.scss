@@ -1,0 +1,21 @@
+.form {
+  width: 400px;
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 20%;
+  border: 2px solid rgb(160,3,7);
+  border-radius: 2px;
+
+  &__input {
+    width: 390px;
+    height: 30px;
+    border: 1px solid rgb(160,3,7);
+    border-radius: 3px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    outline: none;
+    padding: 0 5px;
+    font-family: $font;
+  }
+
+}

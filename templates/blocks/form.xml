@@ -1,0 +1,16 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <fest:include src="btn.xml"/>
+    <fest:set name="form">
+        <div class="form">
+            <form action="/api/v1/auth/signin" method="POST" id="login-form">
+                <div>
+                    <input type="text" name="login" class="form__input" placeholder="Логин..." required=""/>
+                </div>
+                <div>
+                    <input type="password" name="password" class="form__input" placeholder="Пароль..." required=""/>
+                </div>
+                <fest:get name="btn">{title: 'Войти'}</fest:get>
+            </form>
+        </div>
+    </fest:set>
+</fest:template>

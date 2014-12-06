@@ -1,0 +1,10 @@
+$logoColor: rgb(255, 218, 47);
+.title {
+  display: inline-block;
+  font-size: 70px;
+  margin: 0 auto;
+  margin-top: 130px;
+  color: #D91E18;
+  font-weight: bold;
+  text-shadow: 2px 0 0 $logoColor, -2px 0 0 $logoColor, 0 2px 0 $logoColor, 0 -2px 0 $logoColor, 1px 1px $logoColor, -1px -1px 0 $logoColor, 1px -1px 0 $logoColor, -1px 1px 0 $logoColor;
+}

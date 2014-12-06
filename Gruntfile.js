@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         watch: {
             fest: {
-                files: ['templates/*.xml'],
+                files: ['templates/*.xml', 'templates/**/*.xml'],
                 tasks: ['fest'],
                 options: {
                     atBegin: true,
@@ -13,6 +13,7 @@ module.exports = function (grunt) {
             sass: {
                 files: [
                   'public_html/css/scss/*.scss',
+                  'public_html/css/scss/**/*.scss',
                 ],
                 tasks: ['sass'],
                 options: {

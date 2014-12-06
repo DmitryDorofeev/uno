@@ -1,0 +1,12 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <fest:set name="btn">
+        <fest:choose>
+            <fest:when test="params.href">
+                <a href="{params.href}" class="btn"><fest:value>params.title</fest:value></a>
+            </fest:when>
+            <fest:otherwise>
+                <button class="btn {params.classes &amp;&amp; params.classes.length ? params.classes.join(' ') : ''}"><fest:value>params.title</fest:value></button>
+            </fest:otherwise>
+        </fest:choose>
+    </fest:set>
+</fest:template>

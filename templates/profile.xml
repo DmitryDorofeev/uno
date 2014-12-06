@@ -1,4 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="profile">
+    <fest:include src="blocks/btn.xml"/>
   <div class="profile">
       <div class="profile__title"> Профиль </div> 
         <div class="email-field">
@@ -12,8 +13,8 @@
                     <input type="text" value="{profile.login}"/>
                 </div>
             </div>
-            <button type="submit" class="form__button"> Сохранить </button>  
-            <button type="submit" class="form__button js-logout"> Logout </button>            
+            <fest:get name="btn">{title: 'Сохранить'}</fest:get>
+            <fest:get name="btn">{title: 'Logout', classes: ['js-logout']}</fest:get>
         </form>
   </div>
 </fest:template>
