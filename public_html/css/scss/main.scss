@@ -27,36 +27,6 @@ html, body {
     font-family: Verdana;
 }
 
-.overlay {
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #555;
-    opacity: 0.6;
-    z-index: 99;
-}
-
-
-.preload-text {
-    display: none;
-    position: absolute;
-    width: 600px;
-    top: 53%;
-    left: 50%;
-    margin-left: -300px;
-    font-size: 25px;
-    color: #eee;
-    z-index: 100;
-    text-align: center;
-
-    &__text {
-        display: inline;
-    }
-}
-
 .scoreboard {
     width: 900px;
     margin: 0 auto;

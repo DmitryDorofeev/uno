@@ -1,3 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
+    <fest:include src="blocks/preloader.xml"/>
     <div class="app"></div>
+    <fest:get name="preloader"></fest:get>
 </fest:template>

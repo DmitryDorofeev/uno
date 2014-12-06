@@ -28,6 +28,7 @@ define([
 		sendSettings: function () {
 			this.val = +this.$el.find('.js-select').val();
 			this.trigger('game:connect', this.val);
+			this.hide();
 		}
 	});
 

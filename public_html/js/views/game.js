@@ -65,6 +65,7 @@ define([
       gameSettings.show();
     },
     sendSettings: function (val) {
+        console.log(val);
       this.game.players = val;
       this.game.connect();
     },

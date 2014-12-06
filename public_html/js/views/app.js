@@ -49,8 +49,8 @@ define([
             this.inLoad = true;
             this.$el.find('.overlay').show();
             this.$el.find('.preloader').show();
-            this.$el.find('.js-text').text(text);
-            this.$el.find('.preload-text').show();
+            //this.$el.find('.js-text').text(text);
+            //this.$el.find('.preload-text').show();
         },
         hidePreloader: function () {
             this.inLoad = false;
