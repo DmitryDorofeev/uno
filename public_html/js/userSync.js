@@ -1,7 +1,11 @@
 define([
     'jquery',
-	'backbone'
-], function($, Backbone) {
+	'backbone',
+    'api'
+], function($, Backbone, API) {
+
+    var api = new API('/api/v1/auth/');
+
 	return function(method, model, options) {
 
         if ((method === 'create') && !((model.has('email')) && (model.has('password')))) {
@@ -10,8 +14,9 @@ define([
 
         var methodMap = {
             'create': {
-                method: 'POST',
-                url: model.signupUrl,
+                send: function () {
+                    return api.send('POST', 'signup', model.toJSON()).done(this.success).fail(this.error);
+                },
                 success: function (resp) {
                     if (resp.status == 200) {
                         model.clear();
@@ -26,8 +31,9 @@ define([
                 }
             },
             'read': {
-                method: 'GET',
-                url: model.profileUrl,
+                send: function () {
+                    api.send('GET', 'profile', model.toJSON()).done(this.success).fail(this.error);
+                },
                 success: function (resp) {
                     if (resp.status === 200) {
                         model.set({
@@ -40,8 +46,14 @@ define([
                 }
             },
             'update': {
-                method: 'POST',
-                url: model.has('password') ? model.loginUrl : model.logoutUrl,
+                send: function () {
+                    if (model.has('password')) {
+                        api.send('POST', 'signin', model.toJSON()).done(this.success).fail(this.error);
+                    }
+                    else {
+                        api.send('POST', 'logout', model.toJSON()).done(this.success).fail(this.error);
+                    }
+                },
                 success: function (resp) {
                     if (model.has('password')) {
                         if (resp.status === 200) {
@@ -73,19 +85,7 @@ define([
                 }
             }
         };
-        var type = methodMap[method].method,
-	            url = methodMap[method].url,
-	            success = methodMap[method].success,
-	            error = methodMap[method].error;
-	        
-        var xhr = $.ajax({
-            type: type,
-            url: url,
-            data: (model instanceof Backbone.Model) ? model.toJSON() : {},
-            dataType: 'json'
-        }).done(success).fail(error);
-
-        return xhr;
+        return methodMap[method].send();
 	};
 });
 	

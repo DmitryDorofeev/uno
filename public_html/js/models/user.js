@@ -4,10 +4,6 @@ define([
     'userSync'
 ], function($, Backbone, userSync) {
   var UserModel = Backbone.Model.extend({
-    loginUrl: '/api/v1/auth/signin',
-    signupUrl: '/api/v1/auth/signup',
-    logoutUrl: '/api/v1/auth/logout',
-    profileUrl: '/api/v1/profile',
     initialize: function() {
       this.fetch();
     },
