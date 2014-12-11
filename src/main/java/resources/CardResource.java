@@ -32,6 +32,16 @@ public class CardResource {
         setY(y);
     }
 
+    public void setAllParams (int cardId, String color, int num, int width, int height, int x, int y) {
+        setCardId(cardId);
+        setColor(color);
+        setNum(num);
+        setWidth(width);
+        setHeight(height);
+        setX(x);
+        setY(y);
+    }
+
     public int getCardId() {
         return cardId;
     }

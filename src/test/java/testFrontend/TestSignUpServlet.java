@@ -21,7 +21,13 @@ public class TestSignUpServlet {
     public static UserProfile testUsers[] = new UserProfileImpl[5];
     SignUpServlet testSignUpServlet = new SignUpServletImpl(new AuthServiceImpl());
     final private static HttpServletRequest testRequest = mock(HttpServletRequest.class);
-    private Response testResponse = new Response.;
+//    public class ResponseHttp {
+//        private String status = new String();
+//        private String login = new String();
+////    private String status = new String();
+//
+//    };
+    private HttpServletResponse testResponse = mock(HttpServletResponse.class);
 
     @BeforeClass
     public void initTestValues() {
@@ -34,6 +40,7 @@ public class TestSignUpServlet {
 
     @Test
     public void testDoPost() throws Exception {
+        //when(testResponse.getWriter()).thenReturn(jsonObj.toJSONString());
         for (int i = 0; i < 5; ++i) {
             when(testRequest.getParameter("login")).thenReturn(testUsers[i].getLogin());
             when(testRequest.getParameter("email")).thenReturn(testUsers[i].getEmail());
