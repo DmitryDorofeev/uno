@@ -13,4 +13,12 @@
   font-size: 21px;
   cursor: pointer;
   outline: none;
+
+  @include respond(phone) {
+    display: inline-block;
+    margin: 10px 0 0 0;
+    max-width: 300px;
+    width: 100%;
+    min-width: 200px;
+  }
 }

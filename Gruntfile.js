@@ -13,12 +13,22 @@ module.exports = function (grunt) {
             sass: {
                 files: [
                   'public_html/css/scss/*.scss',
-                  'public_html/css/scss/**/*.scss',
+                  'public_html/css/scss/**/*.scss'
                 ],
-                tasks: ['sass'],
+                tasks: ['sass:dist'],
                 options: {
                     atBegin: true,
                     livereload: true
+                }
+            },
+            sassJ: {
+                files: [
+                    'public_html/joystick/css/scss/*.scss',
+                    'public_html/joystick/css/scss/**/*.scss'
+                ],
+                tasks: ['sass:joystick'],
+                options: {
+                    atBegin: true
                 }
             },
             server: {
@@ -54,6 +64,11 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     'public_html/css/main.css': 'public_html/css/scss/main.scss'
+                }
+            },
+            joystick: {
+                files: {
+                    'public_html/joystick/css/main.css': 'public_html/joystick/css/scss/main.scss'
                 }
             }
         },

@@ -1,0 +1,46 @@
+.cards-wrap {
+
+}
+
+.cards {
+  position: absolute;
+  overflow: hidden;
+  z-index: 10;
+  bottom: 0;
+  width: 860px;
+  left: 50%;
+  margin-left: -430px;
+  padding: 30px;
+
+  @include respond(phone) {
+    width: 100%;
+  }
+  &__card {
+    background-image: url(/images/cards.png);
+    display: inline-block;
+    cursor: pointer;
+  }
+}
+
+.player-cards {
+  overflow: hidden;
+  &__card {
+    max-width: 97px;
+    min-width: 4px;
+    height: 150px;
+    background-color: rgb(226,227,228);
+    background-image: url("/images/back.png");
+    background-size: auto 100%;
+    background-position: right center;
+    float: left;
+
+    &_first {
+      width: 97px;
+      border-radius: 5px 0 0 5px;
+    }
+
+    &_last {
+      border-radius: 0 5px 5px 0;
+    }
+  }
+}

@@ -19,3 +19,15 @@
   }
 
 }
+
+@media screen and (min-height: 320px) {
+  .form {
+    width: 300px;
+    padding: 60px 10px;
+    border: none;
+
+    &__input {
+      width: 290px;
+    }
+  }
+}

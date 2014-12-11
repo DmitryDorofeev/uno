@@ -1,17 +1,10 @@
 @font-face {
   font-family: 'robotol';
   src: url("/fonts/robotol.ttf"); }
-button {
-  display: inline-block;
-  margin: 100px; }
-
-.game {
-  overflow: hidden;
-  width: 100%;
-  height: 100%; }
-
 .game-settings {
   width: 500px;
+  min-width: 320px;
+  overflow: hidden;
   margin: 0 auto;
   margin-top: 40px;
   z-index: 2; }
@@ -40,6 +33,53 @@ button {
     margin-top: 20px;
     color: #ffffff; }
 
+@media screen and (max-width: 480px) {
+  .game-settings {
+    text-align: center;
+    width: 100%; } }
+.cards {
+  position: absolute;
+  overflow: hidden;
+  z-index: 10;
+  bottom: 0;
+  width: 860px;
+  left: 50%;
+  margin-left: -430px;
+  padding: 30px; }
+  @media screen and (max-width: 480px) {
+    .cards {
+      width: 100%; } }
+  .cards__card {
+    background-image: url(/images/cards.png);
+    display: inline-block;
+    cursor: pointer; }
+
+.player-cards {
+  overflow: hidden; }
+  .player-cards__card {
+    max-width: 97px;
+    min-width: 4px;
+    height: 150px;
+    background-color: #e2e3e4;
+    background-image: url("/images/back.png");
+    background-size: auto 100%;
+    background-position: right center;
+    float: left; }
+    .player-cards__card_first {
+      width: 97px;
+      border-radius: 5px 0 0 5px; }
+    .player-cards__card_last {
+      border-radius: 0 5px 5px 0; }
+
+button {
+  display: inline-block;
+  margin: 100px; }
+
+.game {
+  overflow: hidden;
+  width: 100%;
+  height: 100%; }
+
 .player-wrap {
   position: absolute; }
 
@@ -63,37 +103,6 @@ button {
 .player-wrap:nth-child(4) {
   top: 30%;
   right: 0; }
-
-.player-cards {
-  overflow: hidden; }
-  .player-cards__card {
-    max-width: 97px;
-    min-width: 4px;
-    height: 150px;
-    background-color: #e2e3e4;
-    background-image: url("/images/back.png");
-    background-size: auto 100%;
-    background-position: right center;
-    float: left; }
-    .player-cards__card_first {
-      width: 97px;
-      border-radius: 5px 0 0 5px; }
-    .player-cards__card_last {
-      border-radius: 0 5px 5px 0; }
-
-.cards {
-  position: absolute;
-  overflow: hidden;
-  z-index: 10;
-  bottom: 0;
-  width: 860px;
-  left: 50%;
-  margin-left: -430px;
-  padding: 30px; }
-  .cards__card {
-    background-image: url(/images/cards.png);
-    display: inline-block;
-    cursor: pointer; }
 
 .b-table {
   top: 30%;
@@ -168,6 +177,13 @@ button {
   font-size: 21px;
   cursor: pointer;
   outline: none; }
+  @media screen and (max-width: 480px) {
+    .btn {
+      display: inline-block;
+      margin: 10px 0 0 0;
+      max-width: 300px;
+      width: 100%;
+      min-width: 200px; } }
 
 .title {
   display: inline-block;
@@ -285,6 +301,13 @@ button {
     padding: 0 5px;
     font-family: "robotol", Helvetica, Arial; }
 
+@media screen and (min-height: 320px) {
+  .form {
+    width: 300px;
+    padding: 60px 10px;
+    border: none; }
+    .form__input {
+      width: 290px; } }
 html, body {
   width: 100%;
   height: 100%;
