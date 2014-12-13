@@ -1,3 +1,13 @@
-/**
- * Created by dmitrydorofeev on 11.12.14.
- */
+define(['backbone'], function (Backbone) {
+    var GameModel = Backbone.Model.extend({
+        initialize: function () {
+            //this.ws = new WebSocket('ws://' + location.host + '/joystick');
+        },
+        render: function () {
+
+        }
+    });
+
+    return new GameModel();
+});
+

@@ -1,3 +1,59 @@
+@font-face {
+  font-family: 'robotol';
+  src: url("/fonts/robotol.ttf"); }
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #D91E18;
+  margin: 0;
+  padding: 0; }
 
+.form {
+  width: 400px;
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 20%;
+  border: 2px solid #a00307;
+  border-radius: 2px; }
+  .form__input {
+    width: 390px;
+    height: 30px;
+    border: 1px solid #a00307;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    outline: none;
+    padding: 0 5px;
+    font-family: "robotol", Helvetica, Arial; }
+
+@media screen and (max-width: 480px) {
+  .form {
+    width: 300px;
+    padding: 60px 10px;
+    border: none; }
+    .form__input {
+      width: 290px; } }
+.btn {
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+  background: #CF000F;
+  border: 1px solid #a00307;
+  font-family: "robotol", Helvetica, Arial;
+  border-radius: 2px;
+  padding: 10px 0;
+  margin-top: 10px;
+  color: #EEEccc;
+  text-decoration: none;
+  font-size: 21px;
+  cursor: pointer;
+  outline: none; }
+  @media screen and (max-width: 480px) {
+    .btn {
+      display: inline-block;
+      margin: 10px 0 0 0;
+      max-width: 300px;
+      width: 100%;
+      min-width: 200px; } }
 
 /*# sourceMappingURL=main.css.map */

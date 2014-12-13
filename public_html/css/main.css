@@ -301,7 +301,7 @@ button {
     padding: 0 5px;
     font-family: "robotol", Helvetica, Arial; }
 
-@media screen and (min-height: 320px) {
+@media screen and (max-width: 480px) {
   .form {
     width: 300px;
     padding: 60px 10px;

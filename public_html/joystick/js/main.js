@@ -1,4 +1,13 @@
 define(function (require) {
-    var login = require('views/login');
-    var ws = new WebSocket('ws://' + location.host + '/joystick');
+    var userModel = require('models/user'),
+        login = require('views/login'),
+        game = require('views/game');
+
+    if (userModel.isLogined()) {
+        game.render().show();
+    }
+    else {
+        $('body').html(login.render().$el);
+    }
+
 });

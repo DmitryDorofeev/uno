@@ -12,11 +12,10 @@ define([
     }
 
     var _send = function (method, params) {
-        params = params || {};
         $.ajax({
             type: method,
             url: sendUrl,
-            data: params,
+            data: params || {},
             dataType: 'json'
         }).done(function (data) {
             if (data.status === 100) {
