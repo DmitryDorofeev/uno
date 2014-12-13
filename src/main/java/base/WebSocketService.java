@@ -13,11 +13,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public interface WebSocketService {
 
-    void addUser(GameWebSocket user);
+    void addUser(GameWebSocket user, String extra);
 
-    boolean checkUser(String name);
-
-    void removeUser(GameWebSocket user);
+    void removeUser(GameWebSocket user, String extra);
 
     void notifyStartGame(GameUser user);
 

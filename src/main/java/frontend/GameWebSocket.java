@@ -24,6 +24,7 @@ public class GameWebSocket {
     private Session session;
     private GameMechanics gameMechanics;
     private WebSocketService webSocketService;
+    private String extra;
 
     public GameWebSocket(String myName, GameMechanics gameMechanics, WebSocketService webSocketService) {
         System.out.println("GameWebSocket()");
@@ -117,7 +118,7 @@ public class GameWebSocket {
             JSONObject jsonBody = new JSONObject();
             jsonObject.put("body", jsonBody);
             jsonBody.put("message", message);
-            if (!message.equals("OK")) {
+            if (message.equals("OK")) {
                 JSONArray jsonCards = new JSONArray();
                 jsonBody.put("cards", jsonCards);
                 for (CardResource card : cards) {
@@ -143,6 +144,8 @@ public class GameWebSocket {
         try {
             JSONObject jsonObject = (JSONObject)new JSONParser().parse(data);
             if (jsonObject.get("type").equals("gameInfo")) {
+                extra = null;
+                webSocketService.addUser(this, null);
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
                 gameMechanics.addUser(myName, (Long)jsonBody.get("players"));
                 return;
@@ -153,6 +156,8 @@ public class GameWebSocket {
                 return;
             }
             if (jsonObject.get("type").equals("joystick")) {
+                extra = "joystick";
+                webSocketService.addUser(this, "joystick");
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
                 if (jsonBody.get("message").equals("init"))
                     gameMechanics.initJoystick(myName);
@@ -167,12 +172,11 @@ public class GameWebSocket {
      public void onOpen(Session session) {
         System.out.println("onOpen()");
         this.session = session;
-        webSocketService.addUser(this);
     }
 
     @OnWebSocketClose
     public void onClose(int statusCode, String reason) {
         gameMechanics.removeUser(myName);
-        webSocketService.removeUser(this);
+        webSocketService.removeUser(this, extra);
     }
 }

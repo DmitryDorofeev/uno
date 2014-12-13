@@ -16,19 +16,18 @@ public class WebSocketServiceImpl implements WebSocketService {
     private Map<String, GameWebSocket> userSockets = new HashMap<>();
     private Map<String, GameWebSocket> joystickSockets = new HashMap<>();
 
-    public void addUser(GameWebSocket user) {
-        if (!userSockets.containsKey(user.getMyName()))
+    public void addUser(GameWebSocket user, String extra) {
+        if (extra == null)
             userSockets.put(user.getMyName(), user);
-        else if (!joystickSockets.containsKey(user.getMyName()))
+        else if (extra.equals("joystick"))
             joystickSockets.put(user.getMyName(), user);
     }
 
-    public boolean checkUser(String name) {
-        return userSockets.containsKey(name);
-    }
-
-    public void removeUser(GameWebSocket user) {
-        userSockets.remove(user.getMyName());
+    public void removeUser(GameWebSocket user, String extra) {
+        if (extra == null)
+            userSockets.remove(user.getMyName());
+        else
+            joystickSockets.remove(user.getMyName());
     }
 
     public void notifyStartGame(GameUser user) {
