@@ -69,8 +69,8 @@ public class GameMechanicsImpl implements GameMechanics {
     }
 
     public void initJoystick(String username) {
-        if (webSocketService.checkUser(username)) {
-            GameSession gameSession = getPlayerGame(username);
+        GameSession gameSession = getPlayerGame(username);
+        if (gameSession != null) {
             GameUser curPlayer = gameSession.getUser(username);
             webSocketService.initJoystick("OK", username, curPlayer.getCardsForJoystick());
         }
