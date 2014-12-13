@@ -47,31 +47,51 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
                        HttpServletResponse response) throws ServletException, IOException {
         final String login = request.getParameter("login");
         final String password = request.getParameter("password");
+        final String extra = request.getParameter("extra");
+        int status;
 
         JSONObject jsonObj = new JSONObject();
         response.setStatus(HttpServletResponse.SC_OK);
+
+        if (extra != null && !extra.equals("joystick")) {
+            jsonObj.put("status", 500);
+            jsonObj.put("message", "Unknown device");
+            response.getWriter().print(jsonObj.toJSONString());
+            return;
+        }
+
         if (!login.isEmpty() && !password.isEmpty()) {
             final String sessionId = request.getSession().getId();
             if (authService.isLoggedIn(sessionId)) {
                 jsonObj.put("status", 500);
-                jsonObj.put("message", "User has already logged in");
+                if (extra == null)
+                    jsonObj.put("message", "User has already logged in");
+                else
+                    jsonObj.put("message", "Joystick for that user has already been activated");
                 response.getWriter().print(jsonObj.toJSONString());
                 return;
             }
-            if (authService.signIn(sessionId, login, password)) {
-                jsonObj.put("status", 200);
-                UserProfile user = authService.getUserProfile(sessionId);
-                jsonObj.put("login", user.getLogin());
-                jsonObj.put("email", user.getEmail());
-                response.getWriter().print(jsonObj.toJSONString());
-                return;
+            status = authService.signIn(sessionId, login, password, extra);
+            switch (status) {
+                case 200:
+                    jsonObj.put("status", 200);
+                    UserProfile user = authService.getUserProfile(sessionId);
+                    jsonObj.put("login", user.getLogin());
+                    jsonObj.put("email", user.getEmail());
+                    break;
+                case 403:
+                    jsonObj.put("status", 500);
+                    jsonObj.put("message", "Wrong login or password");
+                    break;
+                case 404:
+                    jsonObj.put("message", "User has not logged in yet");
+                    break;
             }
-            jsonObj.put("status", 500);
-            jsonObj.put("message", "Wrong login or password!");
             response.getWriter().print(jsonObj.toJSONString());
             return;
         }
         jsonObj.put("status", 500);
         jsonObj.put("message", "Not all fields are filled");
+        response.getWriter().print(jsonObj.toJSONString());
     }
 }
