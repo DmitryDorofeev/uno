@@ -4,20 +4,10 @@ import static org.junit.Assert.*;
 
 import base.AuthService;
 import db.*;
-import org.hibernate.*;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import frontend.AuthServiceImpl;
-import resources.ResourceSystem;
-
-import java.beans.Statement;
-import java.sql.*;
 
 /**
  * Created by К on 30.10.2014.
@@ -71,14 +61,14 @@ public class TestAuthService {
     public void testSignIn() {
         initSignUp();
         long usersBT = testAuthService.getAmountOfUsersOnline();
-        assertEquals("No such user " + testUsers[2].getLogin(), false, testAuthService.signIn("1", testUsers[2].getLogin(), testUsers[2].getPass(), null));
-        assertEquals("No such user", false, testAuthService.signIn("2", testUsers[4].getLogin(), testUsers[4].getPass(), null));
-        assertEquals("No logined: password is empty", false, testAuthService.signIn("3", testUsers[5].getLogin(), testUsers[5].getPass(), null));
-        assertEquals("No logined: login is empty", false, testAuthService.signIn("4", testUsers[6].getLogin(), testUsers[6].getPass(), null));
-        assertEquals("Logined " + testUsers[3].getLogin(), true, testAuthService.signIn("5", testUsers[3].getLogin(), testUsers[3].getPass(), null));
-        assertEquals("Logined " + testUsers[8].getLogin() + "session 7", true, testAuthService.signIn("7", testUsers[8].getLogin(), testUsers[8].getPass(), null));
-        assertEquals("Already logined " + testUsers[8].getLogin(), false, testAuthService.signIn("7", testUsers[8].getLogin(), testUsers[8].getPass(), null));
-        assertEquals("Logined " + testUsers[8].getLogin() + "session 11", true, testAuthService.signIn("11", testUsers[8].getLogin(), testUsers[8].getPass(), null));
+        assertEquals("No such user " + testUsers[2].getLogin(), 403, testAuthService.signIn("1", testUsers[2].getLogin(), testUsers[2].getPass(), null));
+        assertEquals("No such user", 403, testAuthService.signIn("2", testUsers[4].getLogin(), testUsers[4].getPass(), null));
+        assertEquals("No logined: password is empty", 403, testAuthService.signIn("3", testUsers[5].getLogin(), testUsers[5].getPass(), null));
+        assertEquals("No logined: login is empty", 403, testAuthService.signIn("4", testUsers[6].getLogin(), testUsers[6].getPass(), null));
+        assertEquals("Logined " + testUsers[3].getLogin(), 200, testAuthService.signIn("5", testUsers[3].getLogin(), testUsers[3].getPass(), null));
+        assertEquals("Logined " + testUsers[8].getLogin() + "session 7", 200, testAuthService.signIn("7", testUsers[8].getLogin(), testUsers[8].getPass(), null));
+        assertEquals("Already logined " + testUsers[8].getLogin(), 403, testAuthService.signIn("7", testUsers[8].getLogin(), testUsers[8].getPass(), null));
+        assertEquals("Logined " + testUsers[8].getLogin() + "session 11", 200, testAuthService.signIn("11", testUsers[8].getLogin(), testUsers[8].getPass(), null));
         assertEquals(usersBT + 2, testAuthService.getAmountOfUsersOnline());
     }
 
