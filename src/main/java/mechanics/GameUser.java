@@ -85,4 +85,15 @@ public class GameUser {
     public void setFocusOnCard(int focusOnCard) {
         this.focusOnCard = focusOnCard;
     }
+
+    public long getFocusedCardId() {
+        return cards.get(focusOnCard).getCardId();
+    }
+
+    public void updateFocusOnCard(String direction) {
+        if (direction.equals("right"))
+            focusOnCard = (focusOnCard + 1) % cards.size();
+        else if (direction.equals("left"))
+            focusOnCard = (focusOnCard == 0) ? cards.size() - 1 : focusOnCard - 1;
+    }
 }

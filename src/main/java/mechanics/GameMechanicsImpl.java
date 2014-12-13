@@ -72,10 +72,31 @@ public class GameMechanicsImpl implements GameMechanics {
         GameSession gameSession = getPlayerGame(username);
         if (gameSession != null) {
             GameUser curPlayer = gameSession.getUser(username);
-            webSocketService.initJoystick("OK", username, curPlayer.getCardsForJoystick());
+            webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username, curPlayer.getCardsForJoystick());
         }
         else
-            webSocketService.initJoystick("Player has not started game yet", username, null);
+            webSocketService.notifyAndSendCardsToJoystick(false, null, "Player has not started game yet", username, null);
+    }
+
+    public void stepByJoystick(String username, String action) {
+        GameSession gameSession = getPlayerGame(username);
+        GameUser curPlayer = gameSession.getUser(username);
+        switch (action) {
+            case "selectRightCard":
+                curPlayer.updateFocusOnCard("right");
+                webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username, curPlayer.getCardsForJoystick());
+                break;
+            case "selectLeftCard":
+                curPlayer.updateFocusOnCard("left");
+                webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username, curPlayer.getCardsForJoystick());
+                break;
+            case "throwCard":
+                gameStep(username, curPlayer.getFocusedCardId());
+                break;
+            case "getCards":
+            /* TODO */
+                break;
+        }
     }
 
     private GameSession getPlayerGame(String login) {

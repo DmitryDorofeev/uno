@@ -111,14 +111,15 @@ public class GameWebSocket {
         }
     }
 
-    public void initJoystick(String message, List<CardResource> cards) {
+    public void sendCardsToJoystick(boolean correct, String message, List<CardResource> cards) {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("type", "start");
+            jsonObject.put("type", "cards");
             JSONObject jsonBody = new JSONObject();
             jsonObject.put("body", jsonBody);
+            jsonBody.put("correct", correct);
             jsonBody.put("message", message);
-            if (message.equals("OK")) {
+            if (correct) {
                 JSONArray jsonCards = new JSONArray();
                 jsonBody.put("cards", jsonCards);
                 for (CardResource card : cards) {
@@ -159,8 +160,11 @@ public class GameWebSocket {
                 extra = "joystick";
                 webSocketService.addUser(this, "joystick");
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                if (jsonBody.get("message").equals("init"))
+                if (jsonBody.get("message").equals("init")) {
                     gameMechanics.initJoystick(myName);
+                    return;
+                }
+                gameMechanics.stepByJoystick(myName, (String)jsonBody.get("message"));
             }
         }
         catch (ParseException e) {

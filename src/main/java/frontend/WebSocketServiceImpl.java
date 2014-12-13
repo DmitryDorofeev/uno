@@ -44,10 +44,18 @@ public class WebSocketServiceImpl implements WebSocketService {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
         gameWebSocket.gameStep(correct, message, user.getGameSession().getCurStepPlayerId(),
                 user.getGameSession().getCard(), user.getGameSession().getDirection());
+        if (joystickSockets.containsKey(user.getMyName())) {
+            gameWebSocket = joystickSockets.get(user.getMyName());
+            gameWebSocket.sendCardsToJoystick(correct, message, user.getCardsForJoystick());
+        }
     }
 
-    public void initJoystick(String message, String username, List<CardResource> cards) {
-        GameWebSocket gameWebSocket = joystickSockets.get(username);
-        gameWebSocket.initJoystick(message, cards);
+    public void notifyAndSendCardsToJoystick(boolean correct, GameUser user, String message, String username, List<CardResource> cards) {
+        GameWebSocket gameWebSocket = userSockets.get(username);
+        gameWebSocket.gameStep(correct, message, user.getGameSession().getCurStepPlayerId(),
+                user.getGameSession().getCard(), user.getGameSession().getDirection());
+        gameWebSocket = joystickSockets.get(username);
+        gameWebSocket.sendCardsToJoystick(correct, message, cards);
+
     }
 }
