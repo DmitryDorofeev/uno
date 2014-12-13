@@ -1,10 +1,12 @@
 require([
     'qunit',
     'tests/userModel',
-    'tests/cards'
-], function (qunit, userTest, cards) {
+    'tests/cards',
+    'tests/game'
+], function (qunit, userTest, cards, gameTest) {
     userTest.run();
     cards.run();
+    gameTest.run();
     qunit.load();
     qunit.start();
 });
