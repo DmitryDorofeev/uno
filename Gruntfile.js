@@ -49,6 +49,12 @@ module.exports = function (grunt) {
                     cwd: 'templates',
                     src: '*.xml',
                     dest: 'public_html/js/tmpl'
+                },
+                {
+                    expand: true,
+                    cwd: 'templates/joystick',
+                    src: '*.xml',
+                    dest: 'public_html/js/tmpl/joystick'
                 }],
                 options: {
                     template: function (data) {
