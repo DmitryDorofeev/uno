@@ -68,7 +68,17 @@ public class GameMechanicsImpl implements GameMechanics {
             webSocketService.notifyGameStep(false, "Not your turn!", curPlayer);
     }
 
-    public GameSession getPlayerGame(String login) {
+    public void initJoystick(String username) {
+        if (webSocketService.checkUser(username)) {
+            GameSession gameSession = getPlayerGame(username);
+            GameUser curPlayer = gameSession.getUser(username);
+            webSocketService.initJoystick("OK", username, curPlayer.getCardsForJoystick());
+        }
+        else
+            webSocketService.initJoystick("Player has not started game yet", username, null);
+    }
+
+    private GameSession getPlayerGame(String login) {
         return playerGame.get(login);
     }
 

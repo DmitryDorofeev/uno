@@ -15,6 +15,8 @@ public interface WebSocketService {
 
     void addUser(GameWebSocket user);
 
+    boolean checkUser(String name);
+
     void removeUser(GameWebSocket user);
 
     void notifyStartGame(GameUser user);
@@ -22,4 +24,6 @@ public interface WebSocketService {
     void sendStartCards(GameUser user);
 
     void notifyGameStep(boolean correct, String message, GameUser user);
+
+    void initJoystick(String message, String username, List<CardResource> cards);
 }

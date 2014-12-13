@@ -12,4 +12,6 @@ public interface GameMechanics {
     void removeUser(String username);
 
     void gameStep(String username, long cartId);
+
+    void initJoystick(String myName);
 }

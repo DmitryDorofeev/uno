@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import resources.CardResource;
+import resources.ResourceSystem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +110,34 @@ public class GameWebSocket {
         }
     }
 
+    public void initJoystick(String message, List<CardResource> cards) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type", "start");
+            JSONObject jsonBody = new JSONObject();
+            jsonObject.put("body", jsonBody);
+            jsonBody.put("message", message);
+            if (!message.equals("OK")) {
+                JSONArray jsonCards = new JSONArray();
+                jsonBody.put("cards", jsonCards);
+                for (CardResource card : cards) {
+                    JSONObject jsonCard = new JSONObject();
+                    jsonCard.put("cardId", card.getCardId());
+                    jsonCard.put("x", card.getX());
+                    jsonCard.put("y", card.getY());
+                    jsonCard.put("width", card.getWidth());
+                    jsonCard.put("height", card.getHeight());
+                    jsonCards.add(jsonCard);
+                }
+            }
+            System.out.println(jsonObject.toJSONString());
+            session.getRemote().sendString(jsonObject.toJSONString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @OnWebSocketMessage
     public void onMessage(String data) throws ParseException {
         try {
@@ -121,6 +150,12 @@ public class GameWebSocket {
             if (jsonObject.get("type").equals("card")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
                 gameMechanics.gameStep(myName, (Long)jsonBody.get("cardId"));
+                return;
+            }
+            if (jsonObject.get("type").equals("joystick")) {
+                JSONObject jsonBody = (JSONObject)jsonObject.get("body");
+                if (jsonBody.get("message").equals("init"))
+                    gameMechanics.initJoystick(myName);
             }
         }
         catch (ParseException e) {
