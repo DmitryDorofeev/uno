@@ -24,10 +24,6 @@ import java.io.PrintWriter;
 public class TestSignUpServlet {
     public static UserProfile testUsers[] = new UserProfileImpl[6];
     SignUpServlet testSignUpServlet = new SignUpServletImpl(new AuthServiceImpl());
-//    final private static HttpServletRequest testRequest = mock(HttpServletRequest.class);
-//    private HttpServletResponse testResponse = mock(HttpServletResponse.class);
-//    private PrintWriter testPrintWriter = mock(PrintWriter.class);
-//    ArgumentCaptor<String> jsonStringArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
     @BeforeClass
     public static void initTestValues() {
