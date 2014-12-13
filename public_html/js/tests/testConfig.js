@@ -5,7 +5,8 @@ require.config({
         'underscore': 'lib/underscore',
         'backbone': 'lib/backbone',
         'qunit': 'lib/qunit',
-        'mockjax': 'lib/jquery.mockjax'
+        'mockjax': 'lib/jquery.mockjax',
+        'mock-socket': 'lib/mock-socket'
     },
     shim: {
         'backbone': {
@@ -24,7 +25,10 @@ require.config({
         },
         'mockjax': {
             deps: ['jquery']
-        } 
+        },
+        'mock-socket': {
+            exports: 'mock-socket'
+        }
     }
 });
 
