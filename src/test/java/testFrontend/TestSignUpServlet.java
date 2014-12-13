@@ -5,53 +5,165 @@ import base.UserProfile;
 import db.UserProfileImpl;
 import frontend.AuthServiceImpl;
 import frontend.SignUpServletImpl;
-import org.eclipse.jetty.server.Response;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.json.simple.JSONObject;
+import org.junit.*;
+import static org.junit.Assert.*;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 
 import static org.mockito.Mockito.*;
+import org.mockito.ArgumentCaptor;
+
+import java.io.PrintWriter;
+
 /**
  * Created by К on 20.11.2014.
  */
 public class TestSignUpServlet {
-    public static UserProfile testUsers[] = new UserProfileImpl[5];
+    public static UserProfile testUsers[] = new UserProfileImpl[6];
     SignUpServlet testSignUpServlet = new SignUpServletImpl(new AuthServiceImpl());
-    final private static HttpServletRequest testRequest = mock(HttpServletRequest.class);
-//    public class ResponseHttp {
-//        private String status = new String();
-//        private String login = new String();
-////    private String status = new String();
-//
-//    };
-    private HttpServletResponse testResponse = mock(HttpServletResponse.class);
+//    final private static HttpServletRequest testRequest = mock(HttpServletRequest.class);
+//    private HttpServletResponse testResponse = mock(HttpServletResponse.class);
+//    private PrintWriter testPrintWriter = mock(PrintWriter.class);
+//    ArgumentCaptor<String> jsonStringArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
     @BeforeClass
-    public void initTestValues() {
+    public static void initTestValues() {
         testUsers[0] = new UserProfileImpl("","123qaz!", "nologin");
         testUsers[1] = new UserProfileImpl("nopswd","", "nopassword");
         testUsers[2] = new UserProfileImpl("noemail","12345qaz!", "");
         testUsers[3] = new UserProfileImpl("test","test", "test");
-        testUsers[4] = new UserProfileImpl("testnouser","testnouser", "testnouser");
+        testUsers[4] = new UserProfileImpl("test","test", "test");
     }
 
     @Test
-    public void testDoPost() throws Exception {
-        //when(testResponse.getWriter()).thenReturn(jsonObj.toJSONString());
-        for (int i = 0; i < 5; ++i) {
-            when(testRequest.getParameter("login")).thenReturn(testUsers[i].getLogin());
-            when(testRequest.getParameter("email")).thenReturn(testUsers[i].getEmail());
-            when(testRequest.getParameter("password")).thenReturn(testUsers[i].getPass());
+    public void nologinDoPost() throws Exception {
+        HttpServletRequest testRequest = mock(HttpServletRequest.class);
+        HttpServletResponse testResponse = mock(HttpServletResponse.class);
+        PrintWriter testPrintWriter = mock(PrintWriter.class);
+        ArgumentCaptor<String> jsonStringArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-            testSignUpServlet.doPost(testRequest, testResponse);
-        }
+        when(testResponse.getWriter()).thenReturn(testPrintWriter);
+        when(testRequest.getParameter("login")).thenReturn(testUsers[0].getLogin());
+        when(testRequest.getParameter("email")).thenReturn(testUsers[0].getEmail());
+        when(testRequest.getParameter("password")).thenReturn(testUsers[0].getPass());
 
-        verify(testRequest, times(5)).getParameter("login");
-        verify(testRequest, times(5)).getParameter("email");
-        verify(testRequest, times(5)).getParameter("password");
+        testSignUpServlet.doPost(testRequest, testResponse);
+        verify(testResponse.getWriter()).print(jsonStringArgumentCaptor.capture());
+
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("status", 500);
+        jsonObj.put("message", "Not all fields are filled");
+
+        assertEquals("Asserting server status for " + testUsers[0].getLogin(), jsonObj.toJSONString(), jsonStringArgumentCaptor.getValue());
+
+        verify(testRequest).getParameter("login");
+        verify(testRequest).getParameter("email");
+        verify(testRequest).getParameter("password");
     }
 
+    @Test
+    public void nopassDoPost() throws Exception {
+        HttpServletRequest testRequest = mock(HttpServletRequest.class);
+        HttpServletResponse testResponse = mock(HttpServletResponse.class);
+        PrintWriter testPrintWriter = mock(PrintWriter.class);
+        ArgumentCaptor<String> jsonStringArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        when(testResponse.getWriter()).thenReturn(testPrintWriter);
+        when(testRequest.getParameter("login")).thenReturn(testUsers[1].getLogin());
+        when(testRequest.getParameter("email")).thenReturn(testUsers[1].getEmail());
+        when(testRequest.getParameter("password")).thenReturn(testUsers[1].getPass());
+
+        testSignUpServlet.doPost(testRequest, testResponse);
+        verify(testResponse.getWriter()).print(jsonStringArgumentCaptor.capture());
+
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("status", 500);
+        jsonObj.put("message", "Not all fields are filled");
+
+        assertEquals("Asserting server status for " + testUsers[1].getLogin(), jsonObj.toJSONString(), jsonStringArgumentCaptor.getValue());
+
+        verify(testRequest).getParameter("login");
+        verify(testRequest).getParameter("email");
+        verify(testRequest).getParameter("password");
+    }
+
+    @Test
+    public void noemailDoPost() throws Exception {
+        HttpServletRequest testRequest = mock(HttpServletRequest.class);
+        HttpServletResponse testResponse = mock(HttpServletResponse.class);
+        PrintWriter testPrintWriter = mock(PrintWriter.class);
+        ArgumentCaptor<String> jsonStringArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        when(testResponse.getWriter()).thenReturn(testPrintWriter);
+        when(testRequest.getParameter("login")).thenReturn(testUsers[2].getLogin());
+        when(testRequest.getParameter("email")).thenReturn(testUsers[2].getEmail());
+        when(testRequest.getParameter("password")).thenReturn(testUsers[2].getPass());
+
+        testSignUpServlet.doPost(testRequest, testResponse);
+        verify(testResponse.getWriter()).print(jsonStringArgumentCaptor.capture());
+
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("status", 500);
+        jsonObj.put("message", "Not all fields are filled");
+
+        assertEquals("Asserting server status for " + testUsers[2].getLogin(), jsonObj.toJSONString(), jsonStringArgumentCaptor.getValue());
+
+        verify(testRequest).getParameter("login");
+        verify(testRequest).getParameter("email");
+        verify(testRequest).getParameter("password");
+    }
+
+    @Test
+    public void goodDoPost() throws Exception {
+        HttpServletRequest testRequest = mock(HttpServletRequest.class);
+        HttpServletResponse testResponse = mock(HttpServletResponse.class);
+        PrintWriter testPrintWriter = mock(PrintWriter.class);
+        ArgumentCaptor<String> jsonStringArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        when(testResponse.getWriter()).thenReturn(testPrintWriter);
+        when(testRequest.getParameter("login")).thenReturn(testUsers[3].getLogin());
+        when(testRequest.getParameter("email")).thenReturn(testUsers[3].getEmail());
+        when(testRequest.getParameter("password")).thenReturn(testUsers[3].getPass());
+
+        testSignUpServlet.doPost(testRequest, testResponse);
+        verify(testResponse.getWriter()).print(jsonStringArgumentCaptor.capture());
+
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("status", 200);
+
+        assertEquals("Asserting server status for " + testUsers[3].getLogin(), jsonObj.toJSONString(), jsonStringArgumentCaptor.getValue());
+
+        verify(testRequest).getParameter("login");
+        verify(testRequest).getParameter("email");
+        verify(testRequest).getParameter("password");
+    }
+
+    @Test
+    public void replyDoPost() throws Exception {
+        HttpServletRequest testRequest = mock(HttpServletRequest.class);
+        HttpServletResponse testResponse = mock(HttpServletResponse.class);
+        PrintWriter testPrintWriter = mock(PrintWriter.class);
+        ArgumentCaptor<String> jsonStringArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        when(testResponse.getWriter()).thenReturn(testPrintWriter);
+        when(testRequest.getParameter("login")).thenReturn(testUsers[4].getLogin());
+        when(testRequest.getParameter("email")).thenReturn(testUsers[4].getEmail());
+        when(testRequest.getParameter("password")).thenReturn(testUsers[4].getPass());
+
+        testSignUpServlet.doPost(testRequest, testResponse);
+        verify(testResponse.getWriter()).print(jsonStringArgumentCaptor.capture());
+
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("status", 500);
+        jsonObj.put("message", "Player with login " + testUsers[4].getLogin() + " is already registered");
+
+        assertEquals("Asserting server status for " + testUsers[4].getLogin(), jsonObj.toJSONString(), jsonStringArgumentCaptor.getValue());
+
+        verify(testRequest).getParameter("login");
+        verify(testRequest).getParameter("email");
+        verify(testRequest).getParameter("password");
+    }
 }

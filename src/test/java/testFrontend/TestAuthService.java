@@ -5,23 +5,11 @@ import static org.junit.Assert.*;
 import base.AuthService;
 import base.UserProfile;
 import db.DBService;
-import db.GameDataSet;
-import db.UserDataSet;
-import org.hibernate.*;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import db.UserProfileImpl;
 import frontend.AuthServiceImpl;
-import resources.ResourceSystem;
-
-import java.beans.Statement;
-import java.sql.*;
 
 /**
  * Created by К on 30.10.2014.

@@ -51,7 +51,7 @@ public class TestCardsResources {
             assertEquals("Adding card first time" + i, true, testCardsResource.saveCard(testCards[0]));
         }
         assertEquals("Cards' count is " + testCardsResource.CardsCount(), 108, testCardsResource.CardsCount());
-        
+
         assertEquals("Adding card second time with new ID " + testCards[1].getCardId(), false, testCardsResource.saveCard(testCards[1]));
         assertEquals("Cards' count is " + testCardsResource.CardsCount(), 108, testCardsResource.CardsCount());
 
