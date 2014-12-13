@@ -9,7 +9,8 @@ define([
 
     var exampleServer = new WebSocketServer('ws://' + location.host + '/game');
     exampleServer.on('connection', function(server) {
-        server.on('message', function(data) {
+        server.on('message', function(msg) {
+            var data = JSON.parse(msg.data);
             if (data.type === 'card') {
                 setTimeout(function () {
                     server.send(JSON.stringify({
