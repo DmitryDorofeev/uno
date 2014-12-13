@@ -1,8 +1,9 @@
 package testFrontend;
 
 import base.SignUpServlet;
-import base.UserProfile;
-import db.UserProfileImpl;
+import db.DBService;
+import db.DBServiceImpl;
+import db.UserProfile;
 import frontend.AuthServiceImpl;
 import frontend.SignUpServletImpl;
 import org.json.simple.JSONObject;
@@ -22,16 +23,17 @@ import java.io.PrintWriter;
  * Created by К on 20.11.2014.
  */
 public class TestSignUpServlet {
-    public static UserProfile testUsers[] = new UserProfileImpl[6];
-    SignUpServlet testSignUpServlet = new SignUpServletImpl(new AuthServiceImpl());
+    public static UserProfile testUsers[] = new UserProfile[6];
+    DBService dbService = new DBServiceImpl();
+    SignUpServlet testSignUpServlet = new SignUpServletImpl(new AuthServiceImpl(dbService));
 
     @BeforeClass
     public static void initTestValues() {
-        testUsers[0] = new UserProfileImpl("","123qaz!", "nologin");
-        testUsers[1] = new UserProfileImpl("nopswd","", "nopassword");
-        testUsers[2] = new UserProfileImpl("noemail","12345qaz!", "");
-        testUsers[3] = new UserProfileImpl("test","test", "test");
-        testUsers[4] = new UserProfileImpl("test","test", "test");
+        testUsers[0] = new UserProfile("","123qaz!", "nologin");
+        testUsers[1] = new UserProfile("nopswd","", "nopassword");
+        testUsers[2] = new UserProfile("noemail","12345qaz!", "");
+        testUsers[3] = new UserProfile("test","test", "test");
+        testUsers[4] = new UserProfile("test","test", "test");
     }
 
     @Test
