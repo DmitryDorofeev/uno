@@ -22,7 +22,7 @@ import java.sql.*;
 /**
  * Created by К on 30.10.2014.
  */
-public class TestAuthService {
+/*public class TestAuthService {
     public static AuthService testAuthService;
     public static UserProfile testUsers[] = new UserProfile[13];
 
@@ -97,4 +97,4 @@ public class TestAuthService {
         assertEquals("Logout " + testUsers[8].getLogin() + " SessionId 11", true, testAuthService.logOut("11"));
         assertEquals(userBT - 2, testAuthService.getAmountOfUsersOnline());
     }
-}
+}*/

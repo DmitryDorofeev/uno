@@ -52,19 +52,14 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean logOut(String sessionId, String extra) {
-        if (extra == null) {
-            if (isLoggedIn(sessionId)) {
+        if (isLoggedIn(sessionId)) {
+            if (extra == null) {
                 userSessions.remove(sessions.get(sessionId));
                 sessions.remove(sessionId);
-                return true;
             }
-        }
-        else {
-            if (isLoggedIn(sessionId)) {
-                userJoystick.remove(sessions.get(joystickUser.get(sessionId)));
-                joystickUser.remove(sessionId);
-                return true;
-            }
+            userJoystick.remove(sessions.get(joystickUser.get(sessionId)));
+            joystickUser.remove(sessionId);
+            return true;
         }
         return false;
     }
