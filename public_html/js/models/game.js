@@ -71,6 +71,9 @@ define([
 			}
 			this.connection.send(JSON.stringify(output));
 			return stepDfd.promise();
+		},
+		orient: function (event) {
+			console.log(event.alpha);
 		}
 	});
 
