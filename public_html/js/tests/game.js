@@ -28,7 +28,7 @@ define([
 
         module ('Game model test');
         
-        asyncTest('gameModel.', function () {
+        asyncTest('gameModel.sendCard', function () {
             gameModel.connect();
             var cardModel = new CardModel();
             cardModel.set('cardId', 1);
@@ -42,6 +42,5 @@ define([
         });
     }
     return {run: run};
-    }
-);
+});
 
