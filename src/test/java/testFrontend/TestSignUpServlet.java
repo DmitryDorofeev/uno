@@ -1,5 +1,6 @@
 package testFrontend;
 
+import base.AuthService;
 import base.SignUpServlet;
 import db.DBService;
 import db.DBServiceImpl;
@@ -24,8 +25,6 @@ import java.io.PrintWriter;
  */
 public class TestSignUpServlet {
     public static UserProfile testUsers[] = new UserProfile[6];
-    DBService dbService = new DBServiceImpl();
-    SignUpServlet testSignUpServlet = new SignUpServletImpl(new AuthServiceImpl(dbService));
 
     @BeforeClass
     public static void initTestValues() {
@@ -38,6 +37,7 @@ public class TestSignUpServlet {
 
     @Test
     public void nologinDoPost() throws Exception {
+        SignUpServlet testSignUpServlet = new SignUpServletImpl(new AuthServiceImpl(new DBServiceImpl()));
         HttpServletRequest testRequest = mock(HttpServletRequest.class);
         HttpServletResponse testResponse = mock(HttpServletResponse.class);
         PrintWriter testPrintWriter = mock(PrintWriter.class);
@@ -64,6 +64,7 @@ public class TestSignUpServlet {
 
     @Test
     public void nopassDoPost() throws Exception {
+        SignUpServlet testSignUpServlet = new SignUpServletImpl(new AuthServiceImpl(new DBServiceImpl()));
         HttpServletRequest testRequest = mock(HttpServletRequest.class);
         HttpServletResponse testResponse = mock(HttpServletResponse.class);
         PrintWriter testPrintWriter = mock(PrintWriter.class);
@@ -90,6 +91,7 @@ public class TestSignUpServlet {
 
     @Test
     public void noemailDoPost() throws Exception {
+        SignUpServlet testSignUpServlet = new SignUpServletImpl(new AuthServiceImpl(new DBServiceImpl()));
         HttpServletRequest testRequest = mock(HttpServletRequest.class);
         HttpServletResponse testResponse = mock(HttpServletResponse.class);
         PrintWriter testPrintWriter = mock(PrintWriter.class);
@@ -116,6 +118,7 @@ public class TestSignUpServlet {
 
     @Test
     public void goodDoPost() throws Exception {
+        SignUpServlet testSignUpServlet = new SignUpServletImpl(new AuthServiceImpl(new DBServiceImpl()));
         HttpServletRequest testRequest = mock(HttpServletRequest.class);
         HttpServletResponse testResponse = mock(HttpServletResponse.class);
         PrintWriter testPrintWriter = mock(PrintWriter.class);
@@ -141,6 +144,11 @@ public class TestSignUpServlet {
 
     @Test
     public void replyDoPost() throws Exception {
+
+        AuthService test4AuthService = mock(AuthService.class);
+        when(test4AuthService.signUp(testUsers[4])).thenReturn(false);
+        SignUpServlet testSignUpServlet = new SignUpServletImpl(test4AuthService);
+
         HttpServletRequest testRequest = mock(HttpServletRequest.class);
         HttpServletResponse testResponse = mock(HttpServletResponse.class);
         PrintWriter testPrintWriter = mock(PrintWriter.class);

@@ -4,25 +4,15 @@ import static org.junit.Assert.*;
 
 import base.AuthService;
 import db.*;
-import org.hibernate.*;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import frontend.AuthServiceImpl;
-import resources.ResourceSystem;
-
-import java.beans.Statement;
-import java.sql.*;
 
 /**
  * Created by К on 30.10.2014.
  */
-/*public class TestAuthService {
+public class TestAuthService {
     public static AuthService testAuthService;
     public static UserProfile testUsers[] = new UserProfile[13];
 
@@ -33,8 +23,8 @@ import java.sql.*;
     }
 
     public void initSignIn() {
-        testAuthService.signIn("11", testUsers[8].getLogin(), testUsers[8].getPass());
-        testAuthService.signIn("5", testUsers[3].getLogin(), testUsers[3].getPass());
+        testAuthService.signIn("11", testUsers[8].getLogin(), testUsers[8].getPass(), null);
+        testAuthService.signIn("5", testUsers[3].getLogin(), testUsers[3].getPass(), null);
     }
 
     @BeforeClass
@@ -71,14 +61,14 @@ import java.sql.*;
     public void testSignIn() {
         initSignUp();
         long usersBT = testAuthService.getAmountOfUsersOnline();
-        assertEquals("No such user " + testUsers[2].getLogin(), false, testAuthService.signIn("1", testUsers[2].getLogin(), testUsers[2].getPass()));
-        assertEquals("No such user", false, testAuthService.signIn("2", testUsers[4].getLogin(), testUsers[4].getPass()));
-        assertEquals("No logined: password is empty", false, testAuthService.signIn("3", testUsers[5].getLogin(), testUsers[5].getPass()));
-        assertEquals("No logined: login is empty", false, testAuthService.signIn("4", testUsers[6].getLogin(), testUsers[6].getPass()));
-        assertEquals("Logined " + testUsers[3].getLogin(), true, testAuthService.signIn("5", testUsers[3].getLogin(), testUsers[3].getPass()));
-        assertEquals("Logined " + testUsers[8].getLogin() + "session 7", true, testAuthService.signIn("7", testUsers[8].getLogin(), testUsers[8].getPass()));
-        assertEquals("Already logined " + testUsers[8].getLogin(), false, testAuthService.signIn("7", testUsers[8].getLogin(), testUsers[8].getPass()));
-        assertEquals("Logined " + testUsers[8].getLogin() + "session 11", true, testAuthService.signIn("11", testUsers[8].getLogin(), testUsers[8].getPass()));
+        assertEquals("No such user " + testUsers[2].getLogin(), 403, testAuthService.signIn("1", testUsers[2].getLogin(), testUsers[2].getPass(), null));
+        assertEquals("No such user", 403, testAuthService.signIn("2", testUsers[4].getLogin(), testUsers[4].getPass(), null));
+        assertEquals("No logined: password is empty", 403, testAuthService.signIn("3", testUsers[5].getLogin(), testUsers[5].getPass(), null));
+        assertEquals("No logined: login is empty", 403, testAuthService.signIn("4", testUsers[6].getLogin(), testUsers[6].getPass(), null));
+        assertEquals("Logined " + testUsers[3].getLogin(), 200, testAuthService.signIn("5", testUsers[3].getLogin(), testUsers[3].getPass(), null));
+        assertEquals("Logined " + testUsers[8].getLogin() + "session 7", 200, testAuthService.signIn("7", testUsers[8].getLogin(), testUsers[8].getPass(), null));
+        assertEquals("Already logined " + testUsers[8].getLogin(), 403, testAuthService.signIn("7", testUsers[8].getLogin(), testUsers[8].getPass(), null));
+        assertEquals("Logined " + testUsers[8].getLogin() + "session 11", 200, testAuthService.signIn("11", testUsers[8].getLogin(), testUsers[8].getPass(), null));
         assertEquals(usersBT + 2, testAuthService.getAmountOfUsersOnline());
     }
 
@@ -87,14 +77,14 @@ import java.sql.*;
         initSignUp();
         initSignIn();
         long userBT = testAuthService.getAmountOfUsersOnline();
-        assertEquals("No logined user with SessionId 1", false, testAuthService.logOut("1"));
-        assertEquals("No logined user with SessionId 2", false, testAuthService.logOut("2"));
-        assertEquals("No logined user with SessionId 3", false, testAuthService.logOut("3"));
-        assertEquals("No logined user with SessionId 4", false, testAuthService.logOut("4"));
-        assertEquals("Logout " + testUsers[3].getLogin() + " SessionId 5", true, testAuthService.logOut("5"));
-        assertEquals("No logined user with SessionId 6", false, testAuthService.logOut("6"));
-        assertEquals("No logined user with SessionId 7", false, testAuthService.logOut("7"));
-        assertEquals("Logout " + testUsers[8].getLogin() + " SessionId 11", true, testAuthService.logOut("11"));
+        assertEquals("No logined user with SessionId 1", false, testAuthService.logOut("1", null));
+        assertEquals("No logined user with SessionId 2", false, testAuthService.logOut("2", null));
+        assertEquals("No logined user with SessionId 3", false, testAuthService.logOut("3", null));
+        assertEquals("No logined user with SessionId 4", false, testAuthService.logOut("4", null));
+        assertEquals("Logout " + testUsers[3].getLogin() + " SessionId 5", true, testAuthService.logOut("5", null));
+        assertEquals("No logined user with SessionId 6", false, testAuthService.logOut("6", null));
+        assertEquals("No logined user with SessionId 7", false, testAuthService.logOut("7", null));
+        assertEquals("Logout " + testUsers[8].getLogin() + " SessionId 11", true, testAuthService.logOut("11", null));
         assertEquals(userBT - 2, testAuthService.getAmountOfUsersOnline());
     }
-}*/
+}
