@@ -29,7 +29,7 @@ define([
 
         asyncTest('gameModel.sendStartMessage', function () {
             gameModel.connect();
-            listener.listenToOnce(gameModel, 'load:done', function () {
+            listener.listenToOnce(gameModel, 'message:start', function () {
                 start();
                 ok (1===1, 'After sending start recieved load:done');
             });
