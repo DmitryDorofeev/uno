@@ -66,7 +66,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean isLoggedIn(String sessionId) {
-        return sessions.containsKey(sessionId);
+        return sessions.containsKey(sessionId) || joystickUser.containsKey(sessionId);
     }
 
     @Override
