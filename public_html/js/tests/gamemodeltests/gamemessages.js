@@ -11,9 +11,9 @@ define([
     exampleServer.on('connection', function(server) {
         server.on('message', function(msg) {
             var data = JSON.parse(msg.data);
-            if (data.type === 'gameinfo') {
+            if (data.type === 'gameInfo') {
                 server.send(JSON.stringify({
-                    type: 'cards',
+                    type: 'start',
                     body: {}
                 }));
             }
@@ -25,18 +25,15 @@ define([
         var listener = {};
         _.extend(listener, Backbone.Events);
 
-        module ('Sending cards message test');
+        module ('Sending start test');
 
-        asyncTest('gameModel.sendCardsMessage', function () {
-        gameModel.connect();
-            listener.listenToOnce(gameModel, 'cards:render', function () {
+        asyncTest('gameModel.sendStartMessage', function () {
+            gameModel.connect();
+            listener.listenToOnce(gameModel, 'load:done', function () {
                 start();
-                debugger;
-                ok (1===1, 'After sending cards message recieved cards:render');
-                debugger;
+                ok (1===1, 'After sending start recieved load:done');
             });
         });
     };
-
     return {run: run};
 });
