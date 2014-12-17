@@ -132,7 +132,7 @@ public class GameWebSocket {
                     jsonCards.add(jsonCard);
                 }
             }
-            System.out.println(jsonObject.toJSONString());
+            System.out.println(myName + " joystick " + jsonObject.toJSONString());
             session.getRemote().sendString(jsonObject.toJSONString());
         }
         catch (Exception e) {
