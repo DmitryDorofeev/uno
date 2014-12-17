@@ -1,7 +1,7 @@
 define(['backbone'], function (Backbone) {
     var UserModel = Backbone.Model.extend({
         initialize: function () {
-            $.get('/api/v1/auth/profile').done(_.bind(this._fetch, this));
+            $.get('/api/v1/auth/profile?extra=joystick').done(_.bind(this._fetch, this));
         },
         isLogined: function () {
             return this.has('isLogined');
