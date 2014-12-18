@@ -53,6 +53,7 @@ public class GameUser {
         return cards;
     }
 
+    @Deprecated
     public List<CardResource> getCardsForJoystick() {
         int last = focusOnCard + ResourceSystem.instance().getGameParamsResource().getJoystickCardsCount();
         return cards.subList(focusOnCard, last);
