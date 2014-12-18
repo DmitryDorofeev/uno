@@ -10,7 +10,7 @@ define([
         },
         addCards: function (cards) {
             console.log('adding cards', cards.cards);
-            this.add(cards.cards);
+            this.reset(cards.cards);
         },
         sendCard: function (model) {
             this.pending = model;

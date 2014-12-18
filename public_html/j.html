@@ -7,6 +7,13 @@
     <title></title>
 </head>
 <body>
+<div class="preloader"></div>
+<script>
+        new Image().src = 'http://'+location.host+'/images/cards.png';
+        window.addEventListener("orientationchange", function() {
+            window.o = window.orientation;
+        }, false);
+</script>
 <script type="text/javascript" src="js/require.js" data-main="joystick/js/config"></script>
 </body>
 </html>

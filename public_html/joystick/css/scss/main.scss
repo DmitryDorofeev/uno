@@ -1,17 +1,28 @@
 @import "../../../css/scss/variables";
+@import "../../../css/scss/blocks/preloader";
 @import "../../../css/scss/blocks/media";
 @import "../../../css/scss/blocks/page";
 @import "../../../css/scss/blocks/form";
 @import "../../../css/scss/blocks/btn";
 @import "../../../css/scss/blocks/cards";
 
+html, body {
+  overflow: hidden;
+}
+
 .cards {
-  position: relative;
   overflow: hidden;
   z-index: 10;
+  top: 100px;
   left: 0;
   margin-left: 0;
   padding: 0;
-  height: 200px;
-  width: 100%;
+  height: 180px;
+  width: 1000px;
+
+  &__card {
+    display: block;
+    float: left;
+  }
 }
+

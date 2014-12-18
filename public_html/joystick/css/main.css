@@ -1,6 +1,95 @@
 @font-face {
   font-family: 'robotol';
   src: url("/fonts/robotol.ttf"); }
+.preloader {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #3498db;
+  border-radius: 50px;
+  animation: preloader 1.5s infinite linear;
+  -webkit-animation: preloader 1.5s infinite linear;
+  top: 40%;
+  left: 50%;
+  margin-left: -15px;
+  z-index: 999; }
+
+.preloader:after {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-top: 10px solid #9b59b6;
+  border-bottom: 10px solid #9b59b6;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-radius: 50px;
+  content: '';
+  top: -20px;
+  left: -20px;
+  animation: preloader_after 1.5s infinite linear;
+  -webkit-animation: preloader_after 1.5s infinite linear; }
+
+@keyframes preloader {
+  0% {
+    transform: rotate(0deg); }
+  50% {
+    transform: rotate(180deg);
+    background: #2ecc71; }
+  100% {
+    transform: rotate(360deg); } }
+@-webkit-keyframes preloader {
+  0% {
+    -webkit-transform: rotate(0deg); }
+  50% {
+    -webkit-transform: rotate(180deg);
+    background: #2ecc71; }
+  100% {
+    -webkit-transform: rotate(360deg); } }
+@keyframes preloader_after {
+  0% {
+    border-top: 10px solid #9b59b6;
+    border-bottom: 10px solid #9b59b6; }
+  50% {
+    border-top: 10px solid #3498db;
+    border-bottom: 10px solid #3498db; }
+  100% {
+    border-top: 10px solid #9b59b6;
+    border-bottom: 10px solid #9b59b6; } }
+@-webkit-keyframes preloader_after {
+  0% {
+    border-top: 10px solid #9b59b6;
+    border-bottom: 10px solid #9b59b6; }
+  50% {
+    border-top: 10px solid #3498db;
+    border-bottom: 10px solid #3498db; }
+  100% {
+    border-top: 10px solid #9b59b6;
+    border-bottom: 10px solid #9b59b6; } }
+.overlay {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #555;
+  opacity: 0.6;
+  z-index: 99; }
+
+.preload-text {
+  display: none;
+  position: absolute;
+  width: 600px;
+  top: 53%;
+  left: 50%;
+  margin-left: -300px;
+  font-size: 25px;
+  color: #eee;
+  z-index: 100;
+  text-align: center; }
+  .preload-text__text {
+    display: inline; }
+
 html, body {
   width: 100%;
   height: 100%;
@@ -90,14 +179,20 @@ html, body {
     .player-cards__card_last {
       border-radius: 0 5px 5px 0; }
 
+html, body {
+  overflow: hidden; }
+
 .cards {
-  position: relative;
   overflow: hidden;
   z-index: 10;
+  top: 100px;
   left: 0;
   margin-left: 0;
   padding: 0;
-  height: 200px;
-  width: 100%; }
+  height: 180px;
+  width: 1000px; }
+  .cards__card {
+    display: block;
+    float: left; }
 
 /*# sourceMappingURL=main.css.map */
