@@ -24,18 +24,18 @@ define([
             }
             if (data.type === 'gameInfo') {
 
-                setTimeout(function () {
-//                debugger;
-                    server.send(JSON.stringify({
-                        type: 'cards',
-                        body: {}
-                    }));
-                }, 3000);
-
                 server.send(JSON.stringify({
                     type: 'start',
                     body: {}
                 }));
+
+//                 setTimeout(function () {
+// //                debugger;
+//                     server.send(JSON.stringify({
+//                         type: 'cards',
+//                         body: {}
+//                     }));
+//                 }, 3000);
 
             }
 
@@ -50,6 +50,7 @@ define([
             var cardModel = new CardModel();
             cardModel.set('cardId', 1);
             gameModel.sendCard(cardModel).done(function () {
+                // debugger;
                 start();
                 ok(true, 'Testing of sending card is correct');
             }).fail(function () {
@@ -63,17 +64,19 @@ define([
 
         asyncTest('gameModel.sendStartMessage', function () {
             listener.listenToOnce(gameModel, 'message:start', function () {
+                // debugger;
                 start();
                 ok (true, 'After sending start recieved load:done');
             });
         });
 
-        asyncTest('gameModel.sendCardsMessage', function () {
-            listener.listenToOnce (gameModel, 'cards:render', function () {
-                start();
-                ok (1===1, 'After sending cards message recieved cards:render');
-            });
-        });
+        // asyncTest('gameModel.sendCardsMessage', function () {
+        //     listener.listenToOnce (gameModel, 'cards:render', function () {
+        //         // debugger;
+        //         start();
+        //         ok (true, 'After sending cards message recieved cards:render');
+        //     });
+        // });
     };
     return {run: run};
 });

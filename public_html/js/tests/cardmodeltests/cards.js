@@ -11,6 +11,8 @@ define([
         test('cardsCollection.keepCards', function () {
             ok(true, 'card(s) must be added to collection');
         });
+
+
         
     };
     
