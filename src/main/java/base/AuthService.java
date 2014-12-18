@@ -11,7 +11,7 @@ public interface AuthService {
 
     boolean logOut(String sessionId, String extra);
 
-    boolean isLoggedIn(String sessionId);
+    int isLoggedIn(String sessionId);
 
     UserProfile getUserProfile(String sessionId);
 

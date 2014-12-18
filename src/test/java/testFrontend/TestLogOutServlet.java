@@ -33,7 +33,7 @@ public class TestLogOutServlet {
 
         when(testRequest.getSession()).thenReturn(testSession);
         when(testSession.getId()).thenReturn("1");
-        when(testAS.isLoggedIn("1")).thenReturn(false);
+        when(testAS.isLoggedIn("1")).thenReturn(500);
         when(testResponse.getWriter()).thenReturn(testPrintWriter);
 
         testLogOutServlet.doPost(testRequest, testResponse);
@@ -59,7 +59,7 @@ public class TestLogOutServlet {
 
         when(testRequest.getSession()).thenReturn(testSession);
         when(testSession.getId()).thenReturn("2");
-        when(testAS.isLoggedIn("2")).thenReturn(true);
+        when(testAS.isLoggedIn("2")).thenReturn(200);
         when(testResponse.getWriter()).thenReturn(testPrintWriter);
 
         testLogOutServlet.doPost(testRequest, testResponse);

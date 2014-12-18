@@ -28,7 +28,7 @@ public class UserProfileServletImpl extends HttpServlet implements UserProfileSe
 
         response.setStatus(HttpServletResponse.SC_OK);
         JSONObject jsonObj = new JSONObject();
-        if (!authService.isLoggedIn(sessionId)) {
+        if (authService.isLoggedIn(sessionId) == 500) {
             jsonObj.put("status", 500);
             jsonObj.put("message", "User has not logged in");
             response.getWriter().print(jsonObj.toJSONString());

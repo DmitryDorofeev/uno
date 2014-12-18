@@ -22,7 +22,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public int signIn(String sessionId, String login, String password, String extra) {
         UserProfile user = dbService.getUserData(login);
-        if (!isLoggedIn(sessionId) && user != null && user.getPass().equals(password)) {
+        if (isLoggedIn(sessionId) == 500 && user != null && user.getPass().equals(password)) {
             if (extra == null) {
                 if (userSessions.containsKey(login))
                     logOut(userSessions.get(login), null);
@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
                 return 200;
             }
             else if (extra.equals("joystick")) {
-                if (getUserProfile(userSessions.get(login)) != null) {
+                if (userSessions.containsKey(login)) {
                     if (userJoystick.containsKey(login))
                         logOut(userJoystick.get(login), extra);
                     joystickUser.put(sessionId, userSessions.get(login));
@@ -52,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean logOut(String sessionId, String extra) {
-        if (isLoggedIn(sessionId)) {
+        if (isLoggedIn(sessionId) != 500) {
             if (extra == null) {
                 userSessions.remove(sessions.get(sessionId));
                 sessions.remove(sessionId);
@@ -65,17 +65,21 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public boolean isLoggedIn(String sessionId) {
-        return sessions.containsKey(sessionId) || joystickUser.containsKey(sessionId);
+    public int isLoggedIn(String sessionId) {
+        if (sessions.containsKey(sessionId))
+            return 200;
+        if (joystickUser.containsKey(sessionId))
+            return 2000;
+        return 500;
     }
 
     @Override
     public UserProfile getUserProfile(String sessionId) {
-        if (isLoggedIn(sessionId))
+        if (isLoggedIn(sessionId) == 200)
             return dbService.getUserData(sessions.get(sessionId));
         else {
             String userSessionId = joystickUser.get(sessionId);
-            if (isLoggedIn(userSessionId))
+            if (isLoggedIn(userSessionId) == 200)
                 return dbService.getUserData(sessions.get(userSessionId));
         }
         return null;

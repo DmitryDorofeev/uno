@@ -30,7 +30,7 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
         String sessionId = request.getSession().getId();
 
         JSONObject jsonObj = new JSONObject();
-        if (authService.isLoggedIn(sessionId)) {
+        if (authService.isLoggedIn(sessionId) != 500) {
             UserProfile user = authService.getUserProfile(sessionId);
             jsonObj.put("status", 200);
             jsonObj.put("login", user.getLogin());
@@ -62,7 +62,7 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
 
         if (!login.isEmpty() && !password.isEmpty()) {
             final String sessionId = request.getSession().getId();
-            if (authService.isLoggedIn(sessionId)) {
+            if (authService.isLoggedIn(sessionId) != 500) {
                 jsonObj.put("status", 500);
                 if (extra == null)
                     jsonObj.put("message", "User has already logged in");
