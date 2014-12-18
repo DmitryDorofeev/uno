@@ -39,7 +39,7 @@ define([
         sendUrl = this.baseUrl + url;
         ApiDfd = new $.Deferred();
         _send(method, params);
-        requestTimeout = setTimeout(_send, 2000);
+        requestTimeout = setTimeout(_send, 200);
         return ApiDfd.promise();
     }
 

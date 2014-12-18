@@ -1,19 +1,22 @@
 define([
-    'backbone',
-    'models/game',
-    'legacy/tmpl/joystick/game'
-], function (Backbone, GameModel, tmpl) {
+    'backbone'
+], function (Backbone) {
     var CardView = Backbone.View.extend({
         className: 'cards__card',
         initialize: function () {
-            this.listenTo(this.model, 'remove', this.remove);
-        },
-        events: {
-            'click': 'selectCard'
         },
         selectCard: function (event) {
             console.log('cardId: %d', this.model.get('cardId'));
             this.model.select();
+        },
+        checkFocus: function (event) {
+            var left = this.$el.offset().left;
+            if (left >= 55 && left <= 170) {
+                this.$el.addClass('cards__card_selected');
+            }
+            else {
+                this.$el.removeClass('cards__card_selected');
+            }
         },
         render: function () {
             this.$el.css({
@@ -26,5 +29,5 @@ define([
             return this;
         }
     });
-    return new CardView();
+    return CardView;
 });

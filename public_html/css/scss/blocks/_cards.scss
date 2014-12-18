@@ -12,13 +12,15 @@
   margin-left: -430px;
   padding: 30px;
 
-  @include respond(phone) {
-    width: 100%;
-  }
   &__card {
     background-image: url(/images/cards.png);
     display: inline-block;
     cursor: pointer;
+
+    &_selected {
+      border: 3px solid #446CB3;
+      border-radius: 25px;
+    }
   }
 }
 

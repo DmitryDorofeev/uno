@@ -6,6 +6,9 @@ define([
 ], function ($, Backbone, deckModel, tmpl) {
     var DeckView = Backbone.View.extend({
         model: deckModel,
+        events: {
+            'click .js-deck': 'getCards'
+        },
         initialize: function () {
             this.listenTo(this.model, 'add change', this.changeCard);
             this.$el.hide();
@@ -24,6 +27,9 @@ define([
         },
         show: function () {
             this.$el.show();
+        },
+        getCards: function () {
+            this.model.getCard();
         }
     });
 

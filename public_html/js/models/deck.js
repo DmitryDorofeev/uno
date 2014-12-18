@@ -10,6 +10,9 @@ define([
             if (data.correct) {
                 this.set(data.cards[0]);
             }
+        },
+        getCard: function () {
+            gameModel.getCard();
         }
     });
 

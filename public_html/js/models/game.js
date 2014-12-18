@@ -65,12 +65,15 @@ define([
 				body: {
 					cardId: model.get('cardId')
 				}
-			}
+			};
 			this.connection.send(JSON.stringify(output));
 			return stepDfd.promise();
 		},
 		orient: function (event) {
 			console.log(event.alpha);
+		},
+		getCard: function () {
+			this.connection.send(JSON.stringify({type: "card", body: {focusOnCard: -1}}));
 		}
 	});
 
