@@ -27,14 +27,13 @@ public class GameSession {
     }
 
     public boolean canSetCard(CardResource card) {
-        if (this.card == null || card.getNum() == this.card.getNum() || card.getColor().equals(this.card.getColor()))
-            return true;
-        return false;
+        return this.card == null
+                || this.card.getColor().equals("black") || card.getColor().equals("black")
+                || card.getNum() == this.card.getNum() || card.getColor().equals(this.card.getColor());
     }
 
     public void setCard(CardResource card) {
-        if (this.card == null || card.getNum() == this.card.getNum() || card.getColor().equals(this.card.getColor()))
-            this.card = card;
+        this.card = card;
     }
 
     public GameUser getUser(String login) {

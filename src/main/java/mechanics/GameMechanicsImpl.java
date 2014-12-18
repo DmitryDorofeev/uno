@@ -73,10 +73,10 @@ public class GameMechanicsImpl implements GameMechanics {
         GameSession gameSession = getPlayerGame(username);
         if (gameSession != null) {
             GameUser curPlayer = gameSession.getUser(username);
-            webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username);
+            webSocketService.sendCardsToJoystick(true, "OK", username, curPlayer.getFocusOnCard(), curPlayer.getCards());
         }
         else
-            webSocketService.notifyAndSendCardsToJoystick(false, null, "Player has not started game yet", username);
+            webSocketService.sendCardsToJoystick(false, "Player has not started game yet", username, -1, null);
     }
 
     public void stepByJoystick(String username, String action) {
@@ -85,17 +85,17 @@ public class GameMechanicsImpl implements GameMechanics {
         switch (action) {
             case "selectRightCard":
                 curPlayer.updateFocusOnCard("right");
-                webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username);
+                webSocketService.notifyChangeFocus(curPlayer);
                 break;
             case "selectLeftCard":
                 curPlayer.updateFocusOnCard("left");
-                webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username);
+                webSocketService.notifyChangeFocus(curPlayer);
                 break;
             case "throwCard":
-                gameStep(username, curPlayer.getFocusedCardId());
+                gameStep(username, curPlayer.getFocusOnCard());
                 break;
-            case "getCards":
-            /* TODO */
+            case "getCard":
+                /* TODO */
                 break;
         }
     }

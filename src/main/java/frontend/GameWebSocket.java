@@ -113,6 +113,21 @@ public class GameWebSocket {
         }
     }
 
+    public void changeFocus(long focusOnCard) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type", "focus");
+            JSONObject jsonBody = new JSONObject();
+            jsonObject.put("body", jsonBody);
+            jsonBody.put("focusOnCard", focusOnCard);
+            System.out.println(myName + " joystick " + jsonObject.toJSONString());
+            session.getRemote().sendString(jsonObject.toJSONString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void sendCardsToJoystick(boolean correct, String message, long focusOnCard, List<CardResource> cards) {
         try {
             JSONObject jsonObject = new JSONObject();
@@ -151,7 +166,7 @@ public class GameWebSocket {
                 extra = null;
                 webSocketService.addUser(this, null);
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                gameMechanics.addUser(myName, (Long)jsonBody.get("players"));
+                gameMechanics.addUser(myName, (Long) jsonBody.get("players"));
                 return;
             }
             if (jsonObject.get("type").equals("card")) {
