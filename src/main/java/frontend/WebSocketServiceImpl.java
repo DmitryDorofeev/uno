@@ -45,20 +45,23 @@ public class WebSocketServiceImpl implements WebSocketService {
         gameWebSocket.gameStep(correct, message, user.getGameSession().getCurStepPlayerId(),
                 user.getGameSession().getCard(), user.getGameSession().getDirection(), user.getFocusOnCard());
         if (joystickSockets.containsKey(user.getMyName()))
-            sendCardsToJoystick(correct, message, user.getMyName(), user.getCards());
+            sendCardsToJoystick(correct, message, user.getMyName(), user.getFocusOnCard(), user.getCards());
     }
 
-    public void notifyAndSendCardsToJoystick(boolean correct, GameUser user, String message, String username, List<CardResource> cards) {
-        sendCardsToJoystick(correct, message, username, cards);
+    public void notifyAndSendCardsToJoystick(boolean correct, GameUser user, String message, String username) {
         if (user != null) {
+            sendCardsToJoystick(correct, message, username, user.getFocusOnCard(), user.getCards());
             GameWebSocket gameWebSocket = userSockets.get(username);
             gameWebSocket.gameStep(correct, message, user.getGameSession().getCurStepPlayerId(),
                     user.getGameSession().getCard(), user.getGameSession().getDirection(), user.getFocusOnCard());
         }
+        else
+            sendCardsToJoystick(correct, message, username, -1, null);
     }
 
-    private void sendCardsToJoystick(boolean correct, String message, String username, List<CardResource> cards) {
+    private void sendCardsToJoystick(boolean correct, String message, String username,
+                                     long focusOnCard, List<CardResource> cards) {
         GameWebSocket gameWebSocket = joystickSockets.get(username);
-        gameWebSocket.sendCardsToJoystick(correct, message, cards);
+        gameWebSocket.sendCardsToJoystick(correct, message, focusOnCard, cards);
     }
 }

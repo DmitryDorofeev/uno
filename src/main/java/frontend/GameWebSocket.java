@@ -85,7 +85,7 @@ public class GameWebSocket {
     }
 
     public void gameStep(boolean correct, String message, long curStepPlayerId, CardResource card,
-                         boolean direction, int focusOnCard) {
+                         boolean direction, long focusOnCard) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "step");
@@ -113,7 +113,7 @@ public class GameWebSocket {
         }
     }
 
-    public void sendCardsToJoystick(boolean correct, String message, List<CardResource> cards) {
+    public void sendCardsToJoystick(boolean correct, String message, long focusOnCard, List<CardResource> cards) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "cards");
@@ -122,6 +122,7 @@ public class GameWebSocket {
             jsonBody.put("correct", correct);
             jsonBody.put("message", message);
             if (correct) {
+                jsonBody.put("focusOnCard", focusOnCard);
                 JSONArray jsonCards = new JSONArray();
                 jsonBody.put("cards", jsonCards);
                 for (CardResource card : cards) {
@@ -155,7 +156,7 @@ public class GameWebSocket {
             }
             if (jsonObject.get("type").equals("card")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                gameMechanics.gameStep(myName, (Long)jsonBody.get("cardId"));
+                gameMechanics.gameStep(myName, (Long)jsonBody.get("focusOnCard"));
                 return;
             }
             if (jsonObject.get("type").equals("joystick")) {

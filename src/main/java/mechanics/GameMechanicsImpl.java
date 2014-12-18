@@ -44,11 +44,12 @@ public class GameMechanicsImpl implements GameMechanics {
         //TODO
     }
 
-    public void gameStep(String username, long cardId) {
+    public void gameStep(String username, long focusOnCard) {
         GameSession gameSession = getPlayerGame(username);
         ArrayList<GameUser> playersList = gameSession.getPlayersList();
         GameUser curPlayer = gameSession.getUser(username);
-        CardResource card = ResourceSystem.instance().getCardsResource().getCard(cardId);
+        curPlayer.setFocusOnCard(focusOnCard);
+        CardResource card = ResourceSystem.instance().getCardsResource().getCard(curPlayer.getFocusedCardId());
         if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
             if (curPlayer.canDeleteCard(card)) {
                 if (gameSession.canSetCard(card)) {
@@ -72,10 +73,10 @@ public class GameMechanicsImpl implements GameMechanics {
         GameSession gameSession = getPlayerGame(username);
         if (gameSession != null) {
             GameUser curPlayer = gameSession.getUser(username);
-            webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username, curPlayer.getCards());
+            webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username);
         }
         else
-            webSocketService.notifyAndSendCardsToJoystick(false, null, "Player has not started game yet", username, null);
+            webSocketService.notifyAndSendCardsToJoystick(false, null, "Player has not started game yet", username);
     }
 
     public void stepByJoystick(String username, String action) {
@@ -84,11 +85,11 @@ public class GameMechanicsImpl implements GameMechanics {
         switch (action) {
             case "selectRightCard":
                 curPlayer.updateFocusOnCard("right");
-                webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username, curPlayer.getCards());
+                webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username);
                 break;
             case "selectLeftCard":
                 curPlayer.updateFocusOnCard("left");
-                webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username, curPlayer.getCards());
+                webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username);
                 break;
             case "throwCard":
                 gameStep(username, curPlayer.getFocusedCardId());

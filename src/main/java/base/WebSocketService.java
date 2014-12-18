@@ -23,5 +23,6 @@ public interface WebSocketService {
 
     void notifyGameStep(boolean correct, String message, GameUser user);
 
-    void notifyAndSendCardsToJoystick(boolean correct, GameUser user, String message, String username, List<CardResource> cards);
+    void notifyAndSendCardsToJoystick(boolean correct, GameUser user, String message,
+                                      String username);
 }
