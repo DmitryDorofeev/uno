@@ -61,6 +61,7 @@ public class GameUser {
 
     public void setCards(List<CardResource> cards) {
         this.cards = cards;
+        setFocusOnCard(0);
     }
 
     public GameSession getGameSession() {

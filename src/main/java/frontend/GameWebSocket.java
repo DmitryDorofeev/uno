@@ -84,7 +84,8 @@ public class GameWebSocket {
         }
     }
 
-    public void gameStep(boolean correct, String message, long curStepPlayerId, CardResource card, boolean direction) {
+    public void gameStep(boolean correct, String message, long curStepPlayerId, CardResource card,
+                         boolean direction, int focusOnCard) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "step");
@@ -94,6 +95,7 @@ public class GameWebSocket {
             jsonBody.put("message", message);
             jsonBody.put("curStepPlayerId", curStepPlayerId);
             jsonBody.put("direction", direction);
+            jsonBody.put("focusOnCard", focusOnCard);
             JSONArray jsonCards = new JSONArray();
             jsonBody.put("cards", jsonCards);
             JSONObject jsonCard = new JSONObject();

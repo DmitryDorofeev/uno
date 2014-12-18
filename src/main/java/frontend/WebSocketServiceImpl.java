@@ -43,7 +43,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     public void notifyGameStep(boolean correct, String message, GameUser user) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
         gameWebSocket.gameStep(correct, message, user.getGameSession().getCurStepPlayerId(),
-                user.getGameSession().getCard(), user.getGameSession().getDirection());
+                user.getGameSession().getCard(), user.getGameSession().getDirection(), user.getFocusOnCard());
         if (joystickSockets.containsKey(user.getMyName()))
             sendCardsToJoystick(correct, message, user.getMyName(), user.getCards());
     }
@@ -53,7 +53,7 @@ public class WebSocketServiceImpl implements WebSocketService {
         if (user != null) {
             GameWebSocket gameWebSocket = userSockets.get(username);
             gameWebSocket.gameStep(correct, message, user.getGameSession().getCurStepPlayerId(),
-                    user.getGameSession().getCard(), user.getGameSession().getDirection());
+                    user.getGameSession().getCard(), user.getGameSession().getDirection(), user.getFocusOnCard());
         }
     }
 
