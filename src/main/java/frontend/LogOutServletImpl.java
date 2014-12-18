@@ -25,7 +25,7 @@ public class LogOutServletImpl extends HttpServlet implements LogOutServlet {
         String sessionId = request.getSession().getId();
         JSONObject jsonObj = new JSONObject();
         if (authService.isLoggedIn(sessionId) != 500) {
-            authService.logOut(sessionId, null);
+            authService.logOut(sessionId);
             jsonObj.put("status", 200);
             response.getWriter().print(jsonObj.toJSONString());
             return;

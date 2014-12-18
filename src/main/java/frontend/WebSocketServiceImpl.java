@@ -26,7 +26,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     public void removeUser(GameWebSocket user, String extra) {
         if (extra == null)
             userSockets.remove(user.getMyName());
-        else
+        else if (extra.equals("joystick"))
             joystickSockets.remove(user.getMyName());
     }
 

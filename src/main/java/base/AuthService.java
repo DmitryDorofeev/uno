@@ -9,7 +9,7 @@ public interface AuthService {
 
     boolean signUp(UserProfile user);
 
-    boolean logOut(String sessionId, String extra);
+    boolean logOut(String sessionId);
 
     int isLoggedIn(String sessionId);
 

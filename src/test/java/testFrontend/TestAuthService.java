@@ -77,14 +77,14 @@ public class TestAuthService {
         initSignUp();
         initSignIn();
         long userBT = testAuthService.getAmountOfUsersOnline();
-        assertEquals("No logined user with SessionId 1", false, testAuthService.logOut("1", null));
-        assertEquals("No logined user with SessionId 2", false, testAuthService.logOut("2", null));
-        assertEquals("No logined user with SessionId 3", false, testAuthService.logOut("3", null));
-        assertEquals("No logined user with SessionId 4", false, testAuthService.logOut("4", null));
-        assertEquals("Logout " + testUsers[3].getLogin() + " SessionId 5", true, testAuthService.logOut("5", null));
-        assertEquals("No logined user with SessionId 6", false, testAuthService.logOut("6", null));
-        assertEquals("No logined user with SessionId 7", false, testAuthService.logOut("7", null));
-        assertEquals("Logout " + testUsers[8].getLogin() + " SessionId 11", true, testAuthService.logOut("11", null));
+        assertEquals("No logined user with SessionId 1", false, testAuthService.logOut("1"));
+        assertEquals("No logined user with SessionId 2", false, testAuthService.logOut("2"));
+        assertEquals("No logined user with SessionId 3", false, testAuthService.logOut("3"));
+        assertEquals("No logined user with SessionId 4", false, testAuthService.logOut("4"));
+        assertEquals("Logout " + testUsers[3].getLogin() + " SessionId 5", true, testAuthService.logOut("5"));
+        assertEquals("No logined user with SessionId 6", false, testAuthService.logOut("6"));
+        assertEquals("No logined user with SessionId 7", false, testAuthService.logOut("7"));
+        assertEquals("Logout " + testUsers[8].getLogin() + " SessionId 11", true, testAuthService.logOut("11"));
         assertEquals(userBT - 2, testAuthService.getAmountOfUsersOnline());
     }
 }

@@ -25,7 +25,7 @@ public class AuthServiceImpl implements AuthService {
         if (isLoggedIn(sessionId) == 500 && user != null && user.getPass().equals(password)) {
             if (extra == null) {
                 if (userSessions.containsKey(login))
-                    logOut(userSessions.get(login), null);
+                    logOut(userSessions.get(login));
                 sessions.put(sessionId, login);
                 userSessions.put(login, sessionId);
                 return 200;
@@ -33,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
             else if (extra.equals("joystick")) {
                 if (userSessions.containsKey(login)) {
                     if (userJoystick.containsKey(login))
-                        logOut(userJoystick.get(login), extra);
+                        logOut(userJoystick.get(login));
                     joystickUser.put(sessionId, userSessions.get(login));
                     userJoystick.put(login, sessionId);
                     return 200;
@@ -51,17 +51,25 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public boolean logOut(String sessionId, String extra) {
-        if (isLoggedIn(sessionId) != 500) {
-            if (extra == null) {
-                userSessions.remove(sessions.get(sessionId));
+    public boolean logOut(String sessionId) {
+        switch (isLoggedIn(sessionId)) {
+            case 500:
+                return false;
+            case 200:
+                String login = sessions.get(sessionId);
+                if (userJoystick.containsKey(login)) {
+                    joystickUser.remove(userJoystick.get(login));
+                    userJoystick.remove(login);
+                }
+                userSessions.remove(login);
                 sessions.remove(sessionId);
-            }
-            userJoystick.remove(sessions.get(joystickUser.get(sessionId)));
-            joystickUser.remove(sessionId);
-            return true;
+                break;
+            case 2000:
+                userJoystick.remove(sessions.get(joystickUser.get(sessionId)));
+                joystickUser.remove(sessionId);
+                break;
         }
-        return false;
+        return true;
     }
 
     @Override

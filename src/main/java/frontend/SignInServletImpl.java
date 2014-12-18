@@ -84,7 +84,8 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
                     jsonObj.put("message", "Wrong login or password");
                     break;
                 case 404:
-                    jsonObj.put("message", "User has not logged in yet");
+                    jsonObj.put("status", 500);
+                    jsonObj.put("message", "User has not logged in");
                     break;
             }
             response.getWriter().print(jsonObj.toJSONString());
