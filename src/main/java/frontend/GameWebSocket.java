@@ -85,7 +85,7 @@ public class GameWebSocket {
     }
 
     public void gameStep(boolean correct, String message, long curStepPlayerId, CardResource card,
-                         boolean direction, int focusOnCard) {
+                         boolean direction, long focusOnCard) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "step");
@@ -113,7 +113,22 @@ public class GameWebSocket {
         }
     }
 
-    public void sendCardsToJoystick(boolean correct, String message, List<CardResource> cards) {
+    public void changeFocus(long focusOnCard) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type", "focus");
+            JSONObject jsonBody = new JSONObject();
+            jsonObject.put("body", jsonBody);
+            jsonBody.put("focusOnCard", focusOnCard);
+            System.out.println(myName + " joystick " + jsonObject.toJSONString());
+            session.getRemote().sendString(jsonObject.toJSONString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendCardsToJoystick(boolean correct, String message, long focusOnCard, List<CardResource> cards) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "cards");
@@ -122,6 +137,7 @@ public class GameWebSocket {
             jsonBody.put("correct", correct);
             jsonBody.put("message", message);
             if (correct) {
+                jsonBody.put("focusOnCard", focusOnCard);
                 JSONArray jsonCards = new JSONArray();
                 jsonBody.put("cards", jsonCards);
                 for (CardResource card : cards) {
@@ -150,12 +166,12 @@ public class GameWebSocket {
                 extra = null;
                 webSocketService.addUser(this, null);
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                gameMechanics.addUser(myName, (Long)jsonBody.get("players"));
+                gameMechanics.addUser(myName, (Long) jsonBody.get("players"));
                 return;
             }
             if (jsonObject.get("type").equals("card")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                gameMechanics.gameStep(myName, (Long)jsonBody.get("cardId"));
+                gameMechanics.gameStep(myName, (Long)jsonBody.get("focusOnCard"));
                 return;
             }
             if (jsonObject.get("type").equals("joystick")) {

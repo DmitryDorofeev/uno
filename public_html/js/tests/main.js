@@ -4,9 +4,9 @@ require([
     'tests/cardmodeltests/cards',
     'tests/gamemodeltests/game'
 ], function (qunit, userTest, cards, gameTest) {
-    gameTest.run();
     userTest.run();
     cards.run();
+    gameTest.run();
     qunit.load();
     qunit.start();
 });

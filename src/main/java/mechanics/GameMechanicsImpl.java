@@ -44,25 +44,28 @@ public class GameMechanicsImpl implements GameMechanics {
         //TODO
     }
 
-    public void gameStep(String username, long cardId) {
+    public void gameStep(String username, long focusOnCard) {
         GameSession gameSession = getPlayerGame(username);
         ArrayList<GameUser> playersList = gameSession.getPlayersList();
         GameUser curPlayer = gameSession.getUser(username);
-        CardResource card = ResourceSystem.instance().getCardsResource().getCard(cardId);
         if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
-            if (curPlayer.canDeleteCard(card)) {
-                if (gameSession.canSetCard(card)) {
-                    curPlayer.deleteCard(card);
-                    gameSession.setCard(card);
-                    gameSession.updateCurStepPlayerId();
-                    for (GameUser player : playersList)
-                        webSocketService.notifyGameStep(true, "OK", player);
-                }
-                else
-                    webSocketService.notifyGameStep(false, "You can not put this card!", curPlayer);
+            if (focusOnCard == -1)
+                addCardsToPlayerAndStep(curPlayer, gameSession);
+            else {
+                curPlayer.setFocusOnCard(focusOnCard);
+                CardResource card = ResourceSystem.instance().getCardsResource().getCard(curPlayer.getFocusedCardId());
+                if (curPlayer.canDeleteCard(card)) {
+                    if (gameSession.canSetCard(card)) {
+                        curPlayer.deleteCard(card);
+                        gameSession.setCard(card);
+                        gameSession.updateCurStepPlayerId();
+                        for (GameUser player : playersList)
+                            webSocketService.notifyGameStep(true, "OK", player);
+                    } else
+                        webSocketService.notifyGameStep(false, "You can not put this card!", curPlayer);
+                } else
+                    webSocketService.notifyGameStep(false, "Player has not that card!", curPlayer);
             }
-            else
-                webSocketService.notifyGameStep(false, "Player has not that card!", curPlayer);
         }
         else
             webSocketService.notifyGameStep(false, "Not your turn!", curPlayer);
@@ -72,10 +75,10 @@ public class GameMechanicsImpl implements GameMechanics {
         GameSession gameSession = getPlayerGame(username);
         if (gameSession != null) {
             GameUser curPlayer = gameSession.getUser(username);
-            webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username, curPlayer.getCards());
+            webSocketService.sendCardsToJoystick(true, "OK", username, curPlayer.getFocusOnCard(), curPlayer.getCards());
         }
         else
-            webSocketService.notifyAndSendCardsToJoystick(false, null, "Player has not started game yet", username, null);
+            webSocketService.sendCardsToJoystick(false, "Player has not started game yet", username, -1, null);
     }
 
     public void stepByJoystick(String username, String action) {
@@ -84,19 +87,42 @@ public class GameMechanicsImpl implements GameMechanics {
         switch (action) {
             case "selectRightCard":
                 curPlayer.updateFocusOnCard("right");
-                webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username, curPlayer.getCards());
-                break;
+                webSocketService.notifyChangeFocus(curPlayer);
+                return;
             case "selectLeftCard":
                 curPlayer.updateFocusOnCard("left");
-                webSocketService.notifyAndSendCardsToJoystick(true, curPlayer, "OK", username, curPlayer.getCards());
-                break;
-            case "throwCard":
-                gameStep(username, curPlayer.getFocusedCardId());
-                break;
-            case "getCards":
-            /* TODO */
-                break;
+                webSocketService.notifyChangeFocus(curPlayer);
+                return;
         }
+        if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
+            switch (action) {
+                case "throwCard":
+                    gameStep(username, curPlayer.getFocusOnCard());
+                    break;
+                case "getCard":
+                    addCardsToPlayerAndStep(curPlayer, gameSession);
+                    break;
+            }
+        }
+        else
+            webSocketService.notifyGameStep(false, "Not your turn!", curPlayer);
+    }
+
+    private void addCardsToPlayerAndStep(GameUser player, GameSession gameSession) {
+        if (!gameSession.playerHasCardToSet(player)) {
+            List<CardResource> cards = gameSession.generateCards(1);
+            while (!gameSession.canSetCard(cards.get(0))) {
+                player.addCards(cards);
+                cards = gameSession.generateCards(1);
+            }
+            gameSession.setCard(cards.get(0));
+            gameSession.updateCurStepPlayerId();
+            List<GameUser> playersList = gameSession.getPlayersList();
+            for (GameUser curPlayer : playersList)
+                webSocketService.notifyGameStep(true, "OK", curPlayer);
+        }
+        else
+            webSocketService.notifyGameStep(false, "You have card to put!", player);
     }
 
     private GameSession getPlayerGame(String login) {
@@ -113,21 +139,11 @@ public class GameMechanicsImpl implements GameMechanics {
         }
         for (GameUser player : players)
             webSocketService.notifyStartGame(player);
-        Random rnd = new Random();
         for (GameUser player : players) {
-            List<CardResource> cards = new ArrayList<>();
-            for (int i = 0; i < ResourceSystem.instance().getGameParamsResource().getStartCardsCount(); ++i) {
-                CardResource temp = ResourceSystem.instance().getCardsResource().getCard(
-                        rnd.nextInt(ResourceSystem.instance().getCardsResource().CardsCount()));
-                cards.add(new CardResource(temp.getCardId(), temp.getColor(), temp.getNum(),
-                        temp.getWidth(), temp.getHeight(), temp.getX(), temp.getY()));
-            }
-            player.setCards(cards);
+            player.setCards(gameSession.generateCards(ResourceSystem.instance().getGameParamsResource().getStartCardsCount()));
             webSocketService.sendStartCards(player);
         }
-        CardResource temp = ResourceSystem.instance().getCardsResource().getCard(
-                rnd.nextInt(ResourceSystem.instance().getCardsResource().CardsCount()));
-        gameSession.setCard(temp);
+        gameSession.setCard(gameSession.generateCards(1).get(0));
         for (GameUser player : players)
             webSocketService.notifyGameStep(true, "OK", player);
     }

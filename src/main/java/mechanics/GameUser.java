@@ -15,11 +15,15 @@ public class GameUser {
     private long playersCount;
     private GameSession gameSession;
     private int gamePlayerId;
-    private int focusOnCard;
+    private long focusOnCard;
 
     public GameUser(String myName, long playersCount) {
         this.myName = myName;
         this.playersCount = playersCount;
+    }
+
+    public void addCards(List<CardResource> cards) {
+        this.cards.addAll(cards);
     }
 
     public boolean canDeleteCard(CardResource card) {
@@ -55,8 +59,8 @@ public class GameUser {
 
     @Deprecated
     public List<CardResource> getCardsForJoystick() {
-        int last = focusOnCard + ResourceSystem.instance().getGameParamsResource().getJoystickCardsCount();
-        return cards.subList(focusOnCard, last);
+        int last = (int)focusOnCard + ResourceSystem.instance().getGameParamsResource().getJoystickCardsCount();
+        return cards.subList((int)focusOnCard, last);
     }
 
     public void setCards(List<CardResource> cards) {
@@ -80,16 +84,16 @@ public class GameUser {
         this.gamePlayerId = gamePlayerId;
     }
 
-    public int getFocusOnCard() {
+    public long getFocusOnCard() {
         return focusOnCard;
     }
 
-    public void setFocusOnCard(int focusOnCard) {
+    public void setFocusOnCard(long focusOnCard) {
         this.focusOnCard = focusOnCard;
     }
 
     public long getFocusedCardId() {
-        return cards.get(focusOnCard).getCardId();
+        return cards.get((int)focusOnCard).getCardId();
     }
 
     public void updateFocusOnCard(String direction) {
