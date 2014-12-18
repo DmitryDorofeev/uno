@@ -3,3 +3,15 @@
 @import "../../../css/scss/blocks/page";
 @import "../../../css/scss/blocks/form";
 @import "../../../css/scss/blocks/btn";
+@import "../../../css/scss/blocks/cards";
+
+.cards {
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+  left: 0;
+  margin-left: 0;
+  padding: 0;
+  height: 200px;
+  width: 100%;
+}

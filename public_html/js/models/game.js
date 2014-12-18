@@ -54,9 +54,6 @@ define([
 					if (data.body.correct) {
 						stepDfd.resolve();
 					}
-					else {
-						stepDfd.reject();
-					}
 				}
 			}
 			this.trigger('message:' + data.type, data.body);

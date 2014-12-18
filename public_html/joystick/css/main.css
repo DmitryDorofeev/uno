@@ -56,4 +56,48 @@ html, body {
       width: 100%;
       min-width: 200px; } }
 
+.cards {
+  position: absolute;
+  overflow: hidden;
+  z-index: 10;
+  bottom: 0;
+  width: 860px;
+  left: 50%;
+  margin-left: -430px;
+  padding: 30px; }
+  @media screen and (max-width: 480px) {
+    .cards {
+      width: 100%; } }
+  .cards__card {
+    background-image: url(/images/cards.png);
+    display: inline-block;
+    cursor: pointer; }
+
+.player-cards {
+  overflow: hidden; }
+  .player-cards__card {
+    max-width: 97px;
+    min-width: 4px;
+    height: 150px;
+    background-color: #e2e3e4;
+    background-image: url("/images/back.png");
+    background-size: auto 100%;
+    background-position: right center;
+    float: left; }
+    .player-cards__card_first {
+      width: 97px;
+      border-radius: 5px 0 0 5px; }
+    .player-cards__card_last {
+      border-radius: 0 5px 5px 0; }
+
+.cards {
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+  left: 0;
+  margin-left: 0;
+  padding: 0;
+  height: 200px;
+  width: 100%; }
+
 /*# sourceMappingURL=main.css.map */

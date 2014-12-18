@@ -1,20 +1,21 @@
 define(['backbone'], function (Backbone) {
+    var dfd = new $.Deferred();
+
     var UserModel = Backbone.Model.extend({
         initialize: function () {
-            $.get('/api/v1/auth/profile?extra=joystick').done(_.bind(this._fetch, this));
+            _.bindAll(this, '_fetch');
+            $.get('/api/v1/auth/profile?extra=joystick').done(this._fetch);
         },
         isLogined: function () {
-            return this.has('isLogined');
+            return dfd.promise();
         },
         login: function () {
-            //debugger;
             $.ajax({
                 type: 'POST',
                 url: '/api/v1/auth/signin',
                 data: $.extend(this.toJSON(), {extra: 'joystick'}),
                 dataType: 'json'
             }).done(_.bind(function (data) {
-                debugger;
                 if (data.status == 200) {
                     this.set('isLogined', true);
                     this.trigger('logined');
@@ -27,8 +28,14 @@ define(['backbone'], function (Backbone) {
             }, this));
         },
         _fetch: function (data) {
-            if (data.status == 200) {
+            data = JSON.parse(data);
+            if (data.status === 200) {
                 this.set('isLogined', true);
+                dfd.resolve();
+            }
+            else {
+                this.unset('isLogined');
+                dfd.reject();
             }
         }
     });

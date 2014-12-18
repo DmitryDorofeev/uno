@@ -27,6 +27,5 @@ define([
             this.model.login();
         }
     });
-
     return new LoginView();
 });

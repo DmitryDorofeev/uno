@@ -1,30 +1,25 @@
 define([
     'backbone',
     'models/game',
-    'legacy/tmpl/joystick/game'
-], function (Backbone, GameModel, tmpl) {
+    'legacy/tmpl/joystick/game',
+    'views/cards',
+    'collections/cards'
+], function (Backbone, GameModel, tmpl, CardsView, CardsCollection) {
     var GameView = Backbone.View.extend({
         initialize: function () {
-            if (window.DeviceMotionEvent) {
-                window.addEventListener('devicemotion', this.motion);
-            }
-            else {
-                console.log('no motion avaliable');
-                this.trigger('nomotion');
-            }
+            this.model = new GameModel(),
+            this.cards = new CardsView({collection: new CardsCollection([], {game: this.model})}),
+            this.model.gameStart().done(_.bind(function () {
+                this.$el.html(this.cards.render().$el);
+            }, this));
         },
         template: function () {
             return tmpl();
         },
         render: function () {
             this.$el.html(this.template());
-            this.model = new GameModel();
             return this;
-        },
-        motion: function (event) {
-            console.log(event);
         }
     });
-
-    return new GameView();
+    return GameView;
 });
