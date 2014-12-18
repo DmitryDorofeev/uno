@@ -22,6 +22,10 @@ public class GameUser {
         this.playersCount = playersCount;
     }
 
+    public void addCards(List<CardResource> cards) {
+        this.cards.addAll(cards);
+    }
+
     public boolean canDeleteCard(CardResource card) {
         for (CardResource curCard : cards) {
             if (curCard.getCardId() == card.getCardId())
