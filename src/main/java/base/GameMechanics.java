@@ -11,9 +11,9 @@ public interface GameMechanics {
 
     void removeUser(String username);
 
-    void gameStep(String username, long focusOnCard);
+    void gameStep(String username, long focusOnCard, String newColor);
 
     void initJoystick(String username);
 
-    void stepByJoystick(String username, String action);
+    void stepByJoystick(String username, String action, String newColor);
 }

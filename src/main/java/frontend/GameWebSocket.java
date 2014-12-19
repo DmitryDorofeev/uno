@@ -166,12 +166,12 @@ public class GameWebSocket {
                 extra = null;
                 webSocketService.addUser(this, null);
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                gameMechanics.addUser(myName, (Long) jsonBody.get("players"));
+                gameMechanics.addUser(myName, (Long)jsonBody.get("players"));
                 return;
             }
             if (jsonObject.get("type").equals("card")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                gameMechanics.gameStep(myName, (Long)jsonBody.get("focusOnCard"));
+                gameMechanics.gameStep(myName, (Long)jsonBody.get("focusOnCard"), (String)jsonBody.get("newColor"));
                 return;
             }
             if (jsonObject.get("type").equals("joystick")) {
@@ -182,7 +182,7 @@ public class GameWebSocket {
                     gameMechanics.initJoystick(myName);
                     return;
                 }
-                gameMechanics.stepByJoystick(myName, (String)jsonBody.get("message"));
+                gameMechanics.stepByJoystick(myName, (String)jsonBody.get("message"), (String)jsonBody.get("newColor"));
             }
         }
         catch (ParseException e) {

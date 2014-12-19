@@ -13,14 +13,19 @@ public class GameSession {
     private boolean direction;
     private long curStepPlayerId;
     private CardResource card;
+    private String color;
     private Random rnd;
 
     public GameSession(ArrayList<GameUser> players) {
         for (GameUser player : players)
             users.put(player.getMyName(), player);
         direction = true;
-        curStepPlayerId = 0;
+        setCurStepPlayerId(0);
         rnd = new Random();
+    }
+
+    public String getCardType() {
+        return card.getType();
     }
 
     public CardResource getCard() {
@@ -28,22 +33,20 @@ public class GameSession {
     }
 
     public boolean playerHasCardToSet(GameUser player) {
-        List<CardResource> cards = player.getCards();
-        for (CardResource card : cards) {
-            if (canSetCard(card))
-                return true;
-        }
-        return false;
+        return playerHasCardNotIncFourToSet(player) || playerHasIncFourCard(player);
     }
 
-    public boolean canSetCard(CardResource card) {
+    public boolean canSetCard(CardResource card, GameUser player) {
         return this.card == null
-                || this.card.getColor().equals("black") || card.getColor().equals("black")
-                || card.getNum() == this.card.getNum() || card.getColor().equals(this.card.getColor());
+                || isCorrectNotIncFourCard(card)
+                || !playerHasCardNotIncFourToSet(player) && card.getType().equals("incFour");
     }
 
-    public void setCard(CardResource card) {
+    public void setCard(CardResource card, String newColor) {
         this.card = card;
+        this.color = card.getColor().equals("black") ? newColor : card.getColor();
+        if (card.getType().equals("reverse"))
+            changeDirection();
     }
 
     public GameUser getUser(String login) {
@@ -73,7 +76,8 @@ public class GameSession {
     }
 
     public void updateCurStepPlayerId() {
-        curStepPlayerId = direction ?
+        if (!card.getType().equals("reverse"))
+            curStepPlayerId = direction ?
                 (curStepPlayerId + 1) % users.size() :
                 (curStepPlayerId == 0 ? users.size() - 1 : curStepPlayerId - 1);
     }
@@ -83,9 +87,33 @@ public class GameSession {
         for (int i = 0; i < count; ++i) {
             CardResource temp = ResourceSystem.instance().getCardsResource().getCard(
                     rnd.nextInt(ResourceSystem.instance().getCardsResource().CardsCount()));
-            cards.add(new CardResource(temp.getCardId(), temp.getColor(), temp.getNum(),
+            cards.add(new CardResource(temp.getCardId(), temp.getColor(), temp.getType(), temp.getNum(),
                     temp.getWidth(), temp.getHeight(), temp.getX(), temp.getY()));
         }
         return cards;
+    }
+
+    private boolean isCorrectNotIncFourCard(CardResource card) {
+        return card.getType().equals("number") && this.card.getType().equals("number") && card.getNum() == this.card.getNum()
+                || card.getColor().equals(color)
+                || card.getType().equals("color");
+    }
+
+    private boolean playerHasCardNotIncFourToSet(GameUser player) {
+        List<CardResource> cards = player.getCards();
+        for (CardResource card : cards) {
+            if (isCorrectNotIncFourCard(card))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean playerHasIncFourCard(GameUser player) {
+        List<CardResource> cards = player.getCards();
+        for (CardResource card : cards) {
+            if (card.getType().equals("incFour"))
+                return true;
+        }
+        return false;
     }
 }

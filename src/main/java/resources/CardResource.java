@@ -6,6 +6,7 @@ package resources;
 public class CardResource {
     private long cardId;
     private String color;
+    private String type;
     private int num;
     private int width;
     private int height;
@@ -15,6 +16,7 @@ public class CardResource {
     public CardResource() {
         setCardId(0);
         setColor("red");
+        setType("usual");
         setNum(0);
         setWidth(240);
         setHeight(360);
@@ -22,9 +24,10 @@ public class CardResource {
         setY(0);
     }
 
-    public CardResource(long cardId, String color, int num, int width, int height, int x, int y) {
+    public CardResource(long cardId, String color, String type, int num, int width, int height, int x, int y) {
         setCardId(cardId);
         setColor(color);
+        setType(type);
         setNum(num);
         setWidth(width);
         setHeight(height);
@@ -46,6 +49,14 @@ public class CardResource {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getNum() {

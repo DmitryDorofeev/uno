@@ -19,15 +19,15 @@ public class TestCardsResources {
 
     @BeforeClass
     public static void initTestValues() {
-        testCards.add(new CardResource(109, "red", 0, 240, 360, 0, 0));
-        testCards.add(new CardResource(114, "red", 1, 240, 360, 240, 0));
+        testCards.add(new CardResource(109, "red", "number", 0, 240, 360, 0, 0));
+        testCards.add(new CardResource(114, "red", "number", 1, 240, 360, 240, 0));
     }
 
     @Test
     public void testSavingCards() {
         for (int i = 1; i < 5; ++i) {
             testCards.remove(0);
-            testCards.add(0, new CardResource(i, colors[i%4], 0, 240, 360, 0, 360*(i-1)));
+            testCards.add(0, new CardResource(i, colors[i%4], "number", 0, 240, 360, 0, 360*(i-1)));
             assertEquals("Adding card first time" + i, true, testCardsResource.saveCard(testCards.get(0)));
         }
 
@@ -40,19 +40,19 @@ public class TestCardsResources {
                 x += 240;
             }
             testCards.remove(0);
-            testCards.add(0, new CardResource(i, colors[i%4], number, 240, 360, x, 360*((i-5)%8)));
+            testCards.add(0, new CardResource(i, colors[i%4], "number", number, 240, 360, x, 360*((i-5)%8)));
             assertEquals("Adding card first time " + i, true, testCardsResource.saveCard(testCards.get(0)));
         }
 
         for (int i = 101; i < 105; ++i) {
             testCards.remove(0);
-            testCards.add(0, new CardResource(i, "black", 13, 240, 360, 0, 360*((i-101)%8)));
+            testCards.add(0, new CardResource(i, "black", "number", 13, 240, 360, 0, 360*((i-101)%8)));
             assertEquals("Adding card first time" + i, true, testCardsResource.saveCard(testCards.get(0)));
         }
 
         for (int i = 105; i < 109; ++i) {
             testCards.remove(0);
-            testCards.add(0, new CardResource(i, "black", 14, 240, 360, 0, 360*((i-105)%8)));
+            testCards.add(0, new CardResource(i, "black", "number", 14, 240, 360, 0, 360*((i-105)%8)));
             assertEquals("Adding card first time" + i, true, testCardsResource.saveCard(testCards.get(0)));
         }
         assertEquals("Cards' count is " + testCardsResource.CardsCount(), 108, testCardsResource.CardsCount());

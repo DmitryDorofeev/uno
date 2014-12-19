@@ -5,16 +5,16 @@ import base.GameMechanics;
 import base.WebSocketService;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
+import resources.ResourceSystem;
 
 import javax.servlet.annotation.WebServlet;
 
 /**
  * This class represents a servlet starting a webSocket application
  */
-@WebServlet(name = "WebSocketGameServlet", urlPatterns = {"/game"})
 public class WebSocketGameServlet extends WebSocketServlet {
     public final static String WebSocketGameServletURL = "/game";
-    private final static int IDLE_TIME = 10 * 60 * 1000;
+    private final static int IDLE_TIME = ResourceSystem.instance().getGameParamsResource().getSocketTimeOut() * 60 * 1000;
     private AuthService authService;
     private GameMechanics gameMechanics;
     private WebSocketService webSocketService;
