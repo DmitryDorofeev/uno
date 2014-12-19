@@ -22,22 +22,25 @@ public class GameMechanicsImpl implements GameMechanics {
     }
 
     public void addUser(String username, long playersCount) {
-        GameUser newUser = new GameUser(username, playersCount);
-        ArrayList<GameUser> tempList = new ArrayList<>();
-        tempList.add(newUser);
-        Iterator iter = waiters.iterator();
-        while (iter.hasNext() && tempList.size() != playersCount) {
-            GameUser waiter = (GameUser) iter.next();
-            if (waiter.getPlayersCount() == playersCount)
-                tempList.add(waiter);
+        if (playersCount >= ResourceSystem.instance().getGameParamsResource().getMinPlayersCount()
+                && playersCount <= ResourceSystem.instance().getGameParamsResource().getMaxPlayersCount()) {
+            GameUser newUser = new GameUser(username, playersCount);
+            ArrayList<GameUser> tempList = new ArrayList<>();
+            tempList.add(newUser);
+            Iterator iter = waiters.iterator();
+            while (iter.hasNext() && tempList.size() != playersCount) {
+                GameUser waiter = (GameUser) iter.next();
+                if (waiter.getPlayersCount() == playersCount)
+                    tempList.add(waiter);
+            }
+            if (tempList.size() == playersCount) {
+                for (GameUser player : tempList)
+                    waiters.remove(player);
+                startGame(tempList);
+            } else
+                waiters.add(newUser);
+            tempList.clear();
         }
-        if (tempList.size() == playersCount) {
-            for (GameUser player : tempList)
-                waiters.remove(player);
-            startGame(tempList);
-        } else
-            waiters.add(newUser);
-        tempList.clear();
     }
 
     public void removeUser(String username) {
@@ -134,6 +137,14 @@ public class GameMechanicsImpl implements GameMechanics {
 
     private GameSession getPlayerGame(String login) {
         return playerGame.get(login);
+    }
+
+    private boolean isPlayerInWaiters(String login) {
+        for (GameUser waiter : waiters) {
+            if (waiter.getMyName().equals(login))
+                return true;
+        }
+        return false;
     }
 
     private void startGame(ArrayList<GameUser> players) {

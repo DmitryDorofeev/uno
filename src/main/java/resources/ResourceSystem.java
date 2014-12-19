@@ -18,14 +18,14 @@ public class ResourceSystem {
     protected ResourceSystem() {
         System.out.println("Resources loading started");
 
-        ServerStartResource serverStartResource;
-        if (VFS.exists("resources/server_start.xml"))
-            serverStartResource = (ServerStartResource) ReadXMLFileSAX.readXML("resources/server_start.xml");
+        ServerConfigResource serverConfigResource;
+        if (VFS.exists("resources/server_config.xml"))
+            serverConfigResource = (ServerConfigResource) ReadXMLFileSAX.readXML("resources/server_config.xml");
         else {
-            System.out.println("File resources/server_start.xml does not exist");
-            serverStartResource = new ServerStartResource();
+            System.out.println("File resources/server_config.xml does not exist");
+            serverConfigResource = new ServerConfigResource();
         }
-        resourceMap.put("resources/server_start.xml", serverStartResource);
+        resourceMap.put("resources/server_config.xml", serverConfigResource);
 
         DBConfigResource dbConfigResource;
         if (VFS.exists("resources/db_config.xml"))
@@ -70,8 +70,8 @@ public class ResourceSystem {
         return resourceSystem;
     }
 
-    public ServerStartResource getServerStartResource() {
-        return (ServerStartResource)resourceMap.get("resources/server_start.xml");
+    public ServerConfigResource getServerStartResource() {
+        return (ServerConfigResource)resourceMap.get("resources/server_config.xml");
     }
 
     public CardsResource getCardsResource() {

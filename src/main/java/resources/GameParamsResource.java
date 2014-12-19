@@ -1,28 +1,39 @@
 package resources;
 
 public class GameParamsResource implements Resource {
-    private int socketTimeOut;
+    private int minPlayersCount;
+    private int maxPlayersCount;
     private int startCardsCount;
     private int joystickCardsCount;
 
     public GameParamsResource() {
-        setSocketTimeOut(10);
+        setMinPlayersCount(2);
+        setMaxPlayersCount(5);
         setStartCardsCount(7);
         setJoystickCardsCount(3);
     }
 
-    public GameParamsResource(int socketTimeOut, int startCardsCount, int joystickCardsCount) {
-        setSocketTimeOut(socketTimeOut);
+    public GameParamsResource(int minPlayersCount, int maxPlayersCount, int startCardsCount, int joystickCardsCount) {
+        setMinPlayersCount(minPlayersCount);
+        setMaxPlayersCount(maxPlayersCount);
         setStartCardsCount(startCardsCount);
         setJoystickCardsCount(joystickCardsCount);
     }
 
-    public int getSocketTimeOut() {
-        return socketTimeOut;
+    public int getMinPlayersCount() {
+        return minPlayersCount;
     }
 
-    public void setSocketTimeOut(int socketTimeOut) {
-        this.socketTimeOut = socketTimeOut;
+    public void setMinPlayersCount(int minPlayersCount) {
+        this.minPlayersCount = minPlayersCount;
+    }
+
+    public int getMaxPlayersCount() {
+        return maxPlayersCount;
+    }
+
+    public void setMaxPlayersCount(int maxPlayersCount) {
+        this.maxPlayersCount = maxPlayersCount;
     }
 
     public int getJoystickCardsCount() {

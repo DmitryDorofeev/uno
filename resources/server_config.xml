@@ -1,0 +1,4 @@
+<class type = "resources.ServerConfigResource">
+   <port>9000</port>
+   <socketTimeOut>10</socketTimeOut>
+</class>
