@@ -1,119 +1,37 @@
 package mechanics;
 
 import resources.CardResource;
-import resources.ResourceSystem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author alexey
+ * Created by alexey on 19.12.2014.
  */
-public class GameSession {
-    private Map<String, GameUser> users = new HashMap<>();
-    private boolean direction;
-    private long curStepPlayerId;
-    private CardResource card;
-    private String color;
-    private Random rnd;
+public interface GameSession {
+    String getCardType();
 
-    public GameSession(ArrayList<GameUser> players) {
-        for (GameUser player : players)
-            users.put(player.getMyName(), player);
-        direction = true;
-        setCurStepPlayerId(0);
-        rnd = new Random();
-    }
+    CardResource getCard();
 
-    public String getCardType() {
-        return card.getType();
-    }
+    boolean playerHasCardToSet(GameUser player);
 
-    public CardResource getCard() {
-        return card;
-    }
+    boolean canSetCard(CardResource card, GameUser player);
 
-    public boolean playerHasCardToSet(GameUser player) {
-        return playerHasCardNotIncFourToSet(player) || playerHasIncFourCard(player);
-    }
+    void setCard(CardResource card, String newColor);
 
-    public boolean canSetCard(CardResource card, GameUser player) {
-        return this.card == null
-                || isCorrectNotIncFourCard(card)
-                || !playerHasCardNotIncFourToSet(player) && card.getType().equals("incFour");
-    }
+    GameUser getUser(String login);
 
-    public void setCard(CardResource card, String newColor) {
-        this.card = card;
-        this.color = card.getColor().equals("black") ? newColor : card.getColor();
-        if (card.getType().equals("reverse"))
-            changeDirection();
-    }
+    ArrayList<GameUser> getPlayersList();
 
-    public GameUser getUser(String login) {
-        return users.get(login);
-    }
+    boolean getDirection();
 
-    public ArrayList<GameUser> getPlayersList() {
-        ArrayList<GameUser> result = new ArrayList<>();
-        result.addAll(users.values());
-        return result;
-    }
+    void changeDirection();
 
-    public boolean getDirection() {
-        return direction;
-    }
+    long getCurStepPlayerId();
 
-    public void changeDirection() {
-        direction = !direction;
-    }
+    void setCurStepPlayerId(long curStepPlayerId);
 
-    public long getCurStepPlayerId() {
-        return curStepPlayerId;
-    }
+    void updateCurStepPlayerId();
 
-    public void setCurStepPlayerId(long curStepPlayerId) {
-        this.curStepPlayerId = curStepPlayerId;
-    }
-
-    public void updateCurStepPlayerId() {
-        if (!card.getType().equals("reverse"))
-            curStepPlayerId = direction ?
-                (curStepPlayerId + 1) % users.size() :
-                (curStepPlayerId == 0 ? users.size() - 1 : curStepPlayerId - 1);
-    }
-
-    public List<CardResource> generateCards(long count) {
-        List<CardResource> cards = new ArrayList<>();
-        for (int i = 0; i < count; ++i) {
-            CardResource temp = ResourceSystem.instance().getCardsResource().getCard(
-                    rnd.nextInt(ResourceSystem.instance().getCardsResource().CardsCount()));
-            cards.add(new CardResource(temp.getCardId(), temp.getColor(), temp.getType(), temp.getNum(),
-                    temp.getWidth(), temp.getHeight(), temp.getX(), temp.getY()));
-        }
-        return cards;
-    }
-
-    private boolean isCorrectNotIncFourCard(CardResource card) {
-        return card.getType().equals("number") && this.card.getType().equals("number") && card.getNum() == this.card.getNum()
-                || card.getColor().equals(color)
-                || card.getType().equals("color");
-    }
-
-    private boolean playerHasCardNotIncFourToSet(GameUser player) {
-        List<CardResource> cards = player.getCards();
-        for (CardResource card : cards) {
-            if (isCorrectNotIncFourCard(card))
-                return true;
-        }
-        return false;
-    }
-
-    private boolean playerHasIncFourCard(GameUser player) {
-        List<CardResource> cards = player.getCards();
-        for (CardResource card : cards) {
-            if (card.getType().equals("incFour"))
-                return true;
-        }
-        return false;
-    }
+    List<CardResource> generateCards(long count);
 }

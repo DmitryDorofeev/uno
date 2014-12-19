@@ -137,7 +137,7 @@ public class GameMechanicsImpl implements GameMechanics {
     }
 
     private void startGame(ArrayList<GameUser> players) {
-        GameSession gameSession = new GameSession(players);
+        GameSession gameSession = new GameSessionImpl(players);
         int j = 0;
         for (GameUser player : players) {
             playerGame.put(player.getMyName(), gameSession);
