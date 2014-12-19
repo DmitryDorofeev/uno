@@ -16,4 +16,6 @@ public interface GameMechanics {
     void initJoystick(String username);
 
     void stepByJoystick(String username, String action, String newColor);
+
+    public boolean isPlayerInWaiters(String login);
 }

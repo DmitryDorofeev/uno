@@ -139,7 +139,7 @@ public class GameMechanicsImpl implements GameMechanics {
         return playerGame.get(login);
     }
 
-    private boolean isPlayerInWaiters(String login) {
+    public boolean isPlayerInWaiters(String login) {
         for (GameUser waiter : waiters) {
             if (waiter.getMyName().equals(login))
                 return true;
