@@ -70,7 +70,7 @@ public class ResourceSystem {
         return resourceSystem;
     }
 
-    public ServerConfigResource getServerStartResource() {
+    public ServerConfigResource getServerConfigResource() {
         return (ServerConfigResource)resourceMap.get("resources/server_config.xml");
     }
 
