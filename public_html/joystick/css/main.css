@@ -183,8 +183,11 @@ html, body {
   width: 100%;
   height: 100%;
   max-width: 480px;
-  overflow: hidden;
-  background-image: url("/images/bg.jpg"); }
+  overflow: hidden; }
+
+.page {
+  width: 100%;
+  height: 100%; }
 
 .cards {
   overflow: hidden;

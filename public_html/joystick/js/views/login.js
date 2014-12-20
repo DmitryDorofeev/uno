@@ -4,6 +4,7 @@ define([
     'models/user'
 ], function (Backbone, tmpl, userModel) {
     var LoginView = Backbone.View.extend({
+        className: 'page',
         model: userModel,
         initialize: function () {
 

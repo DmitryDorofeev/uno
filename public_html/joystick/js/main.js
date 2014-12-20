@@ -6,10 +6,10 @@ define(function (require) {
         emitter = _.extend({}, Backbone.Events),
         renderGame = function () {
             var game = new GameView();
-            $('body').html(game.render().$el);
+            $('.page').html(game.render().$el);
         },
         renderLogin = function () {
-            $('body').html(login.render().$el);
+            $('.page').html(login.render().$el);
         },
         onMotion = function (event) {
         var val = event.beta,
@@ -18,7 +18,7 @@ define(function (require) {
                 val = event.gamma;
                 dop = 0;
             }
-            $('body').css({top: (val)*3+dop});
+            $('.page').css({top: (val)*3+dop});
         };
 
     emitter.listenTo(userModel, 'logined', renderGame);

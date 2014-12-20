@@ -63,7 +63,8 @@ define([
 			var output = {
 				type: 'card',
 				body: {
-					cardId: model.get('cardId')
+					focusOnCard: model.collection.indexOf(model),
+                    newColor: model.get('color')
 				}
 			};
 			this.connection.send(JSON.stringify(output));

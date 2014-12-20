@@ -6,6 +6,7 @@ define([
     'collections/cards'
 ], function (Backbone, GameModel, tmpl, CardsView, CardsCollection) {
     var GameView = Backbone.View.extend({
+        className: 'page',
         initialize: function () {
             this.model = new GameModel(),
             this.cards = new CardsView({collection: new CardsCollection([], {game: this.model})}),
