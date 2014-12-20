@@ -1,5 +1,6 @@
 <class type = "resources.GameParamsResource">
-    <socketTimeOut>10</socketTimeOut>
+    <minPlayersCount>2</minPlayersCount>
+    <maxPlayersCount>5</maxPlayersCount>
     <startCardsCount>7</startCardsCount>
     <joystickCardsCount>3</joystickCardsCount>
 </class>
