@@ -121,6 +121,14 @@ public class GameMechanicsImpl implements GameMechanics {
             webSocketService.notifyGameStep(false, "Not your turn!", curPlayer);
     }
 
+    public boolean isPlayerInWaiters(String login) {
+        for (GameUser waiter : waiters) {
+            if (waiter.getMyName().equals(login))
+                return true;
+        }
+        return false;
+    }
+
     private void addCardsToPlayerAndStep(GameUser player, GameSession gameSession, String newColor) {
         if (!gameSession.playerHasCardToSet(player)) {
             List<CardResource> cards = gameSession.generateCards(1);
@@ -137,14 +145,6 @@ public class GameMechanicsImpl implements GameMechanics {
 
     private GameSession getPlayerGame(String login) {
         return playerGame.get(login);
-    }
-
-    public boolean isPlayerInWaiters(String login) {
-        for (GameUser waiter : waiters) {
-            if (waiter.getMyName().equals(login))
-                return true;
-        }
-        return false;
     }
 
     private void startGame(ArrayList<GameUser> players) {
