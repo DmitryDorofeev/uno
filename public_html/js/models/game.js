@@ -13,17 +13,11 @@ define([
 		},
 		connect: function () {
             this.trigger('load:start', 'Подключение...');
-            if (this.connection !== undefined) {
-                this.connection.close();
+            if (this.connection === undefined) {
+				this.connection = new WebSocket('ws://' + location.host + '/game');
             }
-            this.connection = new WebSocket('ws://' + location.host + '/game');
 			this.connection.onopen = this.onConnect;
 			this.connection.onmessage = this.onMessage;
-		},
-		close: function () {
-			if (this.connection !== undefined) {
-				this.connection.close();
-			}
 		},
 		send: function (data) {
 			this.connection.send(JSON.stringify(data));

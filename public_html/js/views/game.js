@@ -27,7 +27,6 @@ define([
     },
     register: function (name, view) {
         this.views[name] = view;
-        //this.views[name]
     },
     loadStart: function (msg) {
         this.trigger('load:start', msg);
@@ -40,17 +39,19 @@ define([
     },
     render: function() {
         this.$el.html(this.template());
+        this.$game = this.$('.game');
         _.forEach(this.views, function(view) {
-            this.$el.find('.game').append(view.render().$el);
+            this.$game.append(view.render().$el);
         }, this);
         return this;
     },
     show: function () {
       if (userModel.isLogined()) {
-        this.trigger('show', this);
-        this.$el.show();
-        this.model.set('inGame', true);
-        this.showSettings();
+          this.trigger('show', this);
+          this.$el.show();
+          if (this.game.connection == undefined) {
+              this.showSettings();
+          }
       }
       else {
         userModel.trigger('login:no');
