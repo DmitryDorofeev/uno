@@ -14,16 +14,13 @@ define([
             this.add(msg.players);
         },
         step: function (msg) {
-            console.log('STEP FUCK', msg);
-            var cardsCount;
-            if ((this.curStep === undefined) || (this.curStep == msg.curStepPlayerId)) {
+            if (!this.curStep || (this.curStep == msg.curStepPlayerId)) {
                 this.curStep = msg.curStepPlayerId;
+                return;
             }
-            else {
-                cardsCount = this.at(this.curStep).get('cardsCount');
-                this.at(this.curStep).set('cardsCount', cardsCount - 1);
-                this.curStep = msg.curStepPlayerId;
-            }
+            var model = this.at(this.curStep);
+            model.set('cardsCount', model.get('cardsCount') - 1);
+            this.curStep = msg.curStepPlayerId;
         }
 	});
 

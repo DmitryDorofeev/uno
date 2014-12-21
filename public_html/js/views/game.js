@@ -60,7 +60,6 @@ define([
     hide: function () {
         this.$el.hide();
         this.model.set('inGame', false);
-        this.game.close();
     },
     showSettings: function () {
       gameSettings.show();

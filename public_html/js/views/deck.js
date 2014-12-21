@@ -10,6 +10,7 @@ define([
             'click .js-deck': 'getCards'
         },
         initialize: function () {
+            this.isFirst = true;
             this.listenTo(this.model, 'add change', this.changeCard);
             this.$el.hide();
         },
@@ -21,9 +22,19 @@ define([
             return this;
         },
         changeCard: function () {
-            this.$el.find('.b-table__current').css({
+            var time = this.isFirst ? 0 : 300;
+            this.isFirst = false;
+            this.$('.b-table__new').css({
                 'background-position': '-' + this.model.get('x') + 'px -' + this.model.get('y') + 'px'
             });
+
+            this.$('.b-table__new').animate({top: 0, opacity: 1}, time, _.bind(function () {
+                this.$('.b-table__current').css({
+                    'background-position': '-' + this.model.get('x') + 'px -' + this.model.get('y') + 'px'
+                });
+
+                this.$('.b-table__new').css({top: -30, opacity: 0});
+            }, this));
         },
         show: function () {
             this.$el.show();

@@ -1,0 +1,34 @@
+.b-table {
+
+  top: 30%;
+  left: 40%;
+  position: absolute;
+  overflow: hidden;
+
+  &__current {
+    background-image: url("/images/cards.png");
+    float: left;
+    width: 120px;
+    height: 180px;
+  }
+
+  &__new {
+    position: absolute;
+    width: 120px;
+    height: 180px;
+    top: -30px;
+    opacity: 0;
+    left: 120px;
+    background-image: url("/images/cards.png");
+  }
+
+  &__deck {
+    float: left;
+    background-image: url(/images/back.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 120px;
+    height: 180px;
+  }
+
+}

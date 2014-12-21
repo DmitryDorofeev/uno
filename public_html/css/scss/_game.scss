@@ -17,6 +17,11 @@ button {
     position: absolute;
 }
 
+.player-wrap__active {
+    padding: 10px;
+    border: 1px solid $secondaryColor;
+}
+
 .player__login {
     color: #fff;
     font-size: 20px;
@@ -41,30 +46,4 @@ button {
 .player-wrap:nth-child(4) {
     top: 30%;
     right: 0;
-}
-
-
-.b-table {
-
-    top: 30%;
-    left: 40%;
-    position: absolute;
-    overflow: hidden;
-
-    &__current {
-        background-image: url("/images/cards.png");
-        float: left;
-        width: 120px;
-        height: 180px;
-    }
-
-    &__deck {
-        float: left;
-        background-image: url(/images/back.png);
-        background-size: contain;
-        background-repeat: no-repeat;
-        width: 120px;
-        height: 180px;
-    }
-
 }
