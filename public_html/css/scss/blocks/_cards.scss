@@ -14,8 +14,10 @@
 
   &__card {
     background-image: url(/images/cards.png);
+    background-repeat: no-repeat;
     display: inline-block;
     cursor: pointer;
+    position: relative;
 
     &_selected {
       border: 3px solid #446CB3;

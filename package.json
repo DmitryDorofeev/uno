@@ -24,6 +24,7 @@
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-fest": "^0.1.5",
-    "grunt-shell": "^1.1.1"
+    "grunt-shell": "^1.1.1",
+    "gulp-requirejs": "^0.1.3"
   }
 }

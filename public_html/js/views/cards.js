@@ -1,21 +1,26 @@
 define([
     'backbone',
     'collections/cards',
-    'views/card'
-], function (Backbone, cardsCollection, CardView) {
+    'views/card',
+    'tmpl/cards'
+], function (Backbone, cardsCollection, CardView, tmpl) {
     
     var CardsView = Backbone.View.extend({
-        className: 'cards',
         collection: cardsCollection,
         initialize: function () {
-            this.listenTo(this.collection, 'add', this.addCard);
             this.render();
+            this.listenTo(this.collection, 'add', this.addCard);
+        },
+        template: function () {
+            return tmpl();
         },
         addCard: function (model) {
             var card = new CardView({model: model});
-            this.$el.append(card.render().$el);
+            this.$wrap.append(card.render().$el);
         },
         render: function () {
+            this.$el.html(this.template());
+            this.$wrap = this.$('.js-cards');
             return this;
         }
     });

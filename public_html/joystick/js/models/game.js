@@ -7,6 +7,9 @@ define(['backbone'], function (Backbone) {
             this.ws = new WebSocket('ws://' + location.host + '/game');
             this.ws.onopen = _.bind(this._onOpen, this);
             this.ws.onmessage = _.bind(this._onMessage, this);
+            document.addEventListener('touchstart', function (event) {
+                event.preventDefault();
+            });
         },
         render: function () {
 
@@ -26,6 +29,9 @@ define(['backbone'], function (Backbone) {
         },
         gameStart: function () {
             return startDfd.promise();
+        },
+        sendCard: function () {
+
         }
     });
 

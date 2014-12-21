@@ -48,8 +48,10 @@
   padding: 30px; }
   .cards__card {
     background-image: url(/images/cards.png);
+    background-repeat: no-repeat;
     display: inline-block;
-    cursor: pointer; }
+    cursor: pointer;
+    position: relative; }
     .cards__card_selected {
       border: 3px solid #446CB3;
       border-radius: 25px; }

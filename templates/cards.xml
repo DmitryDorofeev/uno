@@ -1,0 +1,7 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <div class="cards">
+        <div class="cards__wrap js-cards">
+
+        </div>
+    </div>
+</fest:template>

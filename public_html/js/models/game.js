@@ -64,9 +64,10 @@ define([
 				type: 'card',
 				body: {
 					focusOnCard: model.collection.indexOf(model),
-                    newColor: model.get('color')
+                    newColor: model.get('color') || null
 				}
 			};
+			console.log('SEND CARDS', output);
 			this.connection.send(JSON.stringify(output));
 			return stepDfd.promise();
 		},
