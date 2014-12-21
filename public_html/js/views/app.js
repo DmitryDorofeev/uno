@@ -14,9 +14,13 @@ define([
             this.constructors = {};
             this.inLoad = false;
         },
-        template: tmpl,
+        template: function () {
+            return tmpl();
+        },
         render: function () {
             this.$el.html(this.template());
+            this.$error = this.$('.error');
+            this.$errorText = this.$error.find('.js-text');
         },
         register: function (views) {
             _.forEach(views, function (view, name) {
@@ -39,6 +43,7 @@ define([
                 this.listenTo(view, 'show', this.hideOther);
                 this.listenTo(view, 'load:start', this.showPreloader);
                 this.listenTo(view, 'load:done', this.hidePreloader);
+                this.listenTo(view, 'error', this.showError);
                 view.render();
                 this.$el.find('.app').append(view.$el);
                 this.views[name] = view;
@@ -57,6 +62,13 @@ define([
             this.$el.find('.overlay').hide();
             this.$el.find('.preloader').hide();
             this.$el.find('.preload-text').hide();
+        },
+        showError: function (message) {
+            this.$errorText.text(message);
+            this.$error.css({display: 'block'}).animate({top: 20, opacity: 1}, 500);
+            setTimeout(_.bind(function () {
+                this.$error.animate({top: 0, opacity: 0}, 500);
+            }, this), 3000);
         }
     });
 

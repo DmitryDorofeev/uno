@@ -319,6 +319,24 @@ html, body {
   margin: 0;
   padding: 0; }
 
+.error {
+  display: none;
+  opacity: 0;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  width: 400px;
+  left: 50%;
+  margin-left: -220px;
+  border: 1px solid #a00307;
+  text-align: center;
+  padding: 20px; }
+  .error__text {
+    display: inline-block;
+    font-family: "robotol", Helvetica, Arial;
+    font-size: 22px;
+    color: #fdfdfd; }
+
 .main {
   text-align: center; }
 

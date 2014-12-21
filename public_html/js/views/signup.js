@@ -16,7 +16,6 @@ define([
         template: tmpl,
         render: function () {
             this.$el.html(this.template());
-            this.$error = this.$el.find('#error');
             return this;
         },
         signup: function (event) {
@@ -28,9 +27,6 @@ define([
                 password: form.find('input[name=password]').val()
             });
         },
-        renderError: function (msg) {
-            this.$error.text(msg);
-        },
         show: function () {
             this.trigger('show', this);
             this.$el.show();
@@ -39,10 +35,10 @@ define([
             this.$el.hide();
         },
         renderRegError: function (message) {
-            this.$error.text(message);
+            this.trigger('error', message);
         },
         renderServerError: function () {
-            this.$error.text('Ошибка соединения с сервером');
+            this.trigger('error', 'Ошибка соединения с сервером');
         }
     });
     

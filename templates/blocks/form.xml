@@ -2,10 +2,15 @@
     <fest:include src="btn.xml"/>
     <fest:set name="form">
         <div class="form">
-            <form action="/api/v1/auth/signin" method="POST" id="login-form">
+            <form action="/api/v1/auth/{params.type}" method="POST" id="{params.type}-form">
                 <div>
                     <input type="text" name="login" class="form__input" placeholder="Логин..." required=""/>
                 </div>
+                <fest:if test="params.type === 'signup'">
+                    <div>
+                        <input type="text" name="email" class="form__input" placeholder="E-mail..." required=""/>
+                    </div>
+                </fest:if>
                 <div>
                     <input type="password" name="password" class="form__input" placeholder="Пароль..." required=""/>
                 </div>

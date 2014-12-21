@@ -11,30 +11,29 @@ define([
       this.listenTo(this.model, 'login:bad', this.renderLoginError);
     },
     events: {
-      'submit #login-form': 'login'
+      'submit #signin-form': 'login'
     },
-    template: tmpl,
+    template: function () {
+      return tmpl();
+    },
     render: function() {
       this.$el.html(this.template());
-      this.$error = this.$el.find('#error');
       return this;
     },
     login: function(event) {
       event.preventDefault();
-      this.$error.hide();
-      var form = this.$el.find('#login-form');
+      this.trigger('error:hide');
+      var form = this.$('#signin-form');
       this.model.login({
         login: form.find('input[name=login]').val(),
         password: form.find('input[name=password]').val()
       });
     },
     renderServerError: function() {
-      this.$error.text('Ошибка соединения с сервером');
-      this.$error.show();
+      this.trigger('error', 'Ошибка соединения с сервером');
     },
     renderLoginError: function(message) {
-      this.$error.text(message);
-      this.$error.show();
+      this.trigger('error', message);
     },
     show: function () {
       this.trigger('show', this);

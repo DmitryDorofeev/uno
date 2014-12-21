@@ -2,4 +2,9 @@
     <fest:include src="blocks/preloader.xml"/>
     <div class="app"></div>
     <fest:get name="preloader"></fest:get>
+    <div class="error">
+        <div class="error__text js-text">
+            ERR
+        </div>
+    </div>
 </fest:template>
