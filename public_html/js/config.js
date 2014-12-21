@@ -15,4 +15,6 @@ require.config({
     }
 });
 
-require(['main']);
+window.addEventListener('load', function () {
+    require(['main']);
+});

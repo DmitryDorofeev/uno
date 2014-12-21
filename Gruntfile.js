@@ -76,20 +76,43 @@ module.exports = function (grunt) {
                 files: {
                     'public_html/joystick/css/main.css': 'public_html/joystick/css/scss/main.scss'
                 }
+            },
+            compress: {
+                options: {
+                    style: 'compressed'
+                },
+                files: {
+                    'public_html/css/main.min.css': 'public_html/css/scss/main.scss',
+                    'public_html/joystick/css/main.min.css': 'public_html/joystick/css/scss/main.scss'
+                }
             }
         },
         requirejs: {
             compile: {
                 options: {
+                    almond: true,
                     baseUrl: 'public_html/js',
                     mainConfigFile: 'public_html/js/config.js',
-                    paths: {
-                        'requireLib': 'require'
-                    },
                     name: 'config',
                     out: 'public_html/build/dist.js',
-                    include: ['requireLib'],
-                    optimize: 'uglify'
+                    optimize: 'none'
+                }
+            }
+        },
+        concat: {
+            build: {
+                separator: ';\n',
+                src: [
+                    'public_html/js/lib/almond.js',
+                    'public_html/build/dist.js'
+                ],
+                dest: 'public_html/build/build.js'
+            }
+        },
+        uglify: {
+            build: {
+                files: {
+                    'public_html/build/build.min.js': ['public_html/build/build.js']
                 }
             }
         },
@@ -115,7 +138,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.registerTask('default', ['concurrent']);
-    grunt.registerTask('build', ['fest', 'requirejs']);
+    grunt.registerTask('build', ['fest', 'requirejs', 'concat', 'uglify', 'sass:compress']);
 };
 
