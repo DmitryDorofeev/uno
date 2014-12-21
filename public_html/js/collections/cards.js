@@ -1,15 +1,18 @@
 define([
     'backbone',
     'models/card',
-    'models/game'
-], function (Backbone, CardModel, gameModel) {
+    'models/game',
+    'models/user'
+], function (Backbone, CardModel, gameModel, userModel) {
 
     var stepDfd;
 
     var CardCollection = Backbone.Collection.extend({
         model: CardModel,
         game: gameModel,
+        user: userModel,
         initialize: function () {
+            this.disabled = false;
             this.listenTo(this.game, 'message:cards', this.addCards);
             this.listenTo(this.game, 'message:step', this.processStep);
             _.bindAll(this, 'stepDone');
@@ -33,6 +36,14 @@ define([
             return stepDfd.promise();
         },
         processStep: function (data) {
+            if (data.curStepPlayerId != this.user.orderId) {
+                this.trigger('cards:disable');
+                this.disabled = true;
+            }
+            else {
+                this.trigger('cards:enable');
+                this.disabled = false;
+            }
             if (stepDfd && stepDfd.state() === 'pending') {
                 if (data.correct) {
                     stepDfd.resolve();
@@ -44,6 +55,9 @@ define([
                 this.remove(this.pending);
                 console.log('remove: ', this.pending);
             }
+        },
+        isDisabled: function () {
+            return this.disabled;
         }
     });
 

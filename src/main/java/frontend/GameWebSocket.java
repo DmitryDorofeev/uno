@@ -74,6 +74,8 @@ public class GameWebSocket {
                 jsonCard.put("y", card.getY());
                 jsonCard.put("width", card.getWidth());
                 jsonCard.put("height", card.getHeight());
+                jsonCard.put("color", card.getColor());
+                jsonCard.put("number", card.getNum());
                 jsonCards.add(jsonCard);
             }
             System.out.println(myName + jsonObject.toJSONString());
@@ -104,6 +106,8 @@ public class GameWebSocket {
             jsonCard.put("y", card.getY());
             jsonCard.put("width", card.getWidth());
             jsonCard.put("height", card.getHeight());
+            jsonCard.put("color", card.getColor());
+            jsonCard.put("number", card.getNum());
             jsonCards.add(jsonCard);
             System.out.println(myName + jsonObject.toJSONString());
             session.getRemote().sendString(jsonObject.toJSONString());

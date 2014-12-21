@@ -10,6 +10,8 @@ define([
         initialize: function () {
             this.render();
             this.listenTo(this.collection, 'add', this.addCard);
+            this.listenTo(this.collection, 'cards:disable', this.disable);
+            this.listenTo(this.collection, 'cards:enable', this.enable);
         },
         template: function () {
             return tmpl();
@@ -21,7 +23,14 @@ define([
         render: function () {
             this.$el.html(this.template());
             this.$wrap = this.$('.js-cards');
+            this.$cards = this.$('.cards');
             return this;
+        },
+        disable: function () {
+            this.$cards.addClass('cards_disabled');
+        },
+        enable: function () {
+            this.$cards.removeClass('cards_disabled');
         }
     });
     

@@ -7,29 +7,13 @@ define([
         initialize: function () {
             this.listenTo(this.model, 'remove', this.remove);
         },
-        onMove: function (event) {
-            if (this.curTouch) {
-                var newPos;
-                delta = this.curTouch - event.changedTouches[0].pageY;
-                newPos = - delta;
-                this.bottomPos = newPos;
-                this.$el.css({left: newPos});
-
-            }
-        },
-        onTouch: function (event) {
-            event.preventDefault();
-            this.curTouch = - this.bottomPos + event.changedTouches[0].pageY;
-        },
-        onTouchDone: function (event) {
-            this.curTouch = null;
-        },
         events: {
             'click': 'selectCard'
         },
         selectCard: function (event) {
-            console.log('cardId: %d', this.model.get('cardId'));
-            this.model.select();
+            if (!this.model.collection.isDisabled()) {
+                this.model.select();
+            }
         },
         render: function () {
             this.$el.css({
