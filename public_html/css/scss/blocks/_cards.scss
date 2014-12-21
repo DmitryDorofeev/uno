@@ -7,10 +7,12 @@
   overflow: hidden;
   z-index: 10;
   bottom: 0;
-  width: 860px;
-  left: 50%;
-  margin-left: -430px;
-  padding: 30px;
+  width: 100%;
+  text-align: center;
+
+  &__wrap {
+    display: inline-block;
+  }
 
   &__card {
     background-image: url(/images/cards.png);

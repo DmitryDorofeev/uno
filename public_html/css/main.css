@@ -42,10 +42,10 @@
   overflow: hidden;
   z-index: 10;
   bottom: 0;
-  width: 860px;
-  left: 50%;
-  margin-left: -430px;
-  padding: 30px; }
+  width: 100%;
+  text-align: center; }
+  .cards__wrap {
+    display: inline-block; }
   .cards__card {
     background-image: url(/images/cards.png);
     background-repeat: no-repeat;
@@ -325,7 +325,7 @@ html, body {
   width: 100%;
   height: 100%;
   background: #D91E18;
-  font-family: Verdana; }
+  font-family: Verdana, sans-serif; }
 
 .scoreboard {
   width: 900px;
