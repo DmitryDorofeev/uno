@@ -4,8 +4,6 @@ define([
     'models/user'
 ], function ($, Backbone, userModel) {
 
-	var stepDfd;
-
 	var GameModel = Backbone.Model.extend({
 		initialize: function () {
 			this.connection = undefined;
@@ -26,6 +24,9 @@ define([
 			if (this.connection !== undefined) {
 				this.connection.close();
 			}
+		},
+		send: function (data) {
+			this.connection.send(JSON.stringify(data));
 		},
 		onConnect: function () {
 			this.status = 1;
@@ -49,33 +50,7 @@ define([
 			if (data.type === 'cards') {
 				this.trigger('cards:render');
 			}
-			if (data.type === 'step') {
-				if (stepDfd && stepDfd.state() === 'pending') {
-					if (data.body.correct) {
-						stepDfd.resolve();
-					}
-				}
-			}
 			this.trigger('message:' + data.type, data.body);
-		},
-		sendCard: function (model) {
-			stepDfd = new $.Deferred();
-			var output = {
-				type: 'card',
-				body: {
-					focusOnCard: model.collection.indexOf(model),
-                    newColor: model.get('color') || null
-				}
-			};
-			console.log('SEND CARDS', output);
-			this.connection.send(JSON.stringify(output));
-			return stepDfd.promise();
-		},
-		orient: function (event) {
-			console.log(event.alpha);
-		},
-		getCard: function () {
-			this.connection.send(JSON.stringify({type: "card", body: {focusOnCard: -1}}));
 		}
 	});
 
