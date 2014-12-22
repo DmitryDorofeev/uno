@@ -14,13 +14,26 @@ define([
             this.add(msg.players);
         },
         step: function (msg) {
-            if (!this.curStep || (this.curStep == msg.curStepPlayerId)) {
+            var curStepId = msg.curStepPlayerId;
+            if (this.correct) {
+                if (!this.curStep || (this.curStep == curStepId)) {
+                    this.curStep = curStepId;
+                    return;
+                }
+                var model = this.at(this.curStep);
+                model.set('cardsCount', model.get('cardsCount') - 1);
                 this.curStep = msg.curStepPlayerId;
-                return;
             }
-            var model = this.at(this.curStep);
-            model.set('cardsCount', model.get('cardsCount') - 1);
-            this.curStep = msg.curStepPlayerId;
+
+
+            this.each(function (model, index) {
+                if (model.id == curStepId) {
+                    model.trigger('activate');
+                }
+                else {
+                    model.trigger('deactivate');
+                }
+            });
         }
 	});
 
