@@ -34,13 +34,43 @@ public class TestCardsResources {
         int number = 0;
         int x = 0;
 
-        for (int i = 5; i < 101; ++i) {
+        for (int i = 5; i < 77; ++i) {
             if (((i - 5)%8) == 0) {
                 number++;
                 x += 240;
             }
             testCards.remove(0);
             testCards.add(0, new CardResource(i, colors[i%4], "number", number, 240, 360, x, 360*((i-5)%8)));
+            assertEquals("Adding card first time " + i, true, testCardsResource.saveCard(testCards.get(0)));
+        }
+
+        for (int i = 77; i < 85; ++i) {
+            if (((i - 5)%8) == 0) {
+                number++;
+                x += 240;
+            }
+            testCards.remove(0);
+            testCards.add(0, new CardResource(i, colors[i%4], "skip", number, 240, 360, x, 360*((i-5)%8)));
+            assertEquals("Adding card first time " + i, true, testCardsResource.saveCard(testCards.get(0)));
+        }
+
+        for (int i = 85; i < 93; ++i) {
+            if (((i - 5)%8) == 0) {
+                number++;
+                x += 240;
+            }
+            testCards.remove(0);
+            testCards.add(0, new CardResource(i, colors[i%4], "reverse", number, 240, 360, x, 360*((i-5)%8)));
+            assertEquals("Adding card first time " + i, true, testCardsResource.saveCard(testCards.get(0)));
+        }
+
+        for (int i = 93; i < 101; ++i) {
+            if (((i - 5)%8) == 0) {
+                number++;
+                x += 240;
+            }
+            testCards.remove(0);
+            testCards.add(0, new CardResource(i, colors[i%4], "incTwo", number, 240, 360, x, 360*((i-5)%8)));
             assertEquals("Adding card first time " + i, true, testCardsResource.saveCard(testCards.get(0)));
         }
 
