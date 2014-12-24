@@ -1,10 +1,17 @@
 package testresources;
 
 import org.junit.*;
+import static org.mockito.Mockito.*;
+
 import resources.CardsResource;
 import resources.CardResource;
+import sax.ReadXMLFileSAX;
+import vfs.VFS;
+import vfs.VFSImpl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -96,5 +103,45 @@ public class TestCardsResources {
 
 //        assertEquals("Adding card second time with the new ID " + testCards.get(2).getCardId(), false, testCardsResource.saveCard(testCards.get(2)));
 //        assertEquals("Cards' count is " + testCardsResource.CardsCount(), 108, testCardsResource.CardsCount());
+    }
+
+    @Test
+    public void testParsingCards() throws Exception {
+        HashMap<String, String> colorMap = new HashMap<>();
+        HashMap<String, String> typeMap = new HashMap<>();
+
+        colorMap.put("red", "1");
+        colorMap.put("yellow", "2");
+        colorMap.put("green", "3");
+        colorMap.put("blue", "4");
+        colorMap.put("black", "5");
+
+        typeMap.put("number", "1");
+        typeMap.put("skip", "2");
+        typeMap.put("reverse", "3");
+        typeMap.put("incTwo", "4");
+        typeMap.put("color", "5");
+        typeMap.put("incFour", "6");
+
+        CardsResource cardsResource = new CardsResource();
+        VFS vfs = new VFSImpl("");
+        Iterator<String> iter = vfs.getIterator("resources/cards/");
+        while (iter.hasNext()) {
+            String fileName = iter.next();
+            if (VFS.exists(fileName)) {
+                if (!VFS.isDirectory(fileName)) {
+                    CardResource tempCard = (CardResource) ReadXMLFileSAX.readXML(fileName);
+                    cardsResource.saveCard(tempCard);
+                    assertEquals("Checking colour", true, colorMap.containsKey(tempCard.getColor()));
+                    assertEquals("Checking type", true, typeMap.containsKey(tempCard.getType()));
+                    if (tempCard.getType().equals("number"))
+                        assertEquals("Checking number", true, ((tempCard.getNum() >= 0) && (tempCard.getNum() <= 9)));
+                }
+            }
+            else {
+                System.out.println("File " + fileName + " does not exist");
+                cardsResource.saveCard(new CardResource());
+            }
+        }
     }
 }
