@@ -374,6 +374,20 @@ html, body {
     background-repeat: no-repeat;
     width: 120px;
     height: 180px; }
+  .b-table__uno {
+    position: relative;
+    clear: both;
+    width: 100px;
+    padding: 10px 0;
+    cursor: pointer;
+    margin: 0 auto;
+    margin-top: 10px;
+    text-align: center;
+    vertical-align: middle;
+    font-family: "robotol", Helvetica, Arial;
+    font-size: 25px;
+    text-shadow: 1px 0 0 #ffda2f, -1px 0 0 #ffda2f, 0 1px 0 #ffda2f, 0 -1px 0 #ffda2f, 1px 1px #ffda2f, -1px -1px 0 #ffda2f, 1px -1px 0 #ffda2f, -1px 1px 0 #ffda2f;
+    color: #D91E18; }
 
 .main {
   text-align: center; }

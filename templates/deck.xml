@@ -2,6 +2,7 @@
     <div class="b-table">
         <div class="b-table__deck js-deck"></div>
         <div class="b-table__current"></div>
+        <div class="b-table__uno js-uno">UNO!</div>
         <div class="b-table__new"></div>
     </div>
 </fest:template>

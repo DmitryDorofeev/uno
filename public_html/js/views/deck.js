@@ -7,7 +7,8 @@ define([
     var DeckView = Backbone.View.extend({
         model: deckModel,
         events: {
-            'click .js-deck': 'getCards'
+            'click .js-deck': 'getCards',
+            'click .js-uno': 'sayUno'
         },
         initialize: function () {
             this.isFirst = true;
@@ -41,6 +42,9 @@ define([
         },
         getCards: function () {
             this.model.getCard();
+        },
+        sayUno: function () {
+            this.model.sayUno();
         }
     });
 

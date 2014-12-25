@@ -12,7 +12,10 @@ define([
             }
         },
         getCard: function () {
-            gameModel.connection.send(JSON.stringify({type: "card", body: {focusOnCard: -1}}));
+            gameModel.send({type: 'card', body: {focusOnCard: -1}});
+        },
+        sayUno: function () {
+            gameModel.send({type: 'uno', body: {}})
         }
     });
 

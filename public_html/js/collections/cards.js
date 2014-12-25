@@ -62,7 +62,6 @@ define([
             }
         },
         stepDone: function () {
-            debugger;
             if (this.pending) {
                 this.remove(this.pending);
                 console.log('remove: ', this.pending);
