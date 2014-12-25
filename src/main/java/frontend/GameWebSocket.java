@@ -87,7 +87,7 @@ public class GameWebSocket {
     }
 
     public void gameStep(boolean correct, String message, long curStepPlayerId, CardResource card,
-                         boolean direction, long focusOnCard) {
+                         boolean direction, long focusOnCard, ArrayList<GameUser> players/*, Boolean uno*/) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "step");
@@ -109,6 +109,16 @@ public class GameWebSocket {
             jsonCard.put("color", card.getColor());
             jsonCard.put("number", card.getNum());
             jsonCards.add(jsonCard);
+            JSONArray jsonCardsCount = new JSONArray();
+            jsonBody.put("cardsCount", jsonCardsCount);
+            for (GameUser player : players) {
+                JSONObject jsonCount = new JSONObject();
+                jsonCount.put("id", player.getGamePlayerId());
+                jsonCount.put("count", player.getCards().size());
+                jsonCardsCount.add(jsonCount);
+            }
+//            if (uno != null)
+//                jsonBody.put("uno", uno);
             System.out.println(myName + jsonObject.toJSONString());
             session.getRemote().sendString(jsonObject.toJSONString());
         }

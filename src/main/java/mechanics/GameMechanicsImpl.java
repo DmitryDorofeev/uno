@@ -162,7 +162,7 @@ public class GameMechanicsImpl implements GameMechanics {
             webSocketService.sendStartCards(player);
         }
         CardResource card = gameSession.generateCards(1).get(0);
-        while (card.getType().equals("incFor"))
+        while (card.getType().equals("incFour"))
             card = gameSession.generateCards(1).get(0);
         gameSession.setCard(card, card.getColor());
         for (GameUser player : players)

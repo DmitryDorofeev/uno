@@ -118,7 +118,7 @@ public class GameSessionImpl implements GameSession {
         for (CardResource card : cards) {
             if (!isCorrectForIncFourCard(card))
                 return false;
-            if (card.getType().equals("incFor"))
+            if (card.getType().equals("incFour"))
                 incFourFound = true;
         }
         return incFourFound;
