@@ -53,7 +53,7 @@ public class GameMechanicsImpl implements GameMechanics {
         if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
             if (focusOnCard == -1)
                 addCardsToPlayerAndStep(curPlayer, gameSession, newColor);
-            else {
+            else if (curPlayer.isFocusOnCardValid(focusOnCard)){
                 curPlayer.setFocusOnCard(focusOnCard);
                 CardResource card = ResourceSystem.instance().getCardsResource().getCard(curPlayer.getFocusedCardId());
                 if (curPlayer.canDeleteCard(card)) {
@@ -66,6 +66,8 @@ public class GameMechanicsImpl implements GameMechanics {
                 } else
                     webSocketService.notifyGameStep(false, "Player has not that card!", curPlayer);
             }
+            else
+                webSocketService.notifyGameStep(false, "FocusOnCard is invalid!", curPlayer);
         }
         else
             webSocketService.notifyGameStep(false, "Not your turn!", curPlayer);
@@ -126,12 +128,17 @@ public class GameMechanicsImpl implements GameMechanics {
     private void addCardsToPlayerAndStep(GameUser player, GameSession gameSession, String newColor) {
         if (!gameSession.playerHasCardToSet(player)) {
             List<CardResource> cards = gameSession.generateCards(1);
-            while (!gameSession.canSetCard(cards.get(0), player)) {
-                player.addCards(cards);
-                cards = gameSession.generateCards(1);
+            if (!cards.get(0).getColor().equals("black") && gameSession.canSetCard(cards.get(0), player)) {
+                gameSession.setCard(cards.get(0), newColor);
+                finishGameStep(gameSession);
+                return;
             }
-            gameSession.setCard(cards.get(0), newColor);
-            finishGameStep(gameSession);
+            player.addCards(cards);
+            if (!cards.get(0).getColor().equals("black"))
+                gameSession.updateCurStepPlayerId();
+            List<GameUser> playersList = gameSession.getPlayersList();
+            for (GameUser curPlayer : playersList)
+                webSocketService.notifyNewCards(true, "newCards", curPlayer);
         }
         else
             webSocketService.notifyGameStep(false, "You have card to put!", player);

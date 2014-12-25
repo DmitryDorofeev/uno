@@ -113,6 +113,10 @@ public class GameUser {
         return focusOnCard;
     }
 
+    public boolean isFocusOnCardValid(long focusOnCard) {
+        return focusOnCard >= 0 && focusOnCard < getCardsCount();
+    }
+
     public void setFocusOnCard(long focusOnCard) {
         this.focusOnCard = focusOnCard;
     }
