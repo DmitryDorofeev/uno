@@ -40,12 +40,12 @@ public class GameDataSetDAO {
     }
 
     public long getLastGameId() {
+        Long result;
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GameDataSet.class);
-        Object result = criteria.setProjection(Projections.projectionList().add(Projections.max("gameId"))).uniqueResult();
+        result = (Long)criteria.setProjection(Projections.projectionList().add(Projections.max("gameId"))).uniqueResult();
         session.close();
-        System.out.println(result.toString());
-        return 0;
+        return result == null ? 0 : result;
     }
 
     public List getScores(int limit) {
