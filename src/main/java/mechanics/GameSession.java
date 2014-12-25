@@ -23,13 +23,29 @@ public interface GameSession {
 
     ArrayList<GameUser> getPlayersList();
 
+    GameUser getPlayerById(long id);
+
+    GameUser getUnoFailPlayer();
+
     boolean getDirection();
+
+    boolean actionExists();
+
+    boolean unoActionExists();
+
+    void doAction();
+
+    void setAction(String action);
+
+    void setUnoAction();
+
+    void removeUnoAction(GameUser player, boolean late);
 
     void changeDirection();
 
     long getCurStepPlayerId();
 
-    void setCurStepPlayerId(long curStepPlayerId);
+    void setCurStepPlayerId(long playerId);
 
     void updateCurStepPlayerId();
 

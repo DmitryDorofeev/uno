@@ -1,8 +1,10 @@
 package mechanics;
 
 import resources.CardResource;
+import resources.CardsResource;
 import resources.ResourceSystem;
 
+import javax.smartcardio.Card;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class GameUser {
     private GameSession gameSession;
     private int gamePlayerId;
     private long focusOnCard;
+    private List<CardResource> newCards = new ArrayList<>();
 
     public GameUser(String myName, long playersCount) {
         this.myName = myName;
@@ -24,6 +27,7 @@ public class GameUser {
 
     public void addCards(List<CardResource> cards) {
         this.cards.addAll(cards);
+        saveNewCards(cards);
     }
 
     public boolean canDeleteCard(CardResource card) {
@@ -40,9 +44,30 @@ public class GameUser {
                 cards.remove(curCard);
                 if (cards.size() == focusOnCard)
                     focusOnCard--;
+                if (cards.size() == 1)
+                    gameSession.setUnoAction();
                 return;
             }
         }
+    }
+
+    public long getCardsCount() {
+        return cards.size();
+    }
+
+    public void saveNewCards(List<CardResource> cards) {
+        newCards.addAll(cards);
+    }
+
+    public List<CardResource> getNewCards() {
+        List<CardResource> temp = new ArrayList<>();
+        temp.addAll(newCards);
+        removeNewCards();
+        return temp;
+    }
+
+    public void removeNewCards() {
+        newCards.clear();
     }
 
     public String getMyName() {

@@ -16,7 +16,7 @@ public class CardResource {
     public CardResource() {
         setCardId(0);
         setColor("red");
-        setType("usual");
+        setType("number");
         setNum(0);
         setWidth(240);
         setHeight(360);

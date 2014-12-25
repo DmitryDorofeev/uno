@@ -9,12 +9,15 @@ import java.util.*;
  * @author alexey
  */
 public class GameSessionImpl implements GameSession {
+    private Set<String> actions = new HashSet<>();
     private Map<String, GameUser> users = new HashMap<>();
     private boolean direction;
     private long curStepPlayerId;
     private CardResource card;
     private String color;
     private Random rnd;
+    private String action;
+    private boolean uno;
 
     public GameSessionImpl(ArrayList<GameUser> players) {
         for (GameUser player : players)
@@ -22,6 +25,53 @@ public class GameSessionImpl implements GameSession {
         direction = true;
         setCurStepPlayerId(0);
         rnd = new Random();
+        actions.add("incTwo");
+        actions.add("incFour");
+        actions.add("skip");
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public boolean actionExists() {
+        return getAction() != null;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public void setUnoAction() {
+        uno = true;
+    }
+
+    public boolean unoActionExists() {
+        return uno;
+    }
+
+    public void removeUnoAction(GameUser player, boolean late) {
+        if (player.getCardsCount() == 1) {
+            if (late)
+                getPlayerById(getPrevStepPlayerId()).addCards(
+                        generateCards(ResourceSystem.instance().getGameParamsResource().getUnoFailCardsCount()));
+            uno = getPlayerById(getCurStepPlayerId()).getCardsCount() == 1;
+        }
+    }
+
+    public void doAction() {
+        GameUser player = getPlayerById(getCurStepPlayerId());
+        switch (action) {
+            case "incTwo":
+                player.addCards(generateCards(2));
+                break;
+            case "skip":
+                break;
+            case "incFour":
+                player.addCards(generateCards(4));
+                break;
+        }
+        removeAction();
     }
 
     public String getCardType() {
@@ -47,6 +97,8 @@ public class GameSessionImpl implements GameSession {
         this.color = card.getColor().equals("black") ? newColor : card.getColor();
         if (card.getType().equals("reverse"))
             changeDirection();
+        if (actions.contains(card.getType()))
+            setAction(card.getType());
     }
 
     public GameUser getUser(String login) {
@@ -71,13 +123,30 @@ public class GameSessionImpl implements GameSession {
         return curStepPlayerId;
     }
 
-    public void setCurStepPlayerId(long curStepPlayerId) {
-        this.curStepPlayerId = curStepPlayerId;
+    public void setCurStepPlayerId(long playerId) {
+        this.curStepPlayerId = playerId;
     }
 
     public void updateCurStepPlayerId() {
-        if (!card.getType().equals("reverse"))
-            curStepPlayerId = direction ?
+        setCurStepPlayerId(getNextStepPlayerId());
+    }
+
+    public GameUser getPlayerById(long id) {
+        return getPlayersList().get((int)id);
+    }
+
+    public GameUser getUnoFailPlayer() {
+        return getPlayerById((int) getPrevStepPlayerId());
+    }
+
+    private long getPrevStepPlayerId() {
+        return !direction ?
+                (curStepPlayerId + 1) % users.size() :
+                (curStepPlayerId == 0 ? users.size() - 1 : curStepPlayerId - 1);
+    }
+
+    private long getNextStepPlayerId() {
+        return direction ?
                 (curStepPlayerId + 1) % users.size() :
                 (curStepPlayerId == 0 ? users.size() - 1 : curStepPlayerId - 1);
     }
@@ -91,6 +160,10 @@ public class GameSessionImpl implements GameSession {
                     temp.getWidth(), temp.getHeight(), temp.getX(), temp.getY()));
         }
         return cards;
+    }
+
+    private void removeAction() {
+        setAction(null);
     }
 
     private boolean isCorrectNotIncFourCard(CardResource card) {
