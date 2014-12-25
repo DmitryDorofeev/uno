@@ -169,6 +169,7 @@ public class GameSessionImpl implements GameSession {
     private boolean isCorrectNotIncFourCard(CardResource card) {
         return card.getType().equals("number") && this.card.getType().equals("number") && card.getNum() == this.card.getNum()
                 || card.getColor().equals(color)
+                || card.getType().equals(getCardType())
                 || card.getType().equals("color");
     }
 
