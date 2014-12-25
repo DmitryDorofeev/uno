@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.rules.Timeout;
 import org.mockito.ArgumentCaptor;
 import utils.TimeHelper;
@@ -36,6 +37,12 @@ public class TestAdminPageServlet {
 //    private static Server testServer;
     public static AuthService testAS = mock(AuthService.class);
     public static AdminPageServletImpl testAdmin = new AdminPageServletImpl(testAS);
+
+
+    Integer timeout = new Integer(3000);
+
+    @Rule
+    public TestRule globalTimeout = new Timeout(5000);
 
 //    @BeforeClass
 //    public static void startServer() throws Exception {
@@ -64,33 +71,7 @@ public class TestAdminPageServlet {
 //    }
 
     @Test
-    public void testStoppingServer() throws Exception {
-        Integer timeout = new Integer(3000);
-        HttpServletRequest testRequest = mock(HttpServletRequest.class);
-        HttpServletResponse testResponse = mock(HttpServletResponse.class);
-        PrintWriter testPrintWriter = mock(PrintWriter.class);
-        HttpSession testSession = mock(HttpSession.class);
-        ArgumentCaptor<String> jsonStringArgumentCaptor = ArgumentCaptor.forClass(String.class);
-
-        when(testRequest.getParameter("shutdown")).thenReturn(timeout.toString());
-        when(testRequest.getSession()).thenReturn(testSession);
-        when(testSession.getId()).thenReturn("1");
-        when(testAS.getUserProfile("1")).thenReturn(new UserProfile("admin", "admin", "admin"));
-        when(testResponse.getWriter()).thenReturn(testPrintWriter);
-
-        testAdmin.doGet(testRequest, testResponse);
-
-        TimeHelper.sleep(timeout.intValue());
-
-        verify(testResponse.getWriter(), never()).print(jsonStringArgumentCaptor.capture());
-        assertEquals("Checking server stopped", "", jsonStringArgumentCaptor.getValue());
-
-//        assertEquals("Is server alive?", false, isAlive());
-    }
-
-    @Test
     public void testAdminPageNoAdmin() throws Exception {
-        Integer timeout = new Integer(3000);
         HttpServletRequest testRequest = mock(HttpServletRequest.class);
         HttpServletResponse testResponse = mock(HttpServletResponse.class);
         PrintWriter testPrintWriter = mock(PrintWriter.class);
@@ -163,5 +144,30 @@ public class TestAdminPageServlet {
 
         verify(testResponse.getWriter()).print(jsonStringArgumentCaptor.capture());
         assertEquals("Checking user is not admin", jsonObj.toJSONString(), jsonStringArgumentCaptor.getValue());
+    }
+
+    @Test
+    public void testStoppingServer() throws Exception {
+        Integer timeout = new Integer(3000);
+        HttpServletRequest testRequest = mock(HttpServletRequest.class);
+        HttpServletResponse testResponse = mock(HttpServletResponse.class);
+        PrintWriter testPrintWriter = mock(PrintWriter.class);
+        HttpSession testSession = mock(HttpSession.class);
+        ArgumentCaptor<String> jsonStringArgumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        when(testRequest.getParameter("shutdown")).thenReturn(timeout.toString());
+        when(testRequest.getSession()).thenReturn(testSession);
+        when(testSession.getId()).thenReturn("1");
+        when(testAS.getUserProfile("1")).thenReturn(new UserProfile("admin", "admin", "admin"));
+        when(testResponse.getWriter()).thenReturn(testPrintWriter);
+
+        testAdmin.doGet(testRequest, testResponse);
+
+        TimeHelper.sleep(timeout.intValue());
+
+        verify(testResponse.getWriter(), never()).print(jsonStringArgumentCaptor.capture());
+        assertEquals("Checking server stopped", "", jsonStringArgumentCaptor.getValue());
+
+//        assertEquals("Is server alive?", false, isAlive());
     }
 }
