@@ -1,0 +1,10 @@
+<class type = "resources.CardResource">
+    <cardId>37</cardId>
+    <color>yellow</color>
+    <type>number</type>
+    <num>9</num>
+    <width>120</width>
+    <height>180</height>
+    <x>1080</x>
+    <y>180</y>
+</class>

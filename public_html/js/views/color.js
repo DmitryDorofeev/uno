@@ -21,7 +21,7 @@ define([
             });
         },
         render: function () {
-
+            return this;
         },
         show: function () {
             this.$el.show();
