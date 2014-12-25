@@ -137,10 +137,9 @@ public class GameMechanicsImpl implements GameMechanics {
             if (!cards.get(0).getColor().equals("black"))
                 gameSession.updateCurStepPlayerId();
             List<GameUser> playersList = gameSession.getPlayersList();
-            for (GameUser curPlayer : playersList) {
+            webSocketService.sendCards(player);
+            for (GameUser curPlayer : playersList)
                 webSocketService.notifyGameStep(true, "newCards", curPlayer);
-                webSocketService.sendCards(curPlayer);
-            }
         }
         else
             webSocketService.notifyGameStep(false, "You have card to put!", player);
