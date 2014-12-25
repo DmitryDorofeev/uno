@@ -163,7 +163,7 @@ public class GameMechanicsImpl implements GameMechanics {
             webSocketService.sendCards(player);
         }
         CardResource card = gameSession.generateCards(1).get(0);
-        while (card.getType().equals("incFour"))
+        while (!card.getType().equals("number"))
             card = gameSession.generateCards(1).get(0);
         gameSession.setCard(card, card.getColor());
         for (GameUser player : players)
@@ -183,8 +183,9 @@ public class GameMechanicsImpl implements GameMechanics {
         // TODO Gameover
         if (gameSession.actionExists()) {
             gameSession.doAction();
+            webSocketService.sendCards(gameSession.getPlayerById(gameSession.getCurStepPlayerId()));
             for (GameUser curPlayer : playersList)
-                webSocketService.notifyNewCards(true, "newCards", curPlayer);
+                webSocketService.notifyGameStep(true, "newCards", curPlayer);
         }
     }
 }
