@@ -15,11 +15,18 @@ define([
             this.disabled = false;
             this.listenTo(this.game, 'message:cards', this.addCards);
             this.listenTo(this.game, 'message:step', this.processStep);
-            _.bindAll(this, 'stepDone');
+            _.bindAll(this, 'stepDone', 'sendCard');
         },
         addCards: function (cards) {
-            console.log('adding cards', cards.cards);
             this.add(cards.cards);
+        },
+        processCard: function (model) {
+            if (model.get('color') === 'black') {
+                this.trigger('color:select', model);
+            }
+            else {
+                return this.sendCard(model);
+            }
         },
         sendCard: function (model) {
             stepDfd = new $.Deferred();

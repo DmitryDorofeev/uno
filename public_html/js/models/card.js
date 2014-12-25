@@ -5,7 +5,7 @@ define([
         initialize: function () {
         },
         select: function () {
-            this.collection.sendCard(this);
+            this.collection.processCard(this);
         }
     });
 

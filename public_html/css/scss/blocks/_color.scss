@@ -1,0 +1,26 @@
+.color {
+  position: absolute;
+  width: 400px;
+  left: 50%;
+  margin-left: -200px;
+
+  &__value {
+    margin: 10px;
+    width: 80px;
+    height: 80px;
+    border: 2px solid $secondaryColor;
+
+    &_red {
+      background-color: $mainColor;
+    }
+    &_yellow {
+      background-color: $yellowColor;
+    }
+    &_green {
+      background-color: $greenColor;
+    }
+    &_blue {
+      background-color: $blueColor;
+    }
+  }
+}

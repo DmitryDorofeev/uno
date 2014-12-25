@@ -1,0 +1,8 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <div class="color">
+        <div class="color__value color__value_red js-red"></div>
+        <div class="color__value color__value_yellow js-yellow"></div>
+        <div class="color__value color__value_green js-green"></div>
+        <div class="color__value color__value_blue js-blue"></div>
+    </div>
+</fest:template>

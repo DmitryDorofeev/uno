@@ -7,15 +7,18 @@ define([
     'views/gamesettings',
     'views/players',
     'views/cards',
-    'views/deck'
-], function ($, Backbone, tmpl, userModel, gameModel, gameSettings, playersView, cardsView, deckView) {
+    'views/deck',
+    'views/color'
+], function ($, Backbone, tmpl, userModel, gameModel, settingsView, playersView, cardsView, deckView, colorView) {
   var GameView = Backbone.View.extend({
     model: userModel,
     game: gameModel,
-    settings: gameSettings,
+    settings: settingsView,
+    color: colorView,
     initialize: function() {
         this.views = {};
-        this.register('settings', gameSettings);
+        this.register('settings', this.settings);
+        this.register('color', colorView);
         this.register('players', playersView);
         this.register('cards', cardsView);
         this.register('deck', deckView);
@@ -49,7 +52,7 @@ define([
       if (userModel.isLogined()) {
           this.trigger('show', this);
           this.$el.show();
-          if (this.game.connection == undefined) {
+          if (this.game.connection === undefined) {
               this.showSettings();
           }
       }
@@ -62,7 +65,7 @@ define([
         this.model.set('inGame', false);
     },
     showSettings: function () {
-      gameSettings.show();
+      this.settings.show();
     },
     sendSettings: function (val) {
         console.log(val);

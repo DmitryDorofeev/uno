@@ -1,5 +1,6 @@
 @import "blocks/gamesettings";
 @import "blocks/cards";
+@import "blocks/color";
 
 button {
     display: inline-block;
@@ -22,11 +23,6 @@ button {
         border-radius: 10px;
         padding: 8px;
     }
-}
-
-.player-wrap__active {
-    padding: 10px;
-    border: 1px solid $secondaryColor;
 }
 
 .player__login {
