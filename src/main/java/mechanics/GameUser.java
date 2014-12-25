@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class GameUser {
     private final String myName;
-    private List<CardResource> cards;
+    private List<CardResource> cards = new ArrayList<>();
     private long playersCount;
     private GameSession gameSession;
     private int gamePlayerId;
