@@ -15,9 +15,14 @@ define([
             this.disabled = false;
             this.listenTo(this.game, 'message:cards', this.addCards);
             this.listenTo(this.game, 'message:step', this.processStep);
+            this.listenTo(this, 'all', this.debug);
             _.bindAll(this, 'stepDone', 'sendCard');
         },
+        debug: function (event) {
+            console.log('EMITTER:', event);
+        },
         addCards: function (cards) {
+            console.log('CARDS::', cards);
             this.add(cards.cards);
         },
         processCard: function (model) {
