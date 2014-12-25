@@ -83,13 +83,13 @@ public class TestCardsResources {
 
         for (int i = 101; i < 105; ++i) {
             testCards.remove(0);
-            testCards.add(0, new CardResource(i, "black", "number", 13, 240, 360, 0, 360*((i-101)%8)));
+            testCards.add(0, new CardResource(i, "black", "color", 13, 240, 360, 0, 360*((i-101)%8)));
             assertEquals("Adding card first time" + i, true, testCardsResource.saveCard(testCards.get(0)));
         }
 
         for (int i = 105; i < 109; ++i) {
             testCards.remove(0);
-            testCards.add(0, new CardResource(i, "black", "number", 14, 240, 360, 0, 360*((i-105)%8)));
+            testCards.add(0, new CardResource(i, "black", "incFour", 14, 240, 360, 0, 360*((i-105)%8)));
             assertEquals("Adding card first time" + i, true, testCardsResource.saveCard(testCards.get(0)));
         }
         assertEquals("Cards' count is " + testCardsResource.CardsCount(), 108, testCardsResource.CardsCount());
