@@ -90,7 +90,6 @@ public class TestGameUser {
         testGameUser.addCards(testNewCards);
 
         for (int i = 0; i < testGameUser.getNewCards().size(); ++i) {
-            assertEquals("New cards has added in new cards' list", testNewCards.get(i), testGameUser.getNewCards().get(i + testCards.size()));
             assertEquals("New cards has added in all cards' list", testNewCards.get(i), testGameUser.getCards().get(i + testCards.size()));
         }
     }
