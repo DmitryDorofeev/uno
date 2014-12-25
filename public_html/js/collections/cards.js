@@ -56,9 +56,13 @@ define([
                 if (data.correct) {
                     stepDfd.resolve();
                 }
+                else {
+                    stepDfd.reject();
+                }
             }
         },
         stepDone: function () {
+            debugger;
             if (this.pending) {
                 this.remove(this.pending);
                 console.log('remove: ', this.pending);
