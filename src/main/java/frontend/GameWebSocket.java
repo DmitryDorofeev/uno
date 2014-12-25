@@ -120,7 +120,7 @@ public class GameWebSocket {
             JSONObject jsonBody = new JSONObject();
             jsonObject.put("body", jsonBody);
             jsonBody.put("focusOnCard", focusOnCard);
-            System.out.println(myName + " joystick " + jsonObject.toJSONString());
+            System.out.println(myName + (extra == null ? " player " : " joystick ") + jsonObject.toJSONString());
             session.getRemote().sendString(jsonObject.toJSONString());
         }
         catch (Exception e) {
@@ -141,6 +141,28 @@ public class GameWebSocket {
                 jsonBody.put("cards", getJSONCardsArray(cards));
             }
             System.out.println(myName + " joystick " + jsonObject.toJSONString());
+            session.getRemote().sendString(jsonObject.toJSONString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendScores(List<GameUser> players) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type", "end");
+            JSONObject jsonBody = new JSONObject();
+            jsonObject.put("body", jsonBody);
+            JSONArray jsonScores = new JSONArray();
+            jsonBody.put("scores", jsonScores);
+            for (GameUser player : players) {
+                JSONObject jsonScore = new JSONObject();
+                jsonScore.put("login", player.getMyName());
+                jsonScore.put("score", player.getScore());
+                jsonScores.add(jsonScore);
+            }
+            System.out.println(myName + (extra == null ? " player " : " joystick ") + jsonObject.toJSONString());
             session.getRemote().sendString(jsonObject.toJSONString());
         }
         catch (Exception e) {

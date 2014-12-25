@@ -19,10 +19,43 @@ public class GameUser {
     private int gamePlayerId;
     private long focusOnCard;
     private List<CardResource> newCards = new ArrayList<>();
+    private long score;
 
     public GameUser(String myName, long playersCount) {
         this.myName = myName;
         this.playersCount = playersCount;
+        setScore(0);
+    }
+
+    public long getSumOfCards() {
+        long sum = 0;
+        for (CardResource card : cards)
+            if (card.getType().equals("number"))
+                sum += card.getNum();
+            else if (card.getColor().equals("black"))
+                sum += ResourceSystem.instance().getGameParamsResource().getBlackCardPrice();
+            else
+                sum += ResourceSystem.instance().getGameParamsResource().getColoredActionCardPrice();
+        return sum;
+    }
+
+    public long calculateScore() {
+        long score = 0;
+        List<GameUser> players = gameSession.getPlayersList();
+        for (GameUser player : players) {
+            if (!player.getMyName().equals(myName))
+                score += player.getSumOfCards();
+        }
+        setScore(score);
+        return getScore();
+    }
+
+    public long getScore() {
+        return score;
+    }
+
+    public void setScore(long score) {
+        this.score = score;
     }
 
     public void addCards(List<CardResource> cards) {

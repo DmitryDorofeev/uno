@@ -47,6 +47,23 @@ public class DBServiceImpl implements DBService {
         return null;
     }
 
+    public Long getUserIdByName(String login) {
+        UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
+        UserDataSet userDataSet = userDataSetDAO.getUserDataByLogin(login);
+        if (userDataSet != null)
+            return userDataSet.getId();
+        return null;
+    }
+
+    public boolean savePlayerScores(long gameId, String name, long score) {
+        Long playerId = getUserIdByName(name);
+        if (playerId == null)
+            return false;
+        GameDataSetDAO gameDataSetDAO = new GameDataSetDAO(sessionFactory);
+        gameDataSetDAO.save(new GameDataSet(gameId, playerId, score));
+        return true;
+    }
+
     public long getPlayerScores(String login) {
         UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
         UserDataSet userDataSet = userDataSetDAO.getUserDataByLogin(login);
@@ -55,6 +72,11 @@ public class DBServiceImpl implements DBService {
             return gameDataSetDAO.getPlayerScores(userDataSet.getId());
         }
         return 0;
+    }
+
+    public long getNewGameId() {
+        GameDataSetDAO gameDataSetDAO = new GameDataSetDAO(sessionFactory);
+        return gameDataSetDAO.getLastGameId() + 1;
     }
 
     public long getAmountOfRegisteredUsers() {

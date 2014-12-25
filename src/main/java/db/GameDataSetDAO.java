@@ -39,6 +39,15 @@ public class GameDataSetDAO {
         return 0;
     }
 
+    public long getLastGameId() {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(GameDataSet.class);
+        Object result = criteria.setProjection(Projections.projectionList().add(Projections.max("gameId"))).uniqueResult();
+        session.close();
+        System.out.println(result.toString());
+        return 0;
+    }
+
     public List getScores(int limit) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GameDataSet.class);

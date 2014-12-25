@@ -2,6 +2,7 @@ package testMechanics;
 
 import static org.mockito.Mockito.*;
 
+import db.DBServiceImpl;
 import mechanics.GameSession;
 import mechanics.GameSessionImpl;
 import mechanics.GameUser;
@@ -18,7 +19,7 @@ import static org.junit.Assert.*;
  * Created by К on 22.12.2014.
  */
 public class TestGameSession {
-    GameSession testGameSession = new GameSessionImpl(new ArrayList<GameUser>());
+    GameSession testGameSession = new GameSessionImpl(new ArrayList<GameUser>(), new DBServiceImpl().getNewGameId()); // НУЖЕН ФИКС, КОСТЯН
 
     public List<CardResource> makeCardList(int conditions) {
         List<CardResource> cards = new ArrayList<>();

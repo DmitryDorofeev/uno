@@ -8,7 +8,13 @@ public interface DBService {
 
     UserProfile getUserData(String login);
 
+    Long getUserIdByName(String login);
+
+    boolean savePlayerScores(long gameId, String name, long score);
+
     long getPlayerScores(String login);
+
+    long getNewGameId();
 
     long getAmountOfRegisteredUsers();
 
