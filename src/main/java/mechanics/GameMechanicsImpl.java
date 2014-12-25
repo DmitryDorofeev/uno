@@ -51,19 +51,6 @@ public class GameMechanicsImpl implements GameMechanics {
         GameSession gameSession = getPlayerGame(username);
         GameUser curPlayer = gameSession.getUser(username);
         if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
-            switch (gameSession.getCardType()) {
-                case "incTwo":
-                    curPlayer.addCards(gameSession.generateCards(2));
-                    finishGameStep(gameSession);
-                    return;
-                case "skip":
-                    finishGameStep(gameSession);
-                    return;
-                case "incFour":
-                    curPlayer.addCards(gameSession.generateCards(4));
-                    finishGameStep(gameSession);
-                    return;
-            }
             if (focusOnCard == -1)
                 addCardsToPlayerAndStep(curPlayer, gameSession, newColor);
             else {
@@ -121,6 +108,13 @@ public class GameMechanicsImpl implements GameMechanics {
             webSocketService.notifyGameStep(false, "Not your turn!", curPlayer);
     }
 
+    public void doUno(String username) {
+        GameSession gameSession = getPlayerGame(username);
+        GameUser curPlayer = gameSession.getUser(username);
+        if (gameSession.unoActionExists())
+            gameSession.removeUnoAction(curPlayer, true);
+    }
+
     public boolean isPlayerInWaiters(String login) {
         for (GameUser waiter : waiters) {
             if (waiter.getMyName().equals(login))
@@ -155,14 +149,13 @@ public class GameMechanicsImpl implements GameMechanics {
             player.setGamePlayerId(j++);
             player.setGameSession(gameSession);
         }
-        for (GameUser player : players)
-            webSocketService.notifyStartGame(player);
+        players.forEach(webSocketService::notifyStartGame);
         for (GameUser player : players) {
             player.setCards(gameSession.generateCards(ResourceSystem.instance().getGameParamsResource().getStartCardsCount()));
             webSocketService.sendStartCards(player);
         }
         CardResource card = gameSession.generateCards(1).get(0);
-        while (card.getType().equals("incFor"))
+        while (card.getType().equals("incFour"))
             card = gameSession.generateCards(1).get(0);
         gameSession.setCard(card, card.getColor());
         for (GameUser player : players)
@@ -172,7 +165,18 @@ public class GameMechanicsImpl implements GameMechanics {
     private void finishGameStep(GameSession gameSession) {
         gameSession.updateCurStepPlayerId();
         List<GameUser> playersList = gameSession.getPlayersList();
+        if (gameSession.unoActionExists()) {
+            gameSession.removeUnoAction(gameSession.getUnoFailPlayer(), true);
+            for (GameUser curPlayer : playersList)
+                webSocketService.notifyUnoFail("UNO fail!", curPlayer);
+        }
         for (GameUser curPlayer : playersList)
             webSocketService.notifyGameStep(true, "OK", curPlayer);
+        // TODO Gameover
+        if (gameSession.actionExists()) {
+            gameSession.doAction();
+            for (GameUser curPlayer : playersList)
+                webSocketService.notifyNewCards(true, "newCards", curPlayer);
+        }
     }
 }

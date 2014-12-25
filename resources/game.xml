@@ -2,5 +2,6 @@
     <minPlayersCount>2</minPlayersCount>
     <maxPlayersCount>5</maxPlayersCount>
     <startCardsCount>7</startCardsCount>
+    <unoFailCardsCount>2</unoFailCardsCount>
     <joystickCardsCount>3</joystickCardsCount>
 </class>

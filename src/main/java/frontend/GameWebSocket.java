@@ -37,7 +37,7 @@ public class GameWebSocket {
         return myName;
     }
 
-    public void startGame(ArrayList<GameUser> players) {
+    public void startGame(List<GameUser> players) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "start");
@@ -65,19 +65,7 @@ public class GameWebSocket {
             jsonObject.put("type", "cards");
             JSONObject jsonBody = new JSONObject();
             jsonObject.put("body", jsonBody);
-            JSONArray jsonCards = new JSONArray();
-            jsonBody.put("cards", jsonCards);
-            for (CardResource card : cards) {
-                JSONObject jsonCard = new JSONObject();
-                jsonCard.put("cardId", card.getCardId());
-                jsonCard.put("x", card.getX());
-                jsonCard.put("y", card.getY());
-                jsonCard.put("width", card.getWidth());
-                jsonCard.put("height", card.getHeight());
-                jsonCard.put("color", card.getColor());
-                jsonCard.put("number", card.getNum());
-                jsonCards.add(jsonCard);
-            }
+            jsonBody.put("cards", getJSONCardsArray(cards));
             System.out.println(myName + jsonObject.toJSONString());
             session.getRemote().sendString(jsonObject.toJSONString());
         }
@@ -86,29 +74,50 @@ public class GameWebSocket {
         }
     }
 
-    public void gameStep(boolean correct, String message, long curStepPlayerId, CardResource card,
-                         boolean direction, long focusOnCard) {
+    public void sendUnoFail(String message, String name, long playerId,
+                            List<CardResource> cards, List<GameUser> players) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type", "uno");
+            JSONObject jsonBody = new JSONObject();
+            jsonObject.put("body", jsonBody);
+            jsonBody.put("id", playerId);
+            jsonBody.put("message", message);
+            jsonBody.put("cardsCount", getJSONCardsCountArray(players));
+            if (name.equals(myName))
+                jsonBody.put("cards", getJSONCardsArray(cards));
+            System.out.println(myName + jsonObject.toJSONString());
+            session.getRemote().sendString(jsonObject.toJSONString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void gameStep(boolean correct, String message, long curStepPlayerId, List<CardResource> cards,
+                         boolean direction, long focusOnCard, List<GameUser> players) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "step");
-            JSONObject jsonBody = new JSONObject();
+            jsonObject.put("body", getJSONGameStepBodyObject(correct, message, curStepPlayerId, cards,
+                    direction, focusOnCard, players));
+            System.out.println(myName + jsonObject.toJSONString());
+            session.getRemote().sendString(jsonObject.toJSONString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendNewCards(boolean correct, String message, long curStepPlayerId, List<CardResource> cards,
+                             boolean direction, long focusOnCard, List<GameUser> players, List<CardResource> newCards) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type", "newCards");
+            JSONObject jsonBody = getJSONGameStepBodyObject(correct, message, curStepPlayerId, cards,
+                    direction, focusOnCard, players);
+            jsonBody.put("newCards", getJSONCardsArray(newCards));
             jsonObject.put("body", jsonBody);
-            jsonBody.put("correct", correct);
-            jsonBody.put("message", message);
-            jsonBody.put("curStepPlayerId", curStepPlayerId);
-            jsonBody.put("direction", direction);
-            jsonBody.put("focusOnCard", focusOnCard);
-            JSONArray jsonCards = new JSONArray();
-            jsonBody.put("cards", jsonCards);
-            JSONObject jsonCard = new JSONObject();
-            jsonCard.put("id", card.getCardId());
-            jsonCard.put("x", card.getX());
-            jsonCard.put("y", card.getY());
-            jsonCard.put("width", card.getWidth());
-            jsonCard.put("height", card.getHeight());
-            jsonCard.put("color", card.getColor());
-            jsonCard.put("number", card.getNum());
-            jsonCards.add(jsonCard);
             System.out.println(myName + jsonObject.toJSONString());
             session.getRemote().sendString(jsonObject.toJSONString());
         }
@@ -142,17 +151,7 @@ public class GameWebSocket {
             jsonBody.put("message", message);
             if (correct) {
                 jsonBody.put("focusOnCard", focusOnCard);
-                JSONArray jsonCards = new JSONArray();
-                jsonBody.put("cards", jsonCards);
-                for (CardResource card : cards) {
-                    JSONObject jsonCard = new JSONObject();
-                    jsonCard.put("cardId", card.getCardId());
-                    jsonCard.put("x", card.getX());
-                    jsonCard.put("y", card.getY());
-                    jsonCard.put("width", card.getWidth());
-                    jsonCard.put("height", card.getHeight());
-                    jsonCards.add(jsonCard);
-                }
+                jsonBody.put("cards", getJSONCardsArray(cards));
             }
             System.out.println(myName + " joystick " + jsonObject.toJSONString());
             session.getRemote().sendString(jsonObject.toJSONString());
@@ -179,15 +178,18 @@ public class GameWebSocket {
                 return;
             }
             if (jsonObject.get("type").equals("joystick")) {
-                extra = "joystick";
-                webSocketService.addUser(this, "joystick");
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
                 if (jsonBody.get("message").equals("init")) {
+                    extra = "joystick";
+                    webSocketService.addUser(this, "joystick");
                     gameMechanics.initJoystick(myName);
                     return;
                 }
                 gameMechanics.stepByJoystick(myName, (String)jsonBody.get("message"), (String)jsonBody.get("newColor"));
+                return;
             }
+            if (jsonObject.get("type").equals("uno"))
+                gameMechanics.doUno(myName);
         }
         catch (ParseException e) {
             e.printStackTrace();
@@ -196,13 +198,68 @@ public class GameWebSocket {
 
     @OnWebSocketConnect
      public void onOpen(Session session) {
-        System.out.println("onOpen()");
+        System.out.println(myName + " onOpen()");
         this.session = session;
     }
 
     @OnWebSocketClose
     public void onClose(int statusCode, String reason) {
+        System.out.println(myName + " onClose()");
         gameMechanics.removeUser(myName);
         webSocketService.removeUser(this, extra);
+    }
+
+    private JSONObject getJSONGameStepBodyObject(boolean correct, String message, long curStepPlayerId,
+                                                 List<CardResource> cards, boolean direction, long focusOnCard,
+                                                 List<GameUser> players) {
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("correct", correct);
+            jsonBody.put("message", message);
+            jsonBody.put("curStepPlayerId", curStepPlayerId);
+            jsonBody.put("direction", direction);
+            jsonBody.put("focusOnCard", focusOnCard);
+            jsonBody.put("cards", getJSONCardsArray(cards));
+            jsonBody.put("cardsCount", getJSONCardsCountArray(players));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonBody;
+    }
+
+    private JSONArray getJSONCardsArray(List<CardResource> cards) {
+        JSONArray jsonCards = new JSONArray();
+        try {
+            for (CardResource card : cards) {
+                JSONObject jsonCard = new JSONObject();
+                jsonCard.put("cardId", card.getCardId());
+                jsonCard.put("x", card.getX());
+                jsonCard.put("y", card.getY());
+                jsonCard.put("width", card.getWidth());
+                jsonCard.put("height", card.getHeight());
+                jsonCards.add(jsonCard);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonCards;
+    }
+
+    private JSONArray getJSONCardsCountArray(List<GameUser> players) {
+        JSONArray jsonCardsCount = new JSONArray();
+        try {
+            for (GameUser player : players) {
+                JSONObject jsonCount = new JSONObject();
+                jsonCount.put("id", player.getGamePlayerId());
+                jsonCount.put("count", player.getCardsCount());
+                jsonCardsCount.add(jsonCount);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonCardsCount;
     }
 }

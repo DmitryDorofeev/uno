@@ -42,8 +42,22 @@ public class WebSocketServiceImpl implements WebSocketService {
 
     public void notifyGameStep(boolean correct, String message, GameUser user) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
+        List<CardResource> cards = new ArrayList<>();
+        cards.add(user.getGameSession().getCard());
         gameWebSocket.gameStep(correct, message, user.getGameSession().getCurStepPlayerId(),
-                user.getGameSession().getCard(), user.getGameSession().getDirection(), user.getFocusOnCard());
+                cards, user.getGameSession().getDirection(), user.getFocusOnCard(),
+                user.getGameSession().getPlayersList());
+        if (joystickSockets.containsKey(user.getMyName()))
+            sendCardsToJoystick(correct, message, user.getMyName(), user.getFocusOnCard(), user.getCards());
+    }
+
+    public void notifyNewCards(boolean correct, String message, GameUser user) {
+        GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
+        List<CardResource> cards = new ArrayList<>();
+        cards.add(user.getGameSession().getCard());
+        gameWebSocket.sendNewCards(correct, message, user.getGameSession().getCurStepPlayerId(),
+                cards, user.getGameSession().getDirection(), user.getFocusOnCard(),
+                user.getGameSession().getPlayersList(), user.getNewCards());
         if (joystickSockets.containsKey(user.getMyName()))
             sendCardsToJoystick(correct, message, user.getMyName(), user.getFocusOnCard(), user.getCards());
     }
@@ -53,6 +67,19 @@ public class WebSocketServiceImpl implements WebSocketService {
         gameWebSocket.changeFocus(user.getFocusOnCard());
         gameWebSocket = joystickSockets.get(user.getMyName());
         gameWebSocket.changeFocus(user.getFocusOnCard());
+    }
+
+    public void notifyUnoFail(String message, GameUser user) {
+        GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
+        GameUser unoFailPlayer = user.getGameSession().getUnoFailPlayer();
+        List<GameUser> players = new ArrayList<>();
+        players.add(unoFailPlayer);
+        gameWebSocket.sendUnoFail(message, unoFailPlayer.getMyName(), unoFailPlayer.getGamePlayerId(),
+                user.getNewCards(), players);
+        if (joystickSockets.containsKey(user.getMyName()) && unoFailPlayer.getMyName().equals(user.getMyName())) {
+            gameWebSocket = joystickSockets.get(user.getMyName());
+            gameWebSocket.sendCardsToJoystick(true, message, user.getFocusOnCard(), user.getCards());
+        }
     }
 
     public void sendCardsToJoystick(boolean correct, String message, String username,

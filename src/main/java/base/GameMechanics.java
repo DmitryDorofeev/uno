@@ -17,5 +17,7 @@ public interface GameMechanics {
 
     void stepByJoystick(String username, String action, String newColor);
 
+    void doUno(String username);
+
     public boolean isPlayerInWaiters(String login);
 }

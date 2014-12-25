@@ -23,7 +23,11 @@ public interface WebSocketService {
 
     void notifyGameStep(boolean correct, String message, GameUser user);
 
+    void notifyNewCards(boolean correct, String message, GameUser user);
+
     void notifyChangeFocus(GameUser user);
+
+    void notifyUnoFail(String message, GameUser user);
 
     void sendCardsToJoystick(boolean correct, String message, String username,
                              long focusOnCard, List<CardResource> cards);
