@@ -21,6 +21,7 @@ define([
             this.$wrap.append(card.render().$el);
         },
         render: function () {
+            debugger;
             this.$el.html(this.template());
             this.$wrap = this.$('.js-cards');
             this.$cards = this.$('.cards');

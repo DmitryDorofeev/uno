@@ -15,11 +15,7 @@ define([
             this.disabled = false;
             this.listenTo(this.game, 'message:cards', this.addCards);
             this.listenTo(this.game, 'message:step', this.processStep);
-            this.listenTo(this, 'all', this.debug);
             _.bindAll(this, 'stepDone', 'sendCard');
-        },
-        debug: function (event) {
-            console.log('EMITTER:', event);
         },
         addCards: function (cards) {
             console.log('CARDS::', cards);
@@ -63,10 +59,11 @@ define([
             }
         },
         stepDone: function () {
-            if (this.pending !== undefined) {
+            if (this.pending) {
                 this.remove(this.pending);
                 console.log('remove: ', this.pending);
             }
+            this.pending = null;
         },
         isDisabled: function () {
             return this.disabled;

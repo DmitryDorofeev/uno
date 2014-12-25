@@ -10,6 +10,7 @@ define([
     'views/deck',
     'views/color'
 ], function ($, Backbone, tmpl, userModel, gameModel, settingsView, playersView, cardsView, deckView, colorView) {
+    var first = true;
   var GameView = Backbone.View.extend({
     model: userModel,
     game: gameModel,
@@ -75,6 +76,7 @@ define([
     renderCards: function () {
         this.views.cards.render();
         this.views.deck.show();
+        first = false;
     }
   });
 

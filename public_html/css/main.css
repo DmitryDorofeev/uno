@@ -76,11 +76,16 @@
       border-radius: 0 5px 5px 0; }
 
 .color {
+  display: none;
   position: absolute;
+  background-color: #D91E18;
+  z-index: 1000;
+  top: 20px;
   width: 400px;
   left: 50%;
   margin-left: -200px; }
   .color__value {
+    display: inline-block;
     margin: 10px;
     width: 80px;
     height: 80px;

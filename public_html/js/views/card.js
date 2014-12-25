@@ -21,8 +21,7 @@ define([
                 'background-size': '1681px, 1141px'
             })
             .width(this.model.get('width'))
-            .height(this.model.get('height'))
-            .data('id', this.model.get('cardId'));
+            .height(this.model.get('height'));
             return this;
         },
         remove: function () {
