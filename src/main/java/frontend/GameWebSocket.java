@@ -206,6 +206,7 @@ public class GameWebSocket {
                 jsonCard.put("y", card.getY());
                 jsonCard.put("width", card.getWidth());
                 jsonCard.put("height", card.getHeight());
+                jsonCard.put("color", card.getColor());
                 jsonCards.add(jsonCard);
             }
         }
