@@ -19,7 +19,7 @@ public interface WebSocketService {
 
     void notifyStartGame(GameUser user);
 
-    void sendStartCards(GameUser user);
+    void sendCards(GameUser user);
 
     void notifyGameStep(boolean correct, String message, GameUser user);
 

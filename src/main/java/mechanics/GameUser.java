@@ -89,7 +89,7 @@ public class GameUser {
     }
 
     public void setCards(List<CardResource> cards) {
-        this.cards = cards;
+        addCards(cards);
         setFocusOnCard(0);
     }
 

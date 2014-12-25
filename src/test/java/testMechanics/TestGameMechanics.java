@@ -69,8 +69,8 @@ public class TestGameMechanics {
         assertEquals("Adding second user with 2 gamer(s) to game", false, testGameMechanics.isPlayerInWaiters("test2gamer2"));
         verify(testWebSocket).notifyStartGame(test2);
         verify(testWebSocket).notifyStartGame(test2gamer2);
-        verify(testWebSocket).sendStartCards(test2);
-        verify(testWebSocket).sendStartCards(test2gamer2);
+        verify(testWebSocket).sendCards(test2);
+        verify(testWebSocket).sendCards(test2gamer2);
         verify(testWebSocket).notifyGameStep(true, "OK", test2);
         verify(testWebSocket).notifyGameStep(true, "OK", test2gamer2);
 
@@ -88,11 +88,11 @@ public class TestGameMechanics {
         verify(testWebSocket).notifyStartGame(test5gamer3);
         verify(testWebSocket).notifyStartGame(test5gamer4);
         verify(testWebSocket).notifyStartGame(test5gamer5);
-        verify(testWebSocket).sendStartCards(test5);
-        verify(testWebSocket).sendStartCards(test5gamer2);
-        verify(testWebSocket).sendStartCards(test5gamer3);
-        verify(testWebSocket).sendStartCards(test5gamer4);
-        verify(testWebSocket).sendStartCards(test5gamer5);
+        verify(testWebSocket).sendCards(test5);
+        verify(testWebSocket).sendCards(test5gamer2);
+        verify(testWebSocket).sendCards(test5gamer3);
+        verify(testWebSocket).sendCards(test5gamer4);
+        verify(testWebSocket).sendCards(test5gamer5);
         verify(testWebSocket).notifyGameStep(true, "OK", test5);
         verify(testWebSocket).notifyGameStep(true, "OK", test5gamer2);
         verify(testWebSocket).notifyGameStep(true, "OK", test5gamer3);

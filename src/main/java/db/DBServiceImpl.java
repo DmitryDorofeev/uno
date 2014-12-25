@@ -71,7 +71,7 @@ public class DBServiceImpl implements DBService {
         return status;
     }
 
-    private SessionFactory createSessionFactory() throws HibernateException {
+    private SessionFactory createSessionFactory() {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(UserDataSet.class);
         configuration.addAnnotatedClass(GameDataSet.class);
@@ -91,7 +91,7 @@ public class DBServiceImpl implements DBService {
         try {
              sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         }
-        catch (HibernateException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
         return sessionFactory;

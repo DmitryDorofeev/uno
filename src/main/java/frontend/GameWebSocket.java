@@ -59,7 +59,7 @@ public class GameWebSocket {
         }
     }
 
-    public void sendStartCards(List<CardResource> cards) {
+    public void sendCards(List<CardResource> cards) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "cards");
@@ -74,8 +74,7 @@ public class GameWebSocket {
         }
     }
 
-    public void sendUnoFail(String message, String name, long playerId,
-                            List<CardResource> cards, List<GameUser> players) {
+    public void sendUnoFail(String message, long playerId, List<GameUser> players) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "uno");
@@ -84,8 +83,6 @@ public class GameWebSocket {
             jsonBody.put("id", playerId);
             jsonBody.put("message", message);
             jsonBody.put("cardsCount", getJSONCardsCountArray(players));
-            if (name.equals(myName))
-                jsonBody.put("cards", getJSONCardsArray(cards));
             System.out.println(myName + jsonObject.toJSONString());
             session.getRemote().sendString(jsonObject.toJSONString());
         }
@@ -99,25 +96,15 @@ public class GameWebSocket {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "step");
-            jsonObject.put("body", getJSONGameStepBodyObject(correct, message, curStepPlayerId, cards,
-                    direction, focusOnCard, players));
-            System.out.println(myName + jsonObject.toJSONString());
-            session.getRemote().sendString(jsonObject.toJSONString());
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void sendNewCards(boolean correct, String message, long curStepPlayerId, List<CardResource> cards,
-                             boolean direction, long focusOnCard, List<GameUser> players, List<CardResource> newCards) {
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("type", "newCards");
-            JSONObject jsonBody = getJSONGameStepBodyObject(correct, message, curStepPlayerId, cards,
-                    direction, focusOnCard, players);
-            jsonBody.put("newCards", getJSONCardsArray(newCards));
+            JSONObject jsonBody = new JSONObject();
             jsonObject.put("body", jsonBody);
+            jsonBody.put("correct", correct);
+            jsonBody.put("message", message);
+            jsonBody.put("curStepPlayerId", curStepPlayerId);
+            jsonBody.put("direction", direction);
+            jsonBody.put("focusOnCard", focusOnCard);
+            jsonBody.put("cards", getJSONCardsArray(cards));
+            jsonBody.put("cardsCount", getJSONCardsCountArray(players));
             System.out.println(myName + jsonObject.toJSONString());
             session.getRemote().sendString(jsonObject.toJSONString());
         }
@@ -207,25 +194,6 @@ public class GameWebSocket {
         System.out.println(myName + " onClose()");
         gameMechanics.removeUser(myName);
         webSocketService.removeUser(this, extra);
-    }
-
-    private JSONObject getJSONGameStepBodyObject(boolean correct, String message, long curStepPlayerId,
-                                                 List<CardResource> cards, boolean direction, long focusOnCard,
-                                                 List<GameUser> players) {
-        JSONObject jsonBody = new JSONObject();
-        try {
-            jsonBody.put("correct", correct);
-            jsonBody.put("message", message);
-            jsonBody.put("curStepPlayerId", curStepPlayerId);
-            jsonBody.put("direction", direction);
-            jsonBody.put("focusOnCard", focusOnCard);
-            jsonBody.put("cards", getJSONCardsArray(cards));
-            jsonBody.put("cardsCount", getJSONCardsCountArray(players));
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return jsonBody;
     }
 
     private JSONArray getJSONCardsArray(List<CardResource> cards) {

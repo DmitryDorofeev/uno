@@ -137,8 +137,10 @@ public class GameMechanicsImpl implements GameMechanics {
             if (!cards.get(0).getColor().equals("black"))
                 gameSession.updateCurStepPlayerId();
             List<GameUser> playersList = gameSession.getPlayersList();
-            for (GameUser curPlayer : playersList)
-                webSocketService.notifyNewCards(true, "newCards", curPlayer);
+            for (GameUser curPlayer : playersList) {
+                webSocketService.notifyGameStep(true, "newCards", curPlayer);
+                webSocketService.sendCards(curPlayer);
+            }
         }
         else
             webSocketService.notifyGameStep(false, "You have card to put!", player);
@@ -159,7 +161,7 @@ public class GameMechanicsImpl implements GameMechanics {
         players.forEach(webSocketService::notifyStartGame);
         for (GameUser player : players) {
             player.setCards(gameSession.generateCards(ResourceSystem.instance().getGameParamsResource().getStartCardsCount()));
-            webSocketService.sendStartCards(player);
+            webSocketService.sendCards(player);
         }
         CardResource card = gameSession.generateCards(1).get(0);
         while (card.getType().equals("incFour"))
