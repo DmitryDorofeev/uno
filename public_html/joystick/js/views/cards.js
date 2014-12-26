@@ -17,17 +17,14 @@ define([
         addCards: function () {
             this.collection.each(function (model) {
                 var card = new CardView({model: model});
-                card.listenTo(this, 'checkFocus', card.checkFocus);
+                this.listenTo(card, 'focus', this.focus);
                 this.$el.append(card.render().$el);
             }, this);
-            this.trigger('checkFocus');
         },
         render: function () {
-            this.trigger('checkFocus');
             return this;
         },
         onMove: function (event) {
-            this.trigger('checkFocus');
             if (this.curTouch) {
                 var newPos;
                     delta = this.curTouch - event.changedTouches[0].pageX;
@@ -43,6 +40,13 @@ define([
         },
         onTouchDone: function (event) {
             this.curTouch = null;
+        },
+        focus: function (focusedModel) {
+            this.collection.each(function (model) {
+                if (focusedModel !== model) {
+                    model.trigger('unfocus');
+                }
+            }, this);
         }
     });
 

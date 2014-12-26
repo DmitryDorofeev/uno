@@ -9,21 +9,19 @@ define([
             this.el.addEventListener('touchmove', this.onMove, false);
             this.el.addEventListener('touchstart', this.onTouch, false);
             this.el.addEventListener('touchend', this.onTouchDone, false);
+            this.listenTo(this.model, 'unfocus', this.unfocus);
         },
         selectCard: function (event) {
-            console.log('cardId: %d', this.model.get('cardId'));
             this.model.select();
         },
-        checkFocus: function (event) {
-            var left = this.$el.offset().left;
-            if (left >= 55 && left <= 170) {
-                this.$el.addClass('cards__card_selected');
-                this.isFocused = true;
-            }
-            else {
-                this.$el.removeClass('cards__card_selected');
-                this.isFocused = false;
-            }
+        focus: function () {
+            this.trigger('focus', this);
+            this.$el.addClass('cards__card_selected');
+            this.isFocused = true;
+        },
+        unfocus: function () {
+            this.$el.removeClass('cards__card_selected');
+            this.isFocused = false;
         },
         render: function () {
             this.$el.css({
@@ -44,6 +42,7 @@ define([
         },
         onTouch: function (event) {
             event.preventDefault();
+            this.focus();
             this.curTouch = event.changedTouches[0].pageY;
         },
         onTouchDone: function (event) {

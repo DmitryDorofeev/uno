@@ -17,7 +17,7 @@ define([
             return this;
         },
         events: {
-            'submit #login-form': 'login'
+            'submit #signin-form': 'login'
         },
         login: function (event) {
             event.preventDefault();
