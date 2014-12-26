@@ -4,6 +4,14 @@ define([
     'models/deck',
     'tmpl/deck'
 ], function ($, Backbone, deckModel, tmpl) {
+
+    var colors = {
+        green: 'rgb(0,178, 87)',
+        red: 'rgb(255, 49, 64)',
+        blue: 'rgb(107, 36, 255)',
+        yellow: 'rgb(255, 168, 0)'
+    };
+
     var DeckView = Backbone.View.extend({
         model: deckModel,
         events: {
@@ -25,6 +33,7 @@ define([
         changeCard: function () {
             var time = this.isFirst ? 0 : 300;
             this.isFirst = false;
+            this.$('.js-table').css({backgroundColor: colors[this.model.get('color')]});
             this.$('.b-table__new').css({
                 'background-position': '-' + this.model.get('x') + 'px -' + this.model.get('y') + 'px'
             });

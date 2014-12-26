@@ -1,15 +1,20 @@
 .b-table {
-
   top: 30%;
   left: 40%;
   position: absolute;
   overflow: hidden;
+  padding: 10px;
+  background-color: $blueColor;
+  border: 2px solid $secondaryColor;
+  border-radius: 5px;
 
   &__current {
     background-image: url("/images/cards.png");
     float: left;
     width: 120px;
     height: 180px;
+    border: 1px solid black;
+    border-radius: 21px;
   }
 
   &__new {
@@ -18,7 +23,7 @@
     height: 180px;
     top: -30px;
     opacity: 0;
-    left: 120px;
+    left: 131px;
     background-image: url("/images/cards.png");
   }
 
@@ -29,11 +34,12 @@
     background-repeat: no-repeat;
     width: 120px;
     height: 180px;
+    cursor: pointer;
   }
 
   &__uno {
     position: relative;
-    clear: both;
+    clear: left;
     width: 100px;
     padding: 10px 0;
     cursor: pointer;

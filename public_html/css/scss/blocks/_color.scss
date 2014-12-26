@@ -3,10 +3,11 @@
   position: absolute;
   background-color: $mainColor;
   z-index: 1000;
-  top: 20px;
-  width: 400px;
+  width: 420px;
   left: 50%;
   margin-left: -200px;
+  top: 25%;
+  border: 2px solid $secondaryColor;
 
   &__value {
     display: inline-block;

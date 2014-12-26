@@ -1,5 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-    <div class="b-table">
+    <div class="b-table js-table">
         <div class="b-table__deck js-deck"></div>
         <div class="b-table__current"></div>
         <div class="b-table__uno js-uno">UNO!</div>

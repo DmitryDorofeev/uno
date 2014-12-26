@@ -8,7 +8,8 @@ define([
         },
         step: function (data) {
             if (data.correct) {
-                this.set(data.cards[0]);
+                var card = data.cards[0];
+                this.set(card);
             }
         },
         getCard: function () {

@@ -80,10 +80,11 @@
   position: absolute;
   background-color: #D91E18;
   z-index: 1000;
-  top: 20px;
-  width: 400px;
+  width: 420px;
   left: 50%;
-  margin-left: -200px; }
+  margin-left: -200px;
+  top: 25%;
+  border: 2px solid #a00307; }
   .color__value {
     display: inline-block;
     margin: 10px;
@@ -93,11 +94,11 @@
     .color__value_red {
       background-color: #D91E18; }
     .color__value_yellow {
-      background-color: #FFFF00; }
+      background-color: #ffa800; }
     .color__value_green {
-      background-color: #00FF00; }
+      background-color: #00b257; }
     .color__value_blue {
-      background-color: #0000FF; }
+      background-color: #6b24ff; }
 
 button {
   display: inline-block;
@@ -353,19 +354,25 @@ html, body {
   top: 30%;
   left: 40%;
   position: absolute;
-  overflow: hidden; }
+  overflow: hidden;
+  padding: 10px;
+  background-color: #6b24ff;
+  border: 2px solid #a00307;
+  border-radius: 5px; }
   .b-table__current {
     background-image: url("/images/cards.png");
     float: left;
     width: 120px;
-    height: 180px; }
+    height: 180px;
+    border: 1px solid black;
+    border-radius: 21px; }
   .b-table__new {
     position: absolute;
     width: 120px;
     height: 180px;
     top: -30px;
     opacity: 0;
-    left: 120px;
+    left: 131px;
     background-image: url("/images/cards.png"); }
   .b-table__deck {
     float: left;
@@ -373,10 +380,11 @@ html, body {
     background-size: contain;
     background-repeat: no-repeat;
     width: 120px;
-    height: 180px; }
+    height: 180px;
+    cursor: pointer; }
   .b-table__uno {
     position: relative;
-    clear: both;
+    clear: left;
     width: 100px;
     padding: 10px 0;
     cursor: pointer;
