@@ -58,7 +58,7 @@ public class GameDataSetDAO {
         Criteria criteria = session.createCriteria(GameDataSet.class);
         List<Object[]> objects = criteria.setProjection(Projections.projectionList()
                         .add(Projections.groupProperty("playerId"))
-                        .add(Projections.count("score"))
+                        .add(Projections.sum("score"))
         ).setMaxResults(limit).setFirstResult(offset).addOrder(Order.desc("score")).list();
         Map<Long, Long> result = new HashMap<>();
         for (Object[] elem : objects)
