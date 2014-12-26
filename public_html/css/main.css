@@ -111,15 +111,26 @@
   border-radius: 5px;
   color: #ffffff; }
   .end__title {
+    margin: 10px;
+    font-size: 20px;
     width: 100%;
     text-align: center; }
   .end__scores {
-    width: 100%; }
-  .end__score__login {
-    display: inline-block;
-    width: 200px; }
-  .end__score__value {
-    display: inline-block; }
+    width: 100%;
+    margin: 10px; }
+  .end__score {
+    padding: 5px; }
+    .end__score__login {
+      display: inline-block;
+      width: 220px;
+      text-align: right; }
+    .end__score__value {
+      margin-left: 20px;
+      display: inline-block;
+      text-align: left; }
+  .end__btn {
+    padding: 10px;
+    text-align: center; }
 
 button {
   display: inline-block;

@@ -8,15 +8,14 @@ define([
             this.listenTo(gameModel, 'message:end', this.show);
         },
         template: function (ctx) {
-            return tmpl(ctx);
+            return tmpl(ctx || {});
         },
         render: function (msg) {
             this.$el.html(this.template(msg));
             return this;
         },
         show: function (msg) {
-            debugger;
-            this.render(this.template(msg));
+            this.render(msg);
             this.$el.show();
         }
     });

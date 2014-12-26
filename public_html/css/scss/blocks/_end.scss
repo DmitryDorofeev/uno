@@ -10,24 +10,36 @@
   color: #ffffff;
 
   &__title {
+    margin: 10px;
+    font-size: 20px;
     width: 100%;
     text-align: center;
   }
 
   &__scores {
     width: 100%;
+    margin: 10px;
   }
 
   &__score {
+    padding: 5px;
 
     &__login {
       display: inline-block;
-      width: 200px;
+      width: 220px;
+      text-align: right;
     }
 
     &__value {
+      margin-left: 20px;
       display: inline-block;
+      text-align: left;
     }
 
+  }
+
+  &__btn {
+    padding: 10px;
+    text-align: center;
   }
 }
