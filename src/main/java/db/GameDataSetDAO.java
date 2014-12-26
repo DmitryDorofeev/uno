@@ -25,7 +25,9 @@ public class GameDataSetDAO {
 
     public void save(GameDataSet dataSet) {
         Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
         session.save(dataSet);
+        transaction.commit();
         session.close();
     }
 

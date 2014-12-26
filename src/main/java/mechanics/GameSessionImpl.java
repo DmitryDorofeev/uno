@@ -63,9 +63,9 @@ public class GameSessionImpl implements GameSession {
     public void removeUnoAction(GameUser player, boolean late) {
         if (player.getCardsCount() == 1) {
             if (late)
-                getPlayerById(getPrevStepPlayerId()).addCards(
+                getUnoFailPlayer().addCards(
                         generateCards(ResourceSystem.instance().getGameParamsResource().getUnoFailCardsCount()));
-            uno = getPlayerById(getCurStepPlayerId()).getCardsCount() == 1;
+            uno = false;
         }
     }
 

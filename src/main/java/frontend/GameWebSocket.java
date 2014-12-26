@@ -173,6 +173,7 @@ public class GameWebSocket {
     @OnWebSocketMessage
     public void onMessage(String data) throws ParseException {
         try {
+            System.out.println("query: " + myName + (extra == null ? " player " : " joystick ") + data);
             JSONObject jsonObject = (JSONObject)new JSONParser().parse(data);
             if (jsonObject.get("type").equals("gameInfo")) {
                 extra = null;

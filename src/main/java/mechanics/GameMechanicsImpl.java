@@ -117,7 +117,7 @@ public class GameMechanicsImpl implements GameMechanics {
         GameSession gameSession = getPlayerGame(username);
         GameUser curPlayer = gameSession.getUser(username);
         if (gameSession.unoActionExists())
-            gameSession.removeUnoAction(curPlayer, true);
+            gameSession.removeUnoAction(curPlayer, false);
     }
 
     public boolean isPlayerInWaiters(String login) {
@@ -176,24 +176,28 @@ public class GameMechanicsImpl implements GameMechanics {
     private void finishGameStep(GameSession gameSession) {
         List<GameUser> playersList = gameSession.getPlayersList();
         if (gameSession.getPlayerById(gameSession.getCurStepPlayerId()).getCardsCount() != 0) {
-            gameSession.updateCurStepPlayerId();
             if (gameSession.unoActionExists()) {
                 gameSession.removeUnoAction(gameSession.getUnoFailPlayer(), true);
+                webSocketService.sendCards(gameSession.getUnoFailPlayer());
                 for (GameUser curPlayer : playersList)
                     webSocketService.notifyUnoFail("UNO fail!", curPlayer);
             }
+            if (gameSession.getPlayerById(gameSession.getCurStepPlayerId()).getCardsCount() == 1)
+                gameSession.setUnoAction();
+            gameSession.updateCurStepPlayerId();
             for (GameUser curPlayer : playersList)
                 webSocketService.notifyGameStep(true, "OK", curPlayer);
             if (gameSession.actionExists()) {
                 gameSession.doAction();
                 webSocketService.sendCards(gameSession.getPlayerById(gameSession.getCurStepPlayerId()));
+                gameSession.updateCurStepPlayerId();
                 for (GameUser curPlayer : playersList)
                     webSocketService.notifyGameStep(true, "newCards", curPlayer);
             }
         }
         else {
+            playersList.forEach(mechanics.GameUser::calculateScore);
             for (GameUser curPlayer : playersList) {
-                curPlayer.calculateScore();
                 webSocketService.sendScores(curPlayer);
                 dbService.savePlayerScores(gameSession.getGameId(), curPlayer.getMyName(), curPlayer.getScore());
                 playerGame.remove(curPlayer.getMyName());

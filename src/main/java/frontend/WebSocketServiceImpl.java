@@ -66,7 +66,6 @@ public class WebSocketServiceImpl implements WebSocketService {
         List<GameUser> players = new ArrayList<>();
         players.add(unoFailPlayer);
         gameWebSocket.sendUnoFail(message, unoFailPlayer.getGamePlayerId(), players);
-        gameWebSocket.sendCards(user.getNewCards());
         if (joystickSockets.containsKey(user.getMyName()) && unoFailPlayer.getMyName().equals(user.getMyName())) {
             gameWebSocket = joystickSockets.get(user.getMyName());
             gameWebSocket.sendCardsToJoystick(true, message, user.getFocusOnCard(), user.getCards());

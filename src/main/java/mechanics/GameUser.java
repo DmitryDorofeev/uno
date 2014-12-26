@@ -39,7 +39,7 @@ public class GameUser {
         return sum;
     }
 
-    public long calculateScore() {
+    public void calculateScore() {
         long score = 0;
         List<GameUser> players = gameSession.getPlayersList();
         for (GameUser player : players) {
@@ -47,7 +47,6 @@ public class GameUser {
                 score += player.getSumOfCards();
         }
         setScore(score);
-        return getScore();
     }
 
     public long getScore() {
@@ -77,8 +76,6 @@ public class GameUser {
                 cards.remove(curCard);
                 if (cards.size() == focusOnCard)
                     focusOnCard--;
-                if (cards.size() == 1)
-                    gameSession.setUnoAction();
                 return;
             }
         }
