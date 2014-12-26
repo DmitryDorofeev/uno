@@ -43,6 +43,9 @@ define([
                 this.trigger('load:done');
 				this.trigger('cards:render');
             }
+			if (data.type === 'end') {
+				this.connection.close();
+			}
 			this.trigger('message:' + data.type, data.body);
 		}
 	});

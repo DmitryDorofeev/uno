@@ -9,5 +9,6 @@
 			<option value="5">5 игроков</option>
 		</select>
 		<fest:get name="btn">{classes: ['js-send'], title: 'Готово'}</fest:get>
+		<fest:get name="btn">{title: 'Назад', href: '#'}</fest:get>
 	</div>
 </fest:template>

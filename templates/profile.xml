@@ -9,12 +9,10 @@
         <form method="POST">
             <div class="login-field">
                 <div class="login-field__title"> Логин: </div>
-                <div class="login-field__input">
-                    <input type="text" value="{profile.login}"/>
-                </div>
+                <div class="email-field__value"><fest:value>profile.login</fest:value></div>
             </div>
-            <fest:get name="btn">{title: 'Сохранить'}</fest:get>
             <fest:get name="btn">{title: 'Logout', classes: ['js-logout']}</fest:get>
+            <fest:get name="btn">{title: 'Назад', href: '#'}</fest:get>
         </form>
   </div>
 </fest:template>

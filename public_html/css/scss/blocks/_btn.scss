@@ -13,6 +13,7 @@
   font-size: 21px;
   cursor: pointer;
   outline: none;
+  text-align: center;
 
   @include respond(phone) {
     display: inline-block;
