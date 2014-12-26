@@ -56,7 +56,6 @@ define([
                 },
                 success: function (resp) {
                     if (model.has('password')) {
-                        if (resp.status === 200) {
                             model.set({
                                 'login': resp.login,
                                 'email': resp.email,
@@ -64,20 +63,20 @@ define([
                             });
                             model.unset('password');
                             model.trigger('login:ok');
-                        }
-                        else if (resp.status === 500) {
-                            model.trigger('login:bad', resp.message);
-                        }
                     }
                     else {
                         model.clear();
                         model.trigger('logout');
                     }
                 },
-                error: function () {
-                    debugger;
+                error: function (resp) {
                     if (model.has('password')) {
-                        model.trigger('login:error');
+                        if (resp) {
+                            model.trigger('login:bad', resp.message);
+                        }
+                        else {
+                            model.trigger('login:error');
+                        }
                         model.unset('password')
                     }
                     else {
