@@ -28,14 +28,14 @@ public class Main {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
         WebSocketService webSocketService = new WebSocketServiceImpl();
-        GameMechanics gameMechanics = new GameMechanicsImpl(webSocketService);
+        GameMechanics gameMechanics = new GameMechanicsImpl(webSocketService, dbService);
         AuthService authService = new AuthServiceImpl(dbService);
 
         Servlet signIn = new SignInServletImpl(authService);
         Servlet signUp = new SignUpServletImpl(authService);
         Servlet logOut = new LogOutServletImpl(authService);
         Servlet profile = new UserProfileServletImpl(authService);
-        Servlet scoreboard = new ScoreboardServletImpl(authService);
+        Servlet scoreboard = new ScoreboardServletImpl(dbService);
         Servlet admin = new AdminPageServletImpl(authService);
 
         context.addServlet(new ServletHolder(new WebSocketGameServlet(authService, gameMechanics, webSocketService)),

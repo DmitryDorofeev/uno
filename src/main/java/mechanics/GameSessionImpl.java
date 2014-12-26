@@ -18,16 +18,26 @@ public class GameSessionImpl implements GameSession {
     private Random rnd;
     private String action;
     private boolean uno;
+    private long gameId;
 
-    public GameSessionImpl(ArrayList<GameUser> players) {
+    public GameSessionImpl(ArrayList<GameUser> players, long gameId) {
         for (GameUser player : players)
             users.put(player.getMyName(), player);
         direction = true;
         setCurStepPlayerId(0);
         rnd = new Random();
+        setGameId(gameId);
         actions.add("incTwo");
         actions.add("incFour");
         actions.add("skip");
+    }
+
+    public long getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(long gameId) {
+        this.gameId = gameId;
     }
 
     public String getAction() {
@@ -53,9 +63,9 @@ public class GameSessionImpl implements GameSession {
     public void removeUnoAction(GameUser player, boolean late) {
         if (player.getCardsCount() == 1) {
             if (late)
-                getPlayerById(getPrevStepPlayerId()).addCards(
+                getUnoFailPlayer().addCards(
                         generateCards(ResourceSystem.instance().getGameParamsResource().getUnoFailCardsCount()));
-            uno = getPlayerById(getCurStepPlayerId()).getCardsCount() == 1;
+            uno = false;
         }
     }
 
@@ -94,11 +104,19 @@ public class GameSessionImpl implements GameSession {
 
     public void setCard(CardResource card, String newColor) {
         this.card = card;
-        this.color = card.getColor().equals("black") ? newColor : card.getColor();
+        setColor(card.getColor().equals("black") ? newColor : card.getColor());
         if (card.getType().equals("reverse"))
             changeDirection();
         if (actions.contains(card.getType()))
             setAction(card.getType());
+    }
+
+    public void setColor(String newColor) {
+        this.color = newColor;
+    }
+
+    public String getColor() {
+        return color;
     }
 
     public GameUser getUser(String login) {

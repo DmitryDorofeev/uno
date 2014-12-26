@@ -43,7 +43,9 @@ public class WebSocketServiceImpl implements WebSocketService {
     public void notifyGameStep(boolean correct, String message, GameUser user) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
         List<CardResource> cards = new ArrayList<>();
-        cards.add(user.getGameSession().getCard());
+        CardResource card = user.getGameSession().getCard();
+        card.setColor(user.getGameSession().getColor());
+        cards.add(card);
         gameWebSocket.gameStep(correct, message, user.getGameSession().getCurStepPlayerId(),
                 cards, user.getGameSession().getDirection(), user.getFocusOnCard(),
                 user.getGameSession().getPlayersList());
@@ -64,7 +66,6 @@ public class WebSocketServiceImpl implements WebSocketService {
         List<GameUser> players = new ArrayList<>();
         players.add(unoFailPlayer);
         gameWebSocket.sendUnoFail(message, unoFailPlayer.getGamePlayerId(), players);
-        gameWebSocket.sendCards(user.getNewCards());
         if (joystickSockets.containsKey(user.getMyName()) && unoFailPlayer.getMyName().equals(user.getMyName())) {
             gameWebSocket = joystickSockets.get(user.getMyName());
             gameWebSocket.sendCardsToJoystick(true, message, user.getFocusOnCard(), user.getCards());
@@ -75,5 +76,14 @@ public class WebSocketServiceImpl implements WebSocketService {
                                      long focusOnCard, List<CardResource> cards) {
         GameWebSocket gameWebSocket = joystickSockets.get(username);
         gameWebSocket.sendCardsToJoystick(correct, message, focusOnCard, cards);
+    }
+
+    public void sendScores(GameUser user) {
+        GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
+        gameWebSocket.sendScores(user.getGameSession().getPlayersList());
+        if (joystickSockets.containsKey(user.getMyName())) {
+            gameWebSocket = joystickSockets.get(user.getMyName());
+            gameWebSocket.sendScores(user.getGameSession().getPlayersList());
+        }
     }
 }

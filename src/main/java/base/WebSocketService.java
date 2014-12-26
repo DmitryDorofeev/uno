@@ -29,4 +29,6 @@ public interface WebSocketService {
 
     void sendCardsToJoystick(boolean correct, String message, String username,
                              long focusOnCard, List<CardResource> cards);
+
+    void sendScores(GameUser user);
 }

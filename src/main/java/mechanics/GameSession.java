@@ -13,11 +13,15 @@ public interface GameSession {
 
     CardResource getCard();
 
+    long getGameId();
+
     boolean playerHasCardToSet(GameUser player);
 
     boolean canSetCard(CardResource card, GameUser player);
 
     void setCard(CardResource card, String newColor);
+
+    String getColor();
 
     GameUser getUser(String login);
 

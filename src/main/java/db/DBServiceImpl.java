@@ -11,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import resources.ResourceSystem;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -47,6 +48,23 @@ public class DBServiceImpl implements DBService {
         return null;
     }
 
+    public Long getUserIdByName(String login) {
+        UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
+        UserDataSet userDataSet = userDataSetDAO.getUserDataByLogin(login);
+        if (userDataSet != null)
+            return userDataSet.getId();
+        return null;
+    }
+
+    public boolean savePlayerScores(long gameId, String name, long score) {
+        Long playerId = getUserIdByName(name);
+        if (playerId == null)
+            return false;
+        GameDataSetDAO gameDataSetDAO = new GameDataSetDAO(sessionFactory);
+        gameDataSetDAO.save(new GameDataSet(gameId, playerId, score));
+        return true;
+    }
+
     public long getPlayerScores(String login) {
         UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
         UserDataSet userDataSet = userDataSetDAO.getUserDataByLogin(login);
@@ -57,15 +75,27 @@ public class DBServiceImpl implements DBService {
         return 0;
     }
 
+    public Map<String, Long> getScoreboard(int offset, int limit) {
+        GameDataSetDAO gameDataSetDAO = new GameDataSetDAO(sessionFactory);
+        UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
+        Map<Long, Long> scores = gameDataSetDAO.getScores(offset, limit);
+        Map<String, Long> result = new HashMap<>();
+        for (Long key : scores.keySet()) {
+            String username = userDataSetDAO.getUserDataById(key).getLogin();
+            result.put(username, scores.get(key));
+        }
+        return result;
+    }
+
+    public long getNewGameId() {
+        GameDataSetDAO gameDataSetDAO = new GameDataSetDAO(sessionFactory);
+        return gameDataSetDAO.getLastGameId() + 1;
+    }
+
     public long getAmountOfRegisteredUsers() {
         UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
         return userDataSetDAO.getUsersCount();
     }
-
-//    public Map<String, Integer> getScoreBoard(int limit) {
-//        GameDataSetDAO gameDataSetDAO = new GameDataSetDAO(sessionFactory);
-//
-//    }
 
     public boolean getStatus() {
         return status;

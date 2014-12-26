@@ -18,13 +18,13 @@ public class GameDataSet implements Serializable { // Serializable Important to 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "gameId")
+    @Column(name = "gameId", nullable = false)
     private long gameId;
 
-    @Column(name = "playerId")
+    @Column(name = "playerId", nullable = false)
     private long playerId;
 
-    @Column(name = "score")
+    @Column(name = "score", nullable = false)
     private long score;
 
     //Important to Hibernate!

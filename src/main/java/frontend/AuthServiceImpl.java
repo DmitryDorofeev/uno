@@ -102,15 +102,4 @@ public class AuthServiceImpl implements AuthService {
     public long getAmountOfUsersOnline() {
         return sessions.size();
     }
-
-//    @Override
-//    public Map<String, Integer> getScoreboard() {
-//        Map<String, Integer> result = new HashMap<>();
-//        Iterator it = users.entrySet().iterator();
-//        while (it.hasNext()) {
-//            Map.Entry<String, UserProfile> pair = (Map.Entry) it.next();
-//            //result.put(pair.getKey(), pair.getValue().getScores());
-//        }
-//        return result;
-//    }
 }

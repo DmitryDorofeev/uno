@@ -4,4 +4,6 @@
     <startCardsCount>7</startCardsCount>
     <unoFailCardsCount>2</unoFailCardsCount>
     <joystickCardsCount>3</joystickCardsCount>
+    <coloredActionCardPrice>20</coloredActionCardPrice>
+    <blackCardPrice>40</blackCardPrice>
 </class>
