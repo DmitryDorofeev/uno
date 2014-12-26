@@ -193,6 +193,7 @@ public class GameMechanicsImpl implements GameMechanics {
         }
         else {
             for (GameUser curPlayer : playersList) {
+                curPlayer.calculateScore();
                 webSocketService.sendScores(curPlayer);
                 dbService.savePlayerScores(gameSession.getGameId(), curPlayer.getMyName(), curPlayer.getScore());
                 playerGame.remove(curPlayer.getMyName());
