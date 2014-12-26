@@ -44,20 +44,20 @@ define([
 
     var run = function () {
 
-        module ('Game model test');
-        gameModel.connect();
-        asyncTest('gameModel.sendCards', function () {
-            var cardModel = new CardModel();
-            cardModel.set('cardId', 1);
-            gameModel.sendCard(cardModel).done(function () {
-                // debugger;
-                start();
-                ok(true, 'Testing of sending card is correct');
-            }).fail(function () {
-                start();
-                ok(false, 'Testing of sending card is not correct');
-            });
-        });
+        // module ('Game model test');
+        // gameModel.connect();
+        // asyncTest('gameModel.sendCards', function () {
+        //     var cardModel = new CardModel();
+        //     cardModel.set('cardId', 1);
+        //     gameModel.sendCard(cardModel).done(function () {
+        //         // debugger;
+        //         start();
+        //         ok(true, 'Testing of sending card is correct');
+        //     }).fail(function () {
+        //         start();
+        //         ok(false, 'Testing of sending card is not correct');
+        //     });
+        // });
 
         var listener = {};
         _.extend(listener, Backbone.Events);
