@@ -1,5 +1,7 @@
 package main;
 
+import MessageSystem.MessageSystem;
+import MessageSystem.AddressService;
 import admin.AdminPageServletImpl;
 import base.*;
 import db.DBService;
@@ -27,8 +29,19 @@ public class Main {
         Server server = new Server(resourceSystem.getServerConfigResource().getPort());
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
-        WebSocketService webSocketService = new WebSocketServiceImpl();
-        GameMechanics gameMechanics = new GameMechanicsImpl(webSocketService, dbService);
+        AddressService addressService = new AddressService();
+
+        MessageSystem messageSystem = MessageSystem.instance();
+        messageSystem.setAddressService(addressService);
+
+        final Thread webSocketServiceThread = new Thread(new WebSocketServiceImpl());
+        webSocketServiceThread.setDaemon(true);
+        final Thread gameMechanicsThread = new Thread(new GameMechanicsImpl(dbService));
+        gameMechanicsThread.setDaemon(true);
+
+        webSocketServiceThread.start();
+        gameMechanicsThread.start();
+
         AuthService authService = new AuthServiceImpl(dbService);
 
         Servlet signIn = new SignInServletImpl(authService);
@@ -38,7 +51,7 @@ public class Main {
         Servlet scoreboard = new ScoreboardServletImpl(dbService);
         Servlet admin = new AdminPageServletImpl(authService);
 
-        context.addServlet(new ServletHolder(new WebSocketGameServlet(authService, gameMechanics, webSocketService)),
+        context.addServlet(new ServletHolder(new WebSocketGameServlet(authService)),
                                                 WebSocketGameServlet.WebSocketGameServletURL);
         context.addServlet(new ServletHolder(signIn), SignInServlet.signInPageURL);
         context.addServlet(new ServletHolder(signUp), SignUpServlet.signUpPageURL);

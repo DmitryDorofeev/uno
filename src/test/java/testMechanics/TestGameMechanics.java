@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
  */
 public class TestGameMechanics {
     private WebSocketService testWebSocket = mock(WebSocketService.class);
-    private GameMechanics testGameMechanics = new GameMechanicsImpl(testWebSocket, new DBServiceImpl()); // Костян, нужен фикс!!!
+    private GameMechanics testGameMechanics = new GameMechanicsImpl(new DBServiceImpl()); // Костян, нужен фикс!!!
     ArrayList<GameUser> test2Players = new ArrayList<>();
     ArrayList<GameUser> test5Players = new ArrayList<>();
 
