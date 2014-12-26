@@ -9,7 +9,7 @@ define([
 
     var API = function (baseUrl) {
         this.baseUrl = baseUrl || '';
-    }
+    };
 
     var _send = function (method, params) {
         $.ajax({
@@ -33,7 +33,7 @@ define([
             clearTimeout(requestTimeout);
             ApiDfd.reject();
         });
-    }
+    };
 
     API.prototype.send = function (method, url, params) {
         sendUrl = this.baseUrl + url;
@@ -41,7 +41,7 @@ define([
         _send(method, params);
         requestTimeout = setTimeout(_send, 200);
         return ApiDfd.promise();
-    }
+    };
 
     return API;
 });
