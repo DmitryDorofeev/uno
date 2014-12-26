@@ -8,11 +8,13 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import java.beans.Expression;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Created by BDV on 16.11.2014.
+ * Created by alexey on 16.11.2014.
  */
 public class GameDataSetDAO {
     private SessionFactory sessionFactory;
@@ -30,32 +32,34 @@ public class GameDataSetDAO {
     public long getPlayerScores(long playerId) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GameDataSet.class);
-        Object result = criteria.add(Restrictions.eq("playerId", playerId))
-            .setProjection(Projections.projectionList()
-                    .add(Projections.count("score"))
-                    .add(Projections.groupProperty("playerId"))).uniqueResult();
+        Object[] result = (Object[])criteria.add(Restrictions.eq("playerId", playerId))
+                .setProjection(Projections.projectionList()
+                                .add(Projections.groupProperty("playerId"))
+                                .add(Projections.sum("score"))
+                ).uniqueResult();
         session.close();
-        System.out.print(result.toString());
-        return 0;
+        return result != null ? (Long)result[1] : 0;
     }
 
     public long getLastGameId() {
-        Long result;
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GameDataSet.class);
-        result = (Long)criteria.setProjection(Projections.projectionList().add(Projections.max("gameId"))).uniqueResult();
+        Long result = (Long)criteria.setProjection(Projections.projectionList()
+              .add(Projections.max("gameId"))).uniqueResult();
         session.close();
-        return result == null ? 0 : result;
+        return result == null ? -1 : result;
     }
 
-    public List getScores(int limit) {
+    public Map<Long, Long> getScores(int limit) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GameDataSet.class);
-        List objects = criteria.setProjection(Projections.projectionList()
-                .add(Projections.count("score"))
-                .add(Projections.groupProperty("playerId"))).setMaxResults(limit).list();
-        session.close();
-        System.out.print(objects.toString());
-        return null;
+        List<Object[]> objects = criteria.setProjection(Projections.projectionList()
+                        .add(Projections.groupProperty("playerId"))
+                        .add(Projections.count("score"))
+        ).setMaxResults(limit).list();
+        Map<Long, Long> result = new HashMap<>();
+        for (Object[] elem : objects)
+            result.put((Long)elem[0], (Long)elem[1]);
+        return result;
     }
 }

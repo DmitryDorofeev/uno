@@ -84,11 +84,6 @@ public class DBServiceImpl implements DBService {
         return userDataSetDAO.getUsersCount();
     }
 
-//    public Map<String, Integer> getScoreBoard(int limit) {
-//        GameDataSetDAO gameDataSetDAO = new GameDataSetDAO(sessionFactory);
-//
-//    }
-
     public boolean getStatus() {
         return status;
     }

@@ -24,9 +24,9 @@
 
 CREATE TABLE IF NOT EXISTS `game` (
 `id` bigint(20) NOT NULL,
-  `playerId` bigint(20) DEFAULT NULL,
-  `score` bigint(20) DEFAULT NULL,
-  `gameId` bigint(20) DEFAULT NULL
+  `playerId` bigint(20) NOT NULL,
+  `score` bigint(20) NOT NULL,
+  `gameId` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
