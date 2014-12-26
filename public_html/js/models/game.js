@@ -20,6 +20,7 @@ define([
 			this.connection.onmessage = this.onMessage;
 		},
 		send: function (data) {
+			console.log('to server: ', data);
 			this.connection.send(JSON.stringify(data));
 		},
 		onConnect: function () {
@@ -31,7 +32,7 @@ define([
                     players: players
                 }
             };
-			this.connection.send(JSON.stringify(sendObj));
+			this.send(sendObj);
             this.trigger('load:done');
             this.trigger('load:start', 'Ожидание игроков...');
 		},

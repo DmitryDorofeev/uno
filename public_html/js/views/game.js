@@ -48,6 +48,7 @@ define([
         this.$game = this.$('.game');
         _.forEach(this.views, function(view) {
             this.$game.append(view.render().$el);
+            view.$el.hide();
         }, this);
         return this;
     },
@@ -71,15 +72,17 @@ define([
       this.settings.show();
     },
     sendSettings: function (val) {
-        console.log(val);
       this.game.players = val;
       this.game.connect();
     },
     renderCards: function () {
-        this.views.cards.render();
+        this.views.cards.render().show();
         this.views.deck.show();
         first = false;
-    }
+    },
+      showError: function (msg) {
+          this.trigger('error', msg);
+      }
   });
 
   return GameView;

@@ -30,12 +30,13 @@ define([
       });
     },
     renderServerError: function() {
-      this.trigger('error', 'Ошибка соединения с сервером');
+      Backbone.Events.trigger('error', 'Ошибка соединения с сервером');
     },
     renderLoginError: function(message) {
-      this.trigger('error', message);
+      Backbone.Events.trigger('error', message);
     },
     show: function () {
+      this.model.fetch();
       this.trigger('show', this);
       if (this.model.has('isLogined')) {
         this.model.trigger('login:ok');

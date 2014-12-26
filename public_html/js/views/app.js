@@ -9,6 +9,7 @@ define([
     var AppView = Backbone.View.extend({
         model: userModel,
         initialize: function() {
+            this.listenTo(Backbone.Events, 'error', this.showError);
             this.$el = $('body');
             this.views = {};
             this.constructors = {};
@@ -43,7 +44,6 @@ define([
                 this.listenTo(view, 'show', this.hideOther);
                 this.listenTo(view, 'load:start', this.showPreloader);
                 this.listenTo(view, 'load:done', this.hidePreloader);
-                this.listenTo(view, 'error', this.showError);
                 view.render();
                 this.$el.find('.app').append(view.$el);
                 this.views[name] = view;

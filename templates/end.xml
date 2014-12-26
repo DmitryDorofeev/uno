@@ -1,3 +1,13 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
-
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="ctx">
+    <div class="end">
+        <div class="end__title">Game Over!</div>
+        <div class="end__scores">
+            <fest:each iterate="ctx.scores" index="i" value="score">
+                <div class="end__score">
+                    <div class="end__score__login"><fest:value>score.login</fest:value></div>
+                    <div class="end__score__value"><fest:value>score.score</fest:value></div>
+                </div>
+            </fest:each>
+        </div>
+    </div>
 </fest:template>

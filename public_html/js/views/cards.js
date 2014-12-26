@@ -26,6 +26,9 @@ define([
             this.$cards = this.$('.cards');
             return this;
         },
+        show: function () {
+            this.$el.show();
+        },
         disable: function () {
             this.$cards.addClass('cards_disabled');
         },

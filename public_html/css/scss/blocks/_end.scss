@@ -1,0 +1,33 @@
+.end {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  margin-left: -250px;
+  width: 500px;
+  background-color: $mainColor;
+  border: 2px solid $secondaryColor;
+  border-radius: 5px;
+  color: #ffffff;
+
+  &__title {
+    width: 100%;
+    text-align: center;
+  }
+
+  &__scores {
+    width: 100%;
+  }
+
+  &__score {
+
+    &__login {
+      display: inline-block;
+      width: 200px;
+    }
+
+    &__value {
+      display: inline-block;
+    }
+
+  }
+}

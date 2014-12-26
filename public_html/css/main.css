@@ -100,6 +100,27 @@
     .color__value_blue {
       background-color: #6b24ff; }
 
+.end {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  margin-left: -250px;
+  width: 500px;
+  background-color: #D91E18;
+  border: 2px solid #a00307;
+  border-radius: 5px;
+  color: #ffffff; }
+  .end__title {
+    width: 100%;
+    text-align: center; }
+  .end__scores {
+    width: 100%; }
+  .end__score__login {
+    display: inline-block;
+    width: 200px; }
+  .end__score__value {
+    display: inline-block; }
+
 button {
   display: inline-block;
   margin: 100px; }

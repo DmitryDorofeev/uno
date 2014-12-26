@@ -15,7 +15,6 @@ define([
 		},
 		addPlayers: function (model) {
 			if (model.get('login') === userModel.get('login')) {
-				console.log('this user');
 				userModel.orderId = model.get('id');
 			}
 			else {
@@ -26,7 +25,7 @@ define([
 			this.show();
 		},
 		show: function () {
-			this.trigger('show', this);
+			this.$el.show();
 		}
 	});
 

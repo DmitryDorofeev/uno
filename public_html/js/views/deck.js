@@ -53,6 +53,7 @@ define([
             this.model.getCard();
         },
         sayUno: function () {
+            Backbone.Events.trigger('error', 'UNO!');
             this.model.sayUno();
         }
     });

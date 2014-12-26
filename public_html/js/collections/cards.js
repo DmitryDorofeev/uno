@@ -35,7 +35,7 @@ define([
             var output = {
                 type: 'card',
                 body: {
-                    focusOnCard: model.collection.indexOf(model),
+                    focusOnCard: this.indexOf(model),
                     newColor: model.get('color') || null
                 }
             };
