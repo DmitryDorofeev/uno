@@ -1,5 +1,6 @@
 package base;
 
+import MessageSystem.Abonent;
 import frontend.GameWebSocket;
 import mechanics.GameUser;
 import resources.CardResource;
@@ -11,7 +12,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * @author alexey
  */
-public interface WebSocketService {
+public interface WebSocketService extends Abonent {
 
     void addUser(GameWebSocket user, String extra);
 

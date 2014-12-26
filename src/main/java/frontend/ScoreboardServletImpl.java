@@ -26,7 +26,6 @@ public class ScoreboardServletImpl extends HttpServlet implements ScoreboardServ
 
     public void doGet(HttpServletRequest request,
                HttpServletResponse response) throws ServletException, IOException {
-        JSONArray jsonArray = new JSONArray();
 
         String limitString = request.getParameter("limit");
         String offsetString = request.getParameter("offset");
@@ -44,6 +43,12 @@ public class ScoreboardServletImpl extends HttpServlet implements ScoreboardServ
             else
                 offset = Integer.getInteger(offsetString);
 
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("status", 200);
+            JSONObject jsonBody = new JSONObject();
+            jsonObject.put("body", jsonBody);
+            JSONArray jsonArray = new JSONArray();
+            jsonBody.put("scores", jsonArray);
             for (Object o : dbService.getScoreboard(offset, limit).entrySet()) {
                 Map.Entry<String, Long> pair = (Map.Entry) o;
                 JSONObject jsonObj = new JSONObject();

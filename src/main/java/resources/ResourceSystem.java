@@ -15,7 +15,7 @@ public class ResourceSystem {
     private static ResourceSystem resourceSystem;
     private Map<String, Resource> resourceMap = new HashMap<>();
 
-    protected ResourceSystem() {
+    private ResourceSystem() {
         System.out.println("Resources loading started");
 
         ServerConfigResource serverConfigResource;

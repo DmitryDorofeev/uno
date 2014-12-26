@@ -1,11 +1,12 @@
 package base;
 
+import MessageSystem.Abonent;
 import resources.CardResource;
 
 /**
  * @author alexey
  */
-public interface GameMechanics {
+public interface GameMechanics extends Abonent {
 
     void addUser(String username, long playersCount);
 

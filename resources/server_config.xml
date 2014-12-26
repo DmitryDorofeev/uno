@@ -1,4 +1,5 @@
 <class type = "resources.ServerConfigResource">
    <port>9000</port>
    <socketTimeOut>10</socketTimeOut>
+   <serviceSleepTime>100</serviceSleepTime>
 </class>

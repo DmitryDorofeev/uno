@@ -1,8 +1,10 @@
 package frontend;
 
-import base.GameMechanics;
+import MessageSystem.*;
+import MessageSystem.ToGameMechanics.*;
+import MessageSystem.ToWebSocketService.MsgAddUser;
+import MessageSystem.ToWebSocketService.MsgRemoveUser;
 import mechanics.GameUser;
-import base.WebSocketService;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
@@ -13,24 +15,18 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import resources.CardResource;
-import resources.ResourceSystem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @WebSocket
 public class GameWebSocket {
     private String myName;
     private Session session;
-    private GameMechanics gameMechanics;
-    private WebSocketService webSocketService;
     private String extra;
 
-    public GameWebSocket(String myName, GameMechanics gameMechanics, WebSocketService webSocketService) {
+    public GameWebSocket(String myName) {
         System.out.println("GameWebSocket()");
         this.myName = myName;
-        this.gameMechanics = gameMechanics;
-        this.webSocketService = webSocketService;
     }
 
     public String getMyName() {
@@ -177,29 +173,29 @@ public class GameWebSocket {
             JSONObject jsonObject = (JSONObject)new JSONParser().parse(data);
             if (jsonObject.get("type").equals("gameInfo")) {
                 extra = null;
-                webSocketService.addUser(this, null);
+                addUser(this, null);
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                gameMechanics.addUser(myName, (Long)jsonBody.get("players"));
+                addGameUser(myName, (Long) jsonBody.get("players"));
                 return;
             }
             if (jsonObject.get("type").equals("card")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                gameMechanics.gameStep(myName, (Long)jsonBody.get("focusOnCard"), (String)jsonBody.get("newColor"));
+                gameStep(myName, (Long) jsonBody.get("focusOnCard"), (String) jsonBody.get("newColor"));
                 return;
             }
             if (jsonObject.get("type").equals("joystick")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
                 if (jsonBody.get("message").equals("init")) {
                     extra = "joystick";
-                    webSocketService.addUser(this, "joystick");
-                    gameMechanics.initJoystick(myName);
+                    addUser(this, "joystick");
+                    initJoystick(myName);
                     return;
                 }
-                gameMechanics.stepByJoystick(myName, (String)jsonBody.get("message"), (String)jsonBody.get("newColor"));
+                stepByJoystick(myName, (String) jsonBody.get("message"), (String) jsonBody.get("newColor"));
                 return;
             }
             if (jsonObject.get("type").equals("uno"))
-                gameMechanics.doUno(myName);
+                doUno(myName);
         }
         catch (ParseException e) {
             e.printStackTrace();
@@ -215,8 +211,8 @@ public class GameWebSocket {
     @OnWebSocketClose
     public void onClose(int statusCode, String reason) {
         System.out.println(myName + " onClose()");
-        gameMechanics.removeUser(myName);
-        webSocketService.removeUser(this, extra);
+        removeGameUser(myName);
+        removeUser(this, extra);
     }
 
     private JSONArray getJSONCardsArray(List<CardResource> cards) {
@@ -253,5 +249,50 @@ public class GameWebSocket {
             e.printStackTrace();
         }
         return jsonCardsCount;
+    }
+
+    private void addUser(GameWebSocket gameWebSocket, String extra) {
+        Msg msgAddUser = new MsgAddUser(null, MessageSystem.instance().getAddressService().getWebSocketService(),
+                gameWebSocket, extra);
+        MessageSystem.instance().sendMessage(msgAddUser);
+    }
+
+    private void removeUser(GameWebSocket gameWebSocket, String extra) {
+        Msg msgRemoveUser = new MsgRemoveUser(null, MessageSystem.instance().getAddressService().getWebSocketService(),
+                gameWebSocket, extra);
+        MessageSystem.instance().sendMessage(msgRemoveUser);
+    }
+
+    private void removeGameUser(String username) {
+        //TODO
+    }
+
+    private void addGameUser(String username, Long playersCount) {
+        Msg msgAddGameUser = new MsgAddGameUser(null, MessageSystem.instance().getAddressService().getGameMechanics(),
+                username, playersCount);
+        MessageSystem.instance().sendMessage(msgAddGameUser);
+    }
+
+    private void gameStep(String username, Long focusOnCard, String newColor) {
+        Msg msgGameStep = new MsgGameStep(null, MessageSystem.instance().getAddressService().getGameMechanics(),
+                username, focusOnCard, newColor);
+        MessageSystem.instance().sendMessage(msgGameStep);
+    }
+
+    private void initJoystick(String username) {
+        Msg msgInitJoystick = new MsgInitJoystick(null, MessageSystem.instance().getAddressService().getGameMechanics(),
+                username);
+        MessageSystem.instance().sendMessage(msgInitJoystick);
+    }
+
+    private void stepByJoystick(String username, String message, String newColor) {
+        Msg msgStepByJoystick = new MsgStepByJoystick(null,
+                MessageSystem.instance().getAddressService().getGameMechanics(), username, message, newColor);
+        MessageSystem.instance().sendMessage(msgStepByJoystick);
+    }
+
+    private void doUno(String username) {
+        Msg msgDoUno = new MsgDoUno(null, MessageSystem.instance().getAddressService().getGameMechanics(), username);
+        MessageSystem.instance().sendMessage(msgDoUno);
     }
 }

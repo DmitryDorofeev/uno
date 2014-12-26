@@ -1,8 +1,12 @@
 package frontend;
 
+import MessageSystem.Msg;
+import MessageSystem.Address;
+import MessageSystem.MessageSystem;
 import mechanics.GameUser;
 import base.WebSocketService;
 import resources.CardResource;
+import resources.ResourceSystem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,9 +16,15 @@ import java.util.Map;
 /**
  * @author alexey
  */
-public class WebSocketServiceImpl implements WebSocketService {
+public class WebSocketServiceImpl implements WebSocketService, Runnable {
+    private Address address = new Address();
     private Map<String, GameWebSocket> userSockets = new HashMap<>();
     private Map<String, GameWebSocket> joystickSockets = new HashMap<>();
+
+    public WebSocketServiceImpl() {
+        MessageSystem.instance().addService(this);
+        MessageSystem.instance().getAddressService().setWebSocketService(getAddress());
+    }
 
     public void addUser(GameWebSocket user, String extra) {
         if (extra == null)
@@ -28,6 +38,24 @@ public class WebSocketServiceImpl implements WebSocketService {
             userSockets.remove(user.getMyName());
         else if (extra.equals("joystick"))
             joystickSockets.remove(user.getMyName());
+    }
+
+    @Override
+    public Address getAddress() {
+        return address;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            MessageSystem.instance().execForAbonent(this);
+            try {
+                Thread.sleep(ResourceSystem.instance().getServerConfigResource().getServiceSleepTime());
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void notifyStartGame(GameUser user) {
