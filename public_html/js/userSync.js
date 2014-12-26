@@ -75,6 +75,7 @@ define([
                     }
                 },
                 error: function () {
+                    debugger;
                     if (model.has('password')) {
                         model.trigger('login:error');
                         model.unset('password')

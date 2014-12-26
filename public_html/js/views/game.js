@@ -8,8 +8,9 @@ define([
     'views/players',
     'views/cards',
     'views/deck',
-    'views/color'
-], function ($, Backbone, tmpl, userModel, gameModel, settingsView, playersView, cardsView, deckView, colorView) {
+    'views/color',
+    'views/end'
+], function ($, Backbone, tmpl, userModel, gameModel, settingsView, playersView, cardsView, deckView, colorView, endView) {
     var first = true;
   var GameView = Backbone.View.extend({
     model: userModel,
@@ -23,6 +24,7 @@ define([
         this.register('players', playersView);
         this.register('cards', cardsView);
         this.register('deck', deckView);
+        this.register('end', endView);
         this.listenTo(this.game, 'load:start', this.loadStart);
         this.listenTo(this.game, 'load:done', this.loadDone);
         this.listenTo(this.game, 'game:settings', this.showSettings);
