@@ -35,7 +35,7 @@ public class Main {
         Servlet signUp = new SignUpServletImpl(authService);
         Servlet logOut = new LogOutServletImpl(authService);
         Servlet profile = new UserProfileServletImpl(authService);
-        Servlet scoreboard = new ScoreboardServletImpl(authService);
+        Servlet scoreboard = new ScoreboardServletImpl(dbService);
         Servlet admin = new AdminPageServletImpl(authService);
 
         context.addServlet(new ServletHolder(new WebSocketGameServlet(authService, gameMechanics, webSocketService)),

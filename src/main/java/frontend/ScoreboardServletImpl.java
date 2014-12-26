@@ -2,6 +2,7 @@ package frontend;
 
 import base.AuthService;
 import base.ScoreboardServlet;
+import db.DBService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -17,23 +18,43 @@ import java.util.Map;
  * Created by alexey on 25.10.2014.
  */
 public class ScoreboardServletImpl extends HttpServlet implements ScoreboardServlet {
-    private AuthService authService;
+    private DBService dbService;
 
-    public ScoreboardServletImpl(AuthService authService) {
-        this.authService = authService;
+    public ScoreboardServletImpl(DBService dbService) {
+        this.dbService = dbService;
     }
 
     public void doGet(HttpServletRequest request,
                HttpServletResponse response) throws ServletException, IOException {
         JSONArray jsonArray = new JSONArray();
-//        Iterator it = authService.getScoreboard().entrySet().iterator();
-//        while (it.hasNext()) {
-//            Map.Entry<String, Integer> pair = (Map.Entry) it.next();
-//            JSONObject jsonObj = new JSONObject();
-//            jsonObj.put("login", pair.getKey());
-//            jsonObj.put("score", pair.getValue());
-//            jsonArray.add(jsonObj);
-//        }
-        response.getWriter().print(jsonArray.toJSONString());
+
+        String limitString = request.getParameter("limit");
+        String offsetString = request.getParameter("offset");
+
+        int limit;
+        int offset;
+        try {
+            if (limitString == null)
+                limit = 10;
+            else
+                limit = Integer.getInteger(limitString);
+
+            if (offsetString == null)
+                offset = 0;
+            else
+                offset = Integer.getInteger(offsetString);
+
+            for (Object o : dbService.getScoreboard(offset, limit).entrySet()) {
+                Map.Entry<String, Long> pair = (Map.Entry) o;
+                JSONObject jsonObj = new JSONObject();
+                jsonObj.put("login", pair.getKey());
+                jsonObj.put("score", pair.getValue());
+                jsonArray.add(jsonObj);
+            }
+            response.getWriter().print(jsonArray.toJSONString());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

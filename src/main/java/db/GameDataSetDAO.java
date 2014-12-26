@@ -4,6 +4,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -52,13 +53,13 @@ public class GameDataSetDAO {
         return result == null ? -1 : result;
     }
 
-    public Map<Long, Long> getScores(int limit) {
+    public Map<Long, Long> getScores(int offset, int limit) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(GameDataSet.class);
         List<Object[]> objects = criteria.setProjection(Projections.projectionList()
                         .add(Projections.groupProperty("playerId"))
                         .add(Projections.count("score"))
-        ).setMaxResults(limit).list();
+        ).setMaxResults(limit).setFirstResult(offset).addOrder(Order.desc("score")).list();
         Map<Long, Long> result = new HashMap<>();
         for (Object[] elem : objects)
             result.put((Long)elem[0], (Long)elem[1]);

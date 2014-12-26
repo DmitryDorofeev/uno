@@ -28,6 +28,14 @@ public class UserDataSetDAO {
         return false;
     }
 
+    public UserDataSet getUserDataById(long id) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(UserDataSet.class);
+        UserDataSet userDataSet = (UserDataSet) criteria.add(Restrictions.eq("id", id)).uniqueResult();
+        session.close();
+        return userDataSet;
+    }
+
     public UserDataSet getUserDataByLogin(String login) {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(UserDataSet.class);

@@ -11,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import resources.ResourceSystem;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -72,6 +73,18 @@ public class DBServiceImpl implements DBService {
             return gameDataSetDAO.getPlayerScores(userDataSet.getId());
         }
         return 0;
+    }
+
+    public Map<String, Long> getScoreboard(int offset, int limit) {
+        GameDataSetDAO gameDataSetDAO = new GameDataSetDAO(sessionFactory);
+        UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
+        Map<Long, Long> scores = gameDataSetDAO.getScores(offset, limit);
+        Map<String, Long> result = new HashMap<>();
+        for (Long key : scores.keySet()) {
+            String username = userDataSetDAO.getUserDataById(key).getLogin();
+            result.put(username, scores.get(key));
+        }
+        return result;
     }
 
     public long getNewGameId() {
