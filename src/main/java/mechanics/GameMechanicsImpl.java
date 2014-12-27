@@ -71,12 +71,12 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
         //TODO
     }
 
-    public void gameStep(String username, long focusOnCard, String newColor) {
+    public void gameStep(String username, long focusOnCard, String newColor, boolean fromJoystick) {
         GameSession gameSession = getPlayerGame(username);
         GameUser curPlayer = gameSession.getUser(username);
         if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
             if (focusOnCard == -1)
-                addCardsToPlayerAndStep(curPlayer, gameSession, newColor);
+                addCardsToPlayerAndStep(curPlayer, gameSession, newColor, fromJoystick);
             else if (curPlayer.isFocusOnCardValid(focusOnCard)){
                 curPlayer.setFocusOnCard(focusOnCard);
                 CardResource card = ResourceSystem.instance().getCardsResource().getCard(curPlayer.getFocusedCardId());
@@ -84,17 +84,17 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
                     if (gameSession.canSetCard(card, curPlayer)) {
                         curPlayer.deleteCard(card);
                         gameSession.setCard(card, newColor);
-                        finishGameStep(gameSession);
+                        finishGameStep(gameSession, fromJoystick);
                     } else
-                        notifyGameStep(false, "You can not put this card!", curPlayer);
+                        notifyGameStep(false, "You can not put this card!", curPlayer, fromJoystick);
                 } else
-                    notifyGameStep(false, "Player has not that card!", curPlayer);
+                    notifyGameStep(false, "Player has not that card!", curPlayer, fromJoystick);
             }
             else
-                notifyGameStep(false, "FocusOnCard is invalid!", curPlayer);
+                notifyGameStep(false, "FocusOnCard is invalid!", curPlayer, fromJoystick);
         }
         else
-            notifyGameStep(false, "Not your turn!", curPlayer);
+            notifyGameStep(false, "Not your turn!", curPlayer, fromJoystick);
     }
 
     public void initJoystick(String username) {
@@ -123,15 +123,15 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
         if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
             switch (action) {
                 case "throwCard":
-                    gameStep(username, curPlayer.getFocusOnCard(), newColor);
+                    gameStep(username, curPlayer.getFocusOnCard(), newColor, true);
                     break;
                 case "getCard":
-                    addCardsToPlayerAndStep(curPlayer, gameSession, newColor);
+                    addCardsToPlayerAndStep(curPlayer, gameSession, newColor, true);
                     break;
             }
         }
         else
-            notifyGameStep(false, "Not your turn!", curPlayer);
+            notifyGameStep(false, "Not your turn!", curPlayer, true);
     }
 
     public void doUno(String username) {
@@ -149,12 +149,12 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
         return false;
     }
 
-    private void addCardsToPlayerAndStep(GameUser player, GameSession gameSession, String newColor) {
+    private void addCardsToPlayerAndStep(GameUser player, GameSession gameSession, String newColor, boolean fromJoystick) {
         if (!gameSession.playerHasCardToSet(player)) {
             List<CardResource> cards = gameSession.generateCards(1);
             if (!cards.get(0).getColor().equals("black") && gameSession.canSetCard(cards.get(0), player)) {
                 gameSession.setCard(cards.get(0), newColor);
-                finishGameStep(gameSession);
+                finishGameStep(gameSession, fromJoystick);
                 return;
             }
             player.addCards(cards);
@@ -163,10 +163,10 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
             List<GameUser> playersList = gameSession.getPlayersList();
             sendCards(player);
             for (GameUser curPlayer : playersList)
-                notifyGameStep(true, "newCards", curPlayer);
+                notifyGameStep(true, "newCards", curPlayer, fromJoystick);
         }
         else
-            notifyGameStep(false, "You have card to put!", player);
+            notifyGameStep(false, "You have card to put!", player, fromJoystick);
     }
 
     private GameSession getPlayerGame(String login) {
@@ -191,10 +191,10 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
             card = gameSession.generateCards(1).get(0);
         gameSession.setCard(card, card.getColor());
         for (GameUser player : players)
-            notifyGameStep(true, "OK", player);
+            notifyGameStep(true, "OK", player, false);
     }
 
-    private void finishGameStep(GameSession gameSession) {
+    private void finishGameStep(GameSession gameSession, boolean fromJoystick) {
         List<GameUser> playersList = gameSession.getPlayersList();
         if (gameSession.getPlayerById(gameSession.getCurStepPlayerId()).getCardsCount() != 0) {
             if (gameSession.unoActionExists()) {
@@ -207,13 +207,13 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
                 gameSession.setUnoAction();
             gameSession.updateCurStepPlayerId();
             for (GameUser curPlayer : playersList)
-                notifyGameStep(true, "OK", curPlayer);
+                notifyGameStep(true, "OK", curPlayer, fromJoystick);
             if (gameSession.actionExists()) {
                 gameSession.doAction();
                 sendCards(gameSession.getPlayerById(gameSession.getCurStepPlayerId()));
                 gameSession.updateCurStepPlayerId();
                 for (GameUser curPlayer : playersList)
-                    notifyGameStep(true, "newCards", curPlayer);
+                    notifyGameStep(true, "newCards", curPlayer, fromJoystick);
             }
         }
         else {
@@ -238,9 +238,10 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
         MessageSystem.instance().sendMessage(msgSendCards);
     }
 
-    void notifyGameStep(boolean correct, String message, GameUser user) {
+    void notifyGameStep(boolean correct, String message, GameUser user, boolean fromJoystick) {
         Msg msgNotifyGameStep = new MsgNotifyGameStep(MessageSystem.instance().getAddressService().getGameMechanics(),
-                MessageSystem.instance().getAddressService().getWebSocketService(), correct, message, user);
+                MessageSystem.instance().getAddressService().getWebSocketService(),
+                correct, message, user, fromJoystick);
         MessageSystem.instance().sendMessage(msgNotifyGameStep);
     }
 

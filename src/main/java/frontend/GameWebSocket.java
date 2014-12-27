@@ -88,7 +88,7 @@ public class GameWebSocket {
     }
 
     public void gameStep(boolean correct, String message, long curStepPlayerId, List<CardResource> cards,
-                         boolean direction, long focusOnCard, List<GameUser> players) {
+                         boolean direction, long focusOnCard, List<GameUser> players, boolean fromJoystick) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "step");
@@ -99,6 +99,8 @@ public class GameWebSocket {
             jsonBody.put("curStepPlayerId", curStepPlayerId);
             jsonBody.put("direction", direction);
             jsonBody.put("focusOnCard", focusOnCard);
+            if (extra == null && fromJoystick)
+                jsonBody.put("fromJoystick", true);
             jsonBody.put("cards", getJSONCardsArray(cards));
             jsonBody.put("cardsCount", getJSONCardsCountArray(players));
             System.out.println(myName + jsonObject.toJSONString());
@@ -180,7 +182,7 @@ public class GameWebSocket {
             }
             if (jsonObject.get("type").equals("card")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                gameStep(myName, (Long) jsonBody.get("focusOnCard"), (String) jsonBody.get("newColor"));
+                gameStep(myName, (Long) jsonBody.get("focusOnCard"), (String) jsonBody.get("newColor"), false);
                 return;
             }
             if (jsonObject.get("type").equals("joystick")) {
@@ -273,9 +275,9 @@ public class GameWebSocket {
         MessageSystem.instance().sendMessage(msgAddGameUser);
     }
 
-    private void gameStep(String username, Long focusOnCard, String newColor) {
+    private void gameStep(String username, Long focusOnCard, String newColor, boolean fromJoystick) {
         Msg msgGameStep = new MsgGameStep(null, MessageSystem.instance().getAddressService().getGameMechanics(),
-                username, focusOnCard, newColor);
+                username, focusOnCard, newColor, fromJoystick);
         MessageSystem.instance().sendMessage(msgGameStep);
     }
 

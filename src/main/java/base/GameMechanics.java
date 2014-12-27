@@ -12,7 +12,7 @@ public interface GameMechanics extends Abonent {
 
     void removeUser(String username);
 
-    void gameStep(String username, long focusOnCard, String newColor);
+    void gameStep(String username, long focusOnCard, String newColor, boolean fromJoystick);
 
     void initJoystick(String username);
 

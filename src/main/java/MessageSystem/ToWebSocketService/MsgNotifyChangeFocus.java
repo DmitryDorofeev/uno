@@ -8,7 +8,7 @@ import mechanics.GameUser;
  * Created by alexey on 26.12.2014.
  */
 public class MsgNotifyChangeFocus extends MsgToWebSocketService {
-    private GameUser user;
+    final private GameUser user;
 
     public MsgNotifyChangeFocus(Address from, Address to, GameUser user) {
         super(from, to);

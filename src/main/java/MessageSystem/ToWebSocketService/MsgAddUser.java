@@ -8,8 +8,8 @@ import frontend.GameWebSocket;
  * Created by alexey on 26.12.2014.
  */
 public class MsgAddUser extends MsgToWebSocketService {
-    private GameWebSocket gameWebSocket;
-    private String extra;
+    final private GameWebSocket gameWebSocket;
+    final private String extra;
 
     public MsgAddUser(Address from, Address to, GameWebSocket gameWebSocket, String extra) {
         super(from, to);

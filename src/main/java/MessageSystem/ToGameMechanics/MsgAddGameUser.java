@@ -7,8 +7,8 @@ import base.GameMechanics;
  * Created by alexey on 26.12.2014.
  */
 public class MsgAddGameUser extends MsgToGameMechanics {
-    private String username;
-    private Long players;
+    final private String username;
+    final private Long players;
 
     public MsgAddGameUser(MessageSystem.Address from, MessageSystem.Address to, String username, Long players) {
         super(from, to);

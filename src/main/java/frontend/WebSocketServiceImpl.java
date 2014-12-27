@@ -68,7 +68,7 @@ public class WebSocketServiceImpl implements WebSocketService, Runnable {
         gameWebSocket.sendCards(user.getNewCards());
     }
 
-    public void notifyGameStep(boolean correct, String message, GameUser user) {
+    public void notifyGameStep(boolean correct, String message, GameUser user, boolean fromJoystick) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
         List<CardResource> cards = new ArrayList<>();
         CardResource card = user.getGameSession().getCard();
@@ -76,7 +76,7 @@ public class WebSocketServiceImpl implements WebSocketService, Runnable {
         cards.add(card);
         gameWebSocket.gameStep(correct, message, user.getGameSession().getCurStepPlayerId(),
                 cards, user.getGameSession().getDirection(), user.getFocusOnCard(),
-                user.getGameSession().getPlayersList());
+                user.getGameSession().getPlayersList(), fromJoystick);
         if (joystickSockets.containsKey(user.getMyName()))
             sendCardsToJoystick(correct, message, user.getMyName(), user.getFocusOnCard(), user.getCards());
     }

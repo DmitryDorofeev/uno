@@ -7,9 +7,9 @@ import base.GameMechanics;
  * Created by alexey on 26.12.2014.
  */
 public class MsgStepByJoystick extends MsgToGameMechanics {
-    private String username;
-    private String message;
-    private String newColor;
+    final private String username;
+    final private String message;
+    final private String newColor;
 
     public MsgStepByJoystick(Address from, Address to, String username, String message, String newColor) {
         super(from, to);

@@ -8,8 +8,8 @@ import mechanics.GameUser;
  * Created by alexey on 26.12.2014.
  */
 public class MsgNotifyUnoFail extends MsgToWebSocketService {
-    private String message;
-    private GameUser user;
+    final private String message;
+    final private GameUser user;
 
     public MsgNotifyUnoFail(Address from, Address to, String message, GameUser user) {
         super(from, to);

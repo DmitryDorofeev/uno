@@ -22,7 +22,7 @@ public interface WebSocketService extends Abonent {
 
     void sendCards(GameUser user);
 
-    void notifyGameStep(boolean correct, String message, GameUser user);
+    void notifyGameStep(boolean correct, String message, GameUser user, boolean fromJoystick);
 
     void notifyChangeFocus(GameUser user);
 
