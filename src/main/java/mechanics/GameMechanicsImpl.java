@@ -45,7 +45,7 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
         }
     }
 
-    public void addUser(String username, long playersCount) {
+    public synchronized void addUser(String username, long playersCount) {
         if (playersCount >= ResourceSystem.instance().getGameParamsResource().getMinPlayersCount()
                 && playersCount <= ResourceSystem.instance().getGameParamsResource().getMaxPlayersCount()) {
             GameUser newUser = new GameUser(username, playersCount);
