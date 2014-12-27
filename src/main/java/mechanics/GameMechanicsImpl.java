@@ -79,7 +79,9 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
                 addCardsToPlayerAndStep(curPlayer, gameSession, newColor, fromJoystick);
             else if (curPlayer.isFocusOnCardValid(focusOnCard)){
                 curPlayer.setFocusOnCard(focusOnCard);
-                CardResource card = ResourceSystem.instance().getCardsResource().getCard(curPlayer.getFocusedCardId());
+                CardResource temp = ResourceSystem.instance().getCardsResource().getCard(curPlayer.getFocusedCardId());
+                CardResource card = new CardResource(temp.getCardId(), temp.getColor(), temp.getType(),
+                        temp.getNum(), temp.getWidth(), temp.getHeight(), temp.getX(), temp.getY());
                 if (curPlayer.canDeleteCard(card)) {
                     if (gameSession.canSetCard(card, curPlayer)) {
                         curPlayer.deleteCard(card);

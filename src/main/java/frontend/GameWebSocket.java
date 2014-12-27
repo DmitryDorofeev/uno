@@ -101,6 +101,8 @@ public class GameWebSocket {
             jsonBody.put("focusOnCard", focusOnCard);
             if (extra == null && fromJoystick != null && fromJoystick.equals(myName))
                 jsonBody.put("joystick", true);
+            else
+                jsonBody.put("joystick", false);
             jsonBody.put("cards", getJSONCardsArray(cards));
             jsonBody.put("cardsCount", getJSONCardsCountArray(players));
             System.out.println(myName + jsonObject.toJSONString());
