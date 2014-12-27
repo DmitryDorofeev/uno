@@ -195,8 +195,10 @@ public class GameWebSocket {
                     initJoystick(myName);
                     return;
                 }
-                stepByJoystick(myName, (String) jsonBody.get("message"), (String) jsonBody.get("newColor"),
-                        (Long) jsonBody.get("focusOnCard"));
+                Long tmp = (Long) jsonBody.get("focusOnCard");
+                if (tmp == null)
+                    tmp = (long)0;
+                stepByJoystick(myName, (String) jsonBody.get("message"), (String) jsonBody.get("newColor"), tmp);
                 return;
             }
             if (jsonObject.get("type").equals("uno"))
