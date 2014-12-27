@@ -20,15 +20,6 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
     private DBService dbService;
     private Map<String, GameSession> playerGame = new HashMap<>();
     private ConcurrentLinkedQueue<GameUser> waiters = new ConcurrentLinkedQueue<>();
-    final private Object object1 = new Object();
-    final private Object object2 = new Object();
-    final private Object object3 = new Object();
-    final private Object object4 = new Object();
-    final private Object object5 = new Object();
-    final private Object object6 = new Object();
-    final private Object object7 = new Object();
-    final private Object object8 = new Object();
-    final private Object object9 = new Object();
 
     public GameMechanicsImpl(DBService dbService) {
         this.dbService = dbService;
@@ -54,27 +45,25 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
         }
     }
 
-    public void addUser(String username, long playersCount) {
-        synchronized (object1) {
-            if (playersCount >= ResourceSystem.instance().getGameParamsResource().getMinPlayersCount()
-                    && playersCount <= ResourceSystem.instance().getGameParamsResource().getMaxPlayersCount()) {
-                GameUser newUser = new GameUser(username, playersCount);
-                ArrayList<GameUser> tempList = new ArrayList<>();
-                tempList.add(newUser);
-                Iterator iter = waiters.iterator();
-                while (iter.hasNext() && tempList.size() != playersCount) {
-                    GameUser waiter = (GameUser) iter.next();
-                    if (waiter.getPlayersCount() == playersCount)
-                        tempList.add(waiter);
-                }
-                if (tempList.size() == playersCount) {
-                    for (GameUser player : tempList)
-                        waiters.remove(player);
-                    startGame(tempList);
-                } else
-                    waiters.add(newUser);
-                tempList.clear();
+    public synchronized void addUser(String username, long playersCount) {
+        if (playersCount >= ResourceSystem.instance().getGameParamsResource().getMinPlayersCount()
+                && playersCount <= ResourceSystem.instance().getGameParamsResource().getMaxPlayersCount()) {
+            GameUser newUser = new GameUser(username, playersCount);
+            ArrayList<GameUser> tempList = new ArrayList<>();
+            tempList.add(newUser);
+            Iterator iter = waiters.iterator();
+            while (iter.hasNext() && tempList.size() != playersCount) {
+                GameUser waiter = (GameUser) iter.next();
+                if (waiter.getPlayersCount() == playersCount)
+                    tempList.add(waiter);
             }
+            if (tempList.size() == playersCount) {
+                for (GameUser player : tempList)
+                    waiters.remove(player);
+                startGame(tempList);
+            } else
+                waiters.add(newUser);
+            tempList.clear();
         }
     }
 
@@ -82,169 +71,153 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
         //TODO
     }
 
-    public void gameStep(String username, long focusOnCard, String newColor, String fromJoystick) {
-        synchronized (object2) {
-            GameSession gameSession = getPlayerGame(username);
-            GameUser curPlayer = gameSession.getUser(username);
-            if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
-                if (focusOnCard == -1)
-                    addCardsToPlayerAndStep(curPlayer, gameSession, newColor, fromJoystick);
-                else if (curPlayer.isFocusOnCardValid(focusOnCard)) {
-                    curPlayer.setFocusOnCard(focusOnCard);
-                    CardResource temp = ResourceSystem.instance().getCardsResource().getCard(curPlayer.getFocusedCardId());
-                    CardResource card = new CardResource(temp.getCardId(), temp.getColor(), temp.getType(),
-                            temp.getNum(), temp.getWidth(), temp.getHeight(), temp.getX(), temp.getY());
-                    if (curPlayer.canDeleteCard(card)) {
-                        if (gameSession.canSetCard(card, curPlayer)) {
-                            curPlayer.deleteCard(card);
-                            gameSession.setCard(card, newColor);
-                            finishGameStep(gameSession, fromJoystick);
-                        } else
-                            notifyGameStep(false, "You can not put this card!", curPlayer, fromJoystick);
+    public synchronized void gameStep(String username, long focusOnCard, String newColor, String fromJoystick) {
+        GameSession gameSession = getPlayerGame(username);
+        GameUser curPlayer = gameSession.getUser(username);
+        if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
+            if (focusOnCard == -1)
+                addCardsToPlayerAndStep(curPlayer, gameSession, newColor, fromJoystick);
+            else if (curPlayer.isFocusOnCardValid(focusOnCard)) {
+                curPlayer.setFocusOnCard(focusOnCard);
+                CardResource temp = ResourceSystem.instance().getCardsResource().getCard(curPlayer.getFocusedCardId());
+                CardResource card = new CardResource(temp.getCardId(), temp.getColor(), temp.getType(),
+                        temp.getNum(), temp.getWidth(), temp.getHeight(), temp.getX(), temp.getY());
+                if (curPlayer.canDeleteCard(card)) {
+                    if (gameSession.canSetCard(card, curPlayer)) {
+                        curPlayer.deleteCard(card);
+                        gameSession.setCard(card, newColor);
+                        finishGameStep(gameSession, fromJoystick);
                     } else
-                        notifyGameStep(false, "Player has not that card!", curPlayer, fromJoystick);
+                        notifyGameStep(false, "You can not put this card!", curPlayer, fromJoystick);
                 } else
-                    notifyGameStep(false, "FocusOnCard is invalid!", curPlayer, fromJoystick);
+                    notifyGameStep(false, "Player has not that card!", curPlayer, fromJoystick);
             } else
-                notifyGameStep(false, "Not your turn!", curPlayer, fromJoystick);
-        }
+                notifyGameStep(false, "FocusOnCard is invalid!", curPlayer, fromJoystick);
+        } else
+            notifyGameStep(false, "Not your turn!", curPlayer, fromJoystick);
     }
 
-    public void initJoystick(String username) {
-        synchronized (object3) {
-            GameSession gameSession = getPlayerGame(username);
-            if (gameSession != null) {
-                GameUser curPlayer = gameSession.getUser(username);
-                sendCardsToJoystick(true, "OK", username, curPlayer.getFocusOnCard(), curPlayer.getCards());
-            } else
-                sendCardsToJoystick(false, "Player has not started game yet", username, -1, null);
-        }
-    }
-
-    public void stepByJoystick(String username, String action, String newColor, long focusOnCard) {
-        synchronized (object4) {
-            GameSession gameSession = getPlayerGame(username);
+    public synchronized void initJoystick(String username) {
+        GameSession gameSession = getPlayerGame(username);
+        if (gameSession != null) {
             GameUser curPlayer = gameSession.getUser(username);
+            sendCardsToJoystick(true, "OK", username, curPlayer.getFocusOnCard(), curPlayer.getCards());
+        } else
+            sendCardsToJoystick(false, "Player has not started game yet", username, -1, null);
+    }
+
+    public synchronized void stepByJoystick(String username, String action, String newColor, long focusOnCard) {
+        GameSession gameSession = getPlayerGame(username);
+        GameUser curPlayer = gameSession.getUser(username);
+        switch (action) {
+            case "selectRightCard":
+                curPlayer.updateFocusOnCard("right");
+                notifyChangeFocus(curPlayer);
+                return;
+            case "selectLeftCard":
+                curPlayer.updateFocusOnCard("left");
+                notifyChangeFocus(curPlayer);
+                return;
+        }
+        if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
             switch (action) {
-                case "selectRightCard":
-                    curPlayer.updateFocusOnCard("right");
-                    notifyChangeFocus(curPlayer);
-                    return;
-                case "selectLeftCard":
-                    curPlayer.updateFocusOnCard("left");
-                    notifyChangeFocus(curPlayer);
-                    return;
+                case "throwCard":
+                    gameStep(username, focusOnCard, newColor, username);
+                    break;
+                case "getCard":
+                    addCardsToPlayerAndStep(curPlayer, gameSession, newColor, null);
+                    break;
             }
-            if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
-                switch (action) {
-                    case "throwCard":
-                        gameStep(username, focusOnCard, newColor, username);
-                        break;
-                    case "getCard":
-                        addCardsToPlayerAndStep(curPlayer, gameSession, newColor, null);
-                        break;
-                }
-            } else
-                notifyGameStep(false, "Not your turn!", curPlayer, username);
-        }
+        } else
+            notifyGameStep(false, "Not your turn!", curPlayer, username);
     }
 
-    public void doUno(String username) {
-        synchronized (object5) {
-            GameSession gameSession = getPlayerGame(username);
-            GameUser curPlayer = gameSession.getUser(username);
-            if (gameSession.unoActionExists())
-                gameSession.removeUnoAction(curPlayer, false);
-        }
+    public synchronized void doUno(String username) {
+        GameSession gameSession = getPlayerGame(username);
+        GameUser curPlayer = gameSession.getUser(username);
+        if (gameSession.unoActionExists())
+            gameSession.removeUnoAction(curPlayer, false);
     }
 
-    public boolean isPlayerInWaiters(String login) {
-        synchronized (object6) {
-            for (GameUser waiter : waiters) {
-                if (waiter.getMyName().equals(login))
-                    return true;
+    public synchronized boolean isPlayerInWaiters(String login) {
+        for (GameUser waiter : waiters) {
+            if (waiter.getMyName().equals(login))
+                return true;
+        }
+        return false;
+    }
+
+    private synchronized void addCardsToPlayerAndStep(GameUser player, GameSession gameSession, String newColor, String fromJoystick) {
+        if (!gameSession.playerHasCardToSet(player)) {
+            List<CardResource> cards = gameSession.generateCards(1);
+            if (!cards.get(0).getColor().equals("black") && gameSession.canSetCard(cards.get(0), player)) {
+                gameSession.setCard(cards.get(0), newColor);
+                finishGameStep(gameSession, fromJoystick);
+                return;
             }
-            return false;
-        }
-    }
-
-    private void addCardsToPlayerAndStep(GameUser player, GameSession gameSession, String newColor, String fromJoystick) {
-        synchronized (object7) {
-            if (!gameSession.playerHasCardToSet(player)) {
-                List<CardResource> cards = gameSession.generateCards(1);
-                if (!cards.get(0).getColor().equals("black") && gameSession.canSetCard(cards.get(0), player)) {
-                    gameSession.setCard(cards.get(0), newColor);
-                    finishGameStep(gameSession, fromJoystick);
-                    return;
-                }
-                player.addCards(cards);
-                if (!cards.get(0).getColor().equals("black"))
-                    gameSession.updateCurStepPlayerId();
-                List<GameUser> playersList = gameSession.getPlayersList();
-                sendCards(player);
-                for (GameUser curPlayer : playersList)
-                    notifyGameStep(true, "newCards", curPlayer, fromJoystick);
-            } else
-                notifyGameStep(false, "You have card to put!", player, fromJoystick);
-        }
+            player.addCards(cards);
+            if (!cards.get(0).getColor().equals("black"))
+                gameSession.updateCurStepPlayerId();
+            List<GameUser> playersList = gameSession.getPlayersList();
+            sendCards(player);
+            for (GameUser curPlayer : playersList)
+                notifyGameStep(true, "newCards", curPlayer, fromJoystick);
+        } else
+            notifyGameStep(false, "You have card to put!", player, fromJoystick);
     }
 
     private GameSession getPlayerGame(String login) {
         return playerGame.get(login);
     }
 
-    private void startGame(ArrayList<GameUser> players) {
-        synchronized (object8) {
-            GameSession gameSession = new GameSessionImpl(players, dbService.getNewGameId());
-            int j = 0;
-            for (GameUser player : players) {
-                playerGame.put(player.getMyName(), gameSession);
-                player.setGamePlayerId(j++);
-                player.setGameSession(gameSession);
-            }
-            players.forEach(this::notifyStartGame);
-            for (GameUser player : players) {
-                player.setCards(gameSession.generateCards(ResourceSystem.instance().getGameParamsResource().getStartCardsCount()));
-                sendCards(player);
-            }
-            CardResource card = gameSession.generateCards(1).get(0);
-            while (!card.getType().equals("number"))
-                card = gameSession.generateCards(1).get(0);
-            gameSession.setCard(card, card.getColor());
-            for (GameUser player : players)
-                notifyGameStep(true, "OK", player, null);
+    private synchronized void startGame(ArrayList<GameUser> players) {
+        GameSession gameSession = new GameSessionImpl(players, dbService.getNewGameId());
+        int j = 0;
+        for (GameUser player : players) {
+            playerGame.put(player.getMyName(), gameSession);
+            player.setGamePlayerId(j++);
+            player.setGameSession(gameSession);
         }
+        players.forEach(this::notifyStartGame);
+        for (GameUser player : players) {
+            player.setCards(gameSession.generateCards(ResourceSystem.instance().getGameParamsResource().getStartCardsCount()));
+            sendCards(player);
+        }
+        CardResource card = gameSession.generateCards(1).get(0);
+        while (!card.getType().equals("number"))
+            card = gameSession.generateCards(1).get(0);
+        gameSession.setCard(card, card.getColor());
+        for (GameUser player : players)
+            notifyGameStep(true, "OK", player, null);
     }
 
-    private void finishGameStep(GameSession gameSession, String fromJoystick) {
-        synchronized (object9) {
-            List<GameUser> playersList = gameSession.getPlayersList();
-            if (gameSession.getPlayerById(gameSession.getCurStepPlayerId()).getCardsCount() != 0) {
-                if (gameSession.unoActionExists()) {
-                    gameSession.removeUnoAction(gameSession.getUnoFailPlayer(), true);
-                    sendCards(gameSession.getUnoFailPlayer());
-                    for (GameUser curPlayer : playersList)
-                        notifyUnoFail("UNO fail!", curPlayer);
-                }
-                if (gameSession.getPlayerById(gameSession.getCurStepPlayerId()).getCardsCount() == 1)
-                    gameSession.setUnoAction();
+    private synchronized void finishGameStep(GameSession gameSession, String fromJoystick) {
+        List<GameUser> playersList = gameSession.getPlayersList();
+        if (gameSession.getPlayerById(gameSession.getCurStepPlayerId()).getCardsCount() != 0) {
+            if (gameSession.unoActionExists()) {
+                gameSession.removeUnoAction(gameSession.getUnoFailPlayer(), true);
+                sendCards(gameSession.getUnoFailPlayer());
+                for (GameUser curPlayer : playersList)
+                    notifyUnoFail("UNO fail!", curPlayer);
+            }
+            if (gameSession.getPlayerById(gameSession.getCurStepPlayerId()).getCardsCount() == 1)
+                gameSession.setUnoAction();
+            gameSession.updateCurStepPlayerId();
+            for (GameUser curPlayer : playersList)
+                notifyGameStep(true, "OK", curPlayer, fromJoystick);
+            if (gameSession.actionExists()) {
+                gameSession.doAction();
+                sendCards(gameSession.getPlayerById(gameSession.getCurStepPlayerId()));
                 gameSession.updateCurStepPlayerId();
                 for (GameUser curPlayer : playersList)
-                    notifyGameStep(true, "OK", curPlayer, fromJoystick);
-                if (gameSession.actionExists()) {
-                    gameSession.doAction();
-                    sendCards(gameSession.getPlayerById(gameSession.getCurStepPlayerId()));
-                    gameSession.updateCurStepPlayerId();
-                    for (GameUser curPlayer : playersList)
-                        notifyGameStep(true, "newCards", curPlayer, fromJoystick);
-                }
-            } else {
-                playersList.forEach(mechanics.GameUser::calculateScore);
-                for (GameUser curPlayer : playersList) {
-                    sendScores(curPlayer);
-                    dbService.savePlayerScores(gameSession.getGameId(), curPlayer.getMyName(), curPlayer.getScore());
-                    playerGame.remove(curPlayer.getMyName());
-                }
+                    notifyGameStep(true, "newCards", curPlayer, fromJoystick);
+            }
+        } else {
+            playersList.forEach(mechanics.GameUser::calculateScore);
+            for (GameUser curPlayer : playersList) {
+                sendScores(curPlayer);
+                dbService.savePlayerScores(gameSession.getGameId(), curPlayer.getMyName(), curPlayer.getScore());
+                playerGame.remove(curPlayer.getMyName());
             }
         }
     }
