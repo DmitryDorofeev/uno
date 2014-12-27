@@ -13677,7 +13677,7 @@ define('collections/cards',[
     'models/user'
 ], function (Backbone, CardModel, gameModel, userModel) {
 
-    var stepDfd;
+    var stepDfd, prevStep;
 
     var CardCollection = Backbone.Collection.extend({
         model: CardModel,
@@ -13724,6 +13724,8 @@ define('collections/cards',[
                 this.trigger('cards:enable');
                 this.disabled = false;
             }
+
+
             if (stepDfd && stepDfd.state() === 'pending') {
                 if (data.correct) {
                     stepDfd.resolve();
@@ -13732,6 +13734,12 @@ define('collections/cards',[
                     stepDfd.reject();
                 }
             }
+            if (data.joystick && data.correct) {
+                if (this.user.orderId === prevStep) {
+                    this.remove(this.at(data.focusOnCard));
+                }
+            }
+            prevStep = data.curStepPlayerId;
         },
         stepDone: function () {
             if (this.pending) {
