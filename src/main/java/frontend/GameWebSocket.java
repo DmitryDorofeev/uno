@@ -88,7 +88,7 @@ public class GameWebSocket {
     }
 
     public void gameStep(boolean correct, String message, long curStepPlayerId, List<CardResource> cards,
-                         boolean direction, long focusOnCard, List<GameUser> players, boolean fromJoystick) {
+                         boolean direction, long focusOnCard, List<GameUser> players, String fromJoystick) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", "step");
@@ -99,8 +99,8 @@ public class GameWebSocket {
             jsonBody.put("curStepPlayerId", curStepPlayerId);
             jsonBody.put("direction", direction);
             jsonBody.put("focusOnCard", focusOnCard);
-            if (extra == null && fromJoystick)
-                jsonBody.put("fromJoystick", true);
+            if (extra == null && fromJoystick != null && fromJoystick.equals(myName))
+                jsonBody.put("joystick", true);
             jsonBody.put("cards", getJSONCardsArray(cards));
             jsonBody.put("cardsCount", getJSONCardsCountArray(players));
             System.out.println(myName + jsonObject.toJSONString());
@@ -182,7 +182,7 @@ public class GameWebSocket {
             }
             if (jsonObject.get("type").equals("card")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                gameStep(myName, (Long) jsonBody.get("focusOnCard"), (String) jsonBody.get("newColor"), false);
+                gameStep(myName, (Long) jsonBody.get("focusOnCard"), (String) jsonBody.get("newColor"), null);
                 return;
             }
             if (jsonObject.get("type").equals("joystick")) {
@@ -275,7 +275,7 @@ public class GameWebSocket {
         MessageSystem.instance().sendMessage(msgAddGameUser);
     }
 
-    private void gameStep(String username, Long focusOnCard, String newColor, boolean fromJoystick) {
+    private void gameStep(String username, Long focusOnCard, String newColor, String fromJoystick) {
         Msg msgGameStep = new MsgGameStep(null, MessageSystem.instance().getAddressService().getGameMechanics(),
                 username, focusOnCard, newColor, fromJoystick);
         MessageSystem.instance().sendMessage(msgGameStep);

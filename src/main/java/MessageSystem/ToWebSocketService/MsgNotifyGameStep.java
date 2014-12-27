@@ -11,10 +11,10 @@ public class MsgNotifyGameStep extends MsgToWebSocketService {
     final private boolean correct;
     final private String message;
     final private GameUser user;
-    final private boolean fromJoystick;
+    final private String fromJoystick;
 
     public MsgNotifyGameStep(Address from, Address to, boolean correct, String message,
-                             GameUser user, boolean fromJoystick) {
+                             GameUser user, String fromJoystick) {
         super(from, to);
         this.correct = correct;
         this.message = message;

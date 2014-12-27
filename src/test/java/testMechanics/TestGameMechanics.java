@@ -72,8 +72,8 @@ public class TestGameMechanics {
         verify(testWebSocket).notifyStartGame(test2gamer2);
         verify(testWebSocket).sendCards(test2);
         verify(testWebSocket).sendCards(test2gamer2);
-        verify(testWebSocket).notifyGameStep(true, "OK", test2, false);
-        verify(testWebSocket).notifyGameStep(true, "OK", test2gamer2, false);
+        verify(testWebSocket).notifyGameStep(true, "OK", test2, null);
+        verify(testWebSocket).notifyGameStep(true, "OK", test2gamer2, null);
 
         testGameMechanics.addUser("test5gamer2", 5);
         testGameMechanics.addUser("test5gamer3", 5);
@@ -94,11 +94,11 @@ public class TestGameMechanics {
         verify(testWebSocket).sendCards(test5gamer3);
         verify(testWebSocket).sendCards(test5gamer4);
         verify(testWebSocket).sendCards(test5gamer5);
-        verify(testWebSocket).notifyGameStep(true, "OK", test5, false);
-        verify(testWebSocket).notifyGameStep(true, "OK", test5gamer2, false);
-        verify(testWebSocket).notifyGameStep(true, "OK", test5gamer3, false);
-        verify(testWebSocket).notifyGameStep(true, "OK", test5gamer4, false);
-        verify(testWebSocket).notifyGameStep(true, "OK", test5gamer5, false);
+        verify(testWebSocket).notifyGameStep(true, "OK", test5, null);
+        verify(testWebSocket).notifyGameStep(true, "OK", test5gamer2, null);
+        verify(testWebSocket).notifyGameStep(true, "OK", test5gamer3, null);
+        verify(testWebSocket).notifyGameStep(true, "OK", test5gamer4, null);
+        verify(testWebSocket).notifyGameStep(true, "OK", test5gamer5, null);
 
         testGameMechanics.addUser("test3", 3);
         testGameMechanics.addUser("test3", 3);
@@ -130,24 +130,24 @@ public class TestGameMechanics {
         testGameMechanics.addUser("test5gamer4", 5);
         testGameMechanics.addUser("test5gamer5", 5);
 
-        testGameMechanics.gameStep(test5.getMyName(), -1, "red", false);
-        verify(testWebSocket).notifyGameStep(false, "Not your turn!", test5, false);
+        testGameMechanics.gameStep(test5.getMyName(), -1, "red", null);
+        verify(testWebSocket).notifyGameStep(false, "Not your turn!", test5, null);
 
-        testGameMechanics.gameStep(test5.getMyName(), 1, "red", false);
-        testGameMechanics.gameStep(test5gamer2.getMyName(), 1, "red", false);
-        testGameMechanics.gameStep(test5gamer3.getMyName(), 2, "red", false);
-        testGameMechanics.gameStep(test5gamer4.getMyName(), 0, "yellow", false);
-        verify(testWebSocket).notifyGameStep(false, "You can not put this card!", test5gamer3, false);
+        testGameMechanics.gameStep(test5.getMyName(), 1, "red", null);
+        testGameMechanics.gameStep(test5gamer2.getMyName(), 1, "red", null);
+        testGameMechanics.gameStep(test5gamer3.getMyName(), 2, "red", null);
+        testGameMechanics.gameStep(test5gamer4.getMyName(), 0, "yellow", null);
+        verify(testWebSocket).notifyGameStep(false, "You can not put this card!", test5gamer3, null);
 
-        testGameMechanics.gameStep(test5gamer4.getMyName(), 2, "yellow", false);
-        testGameMechanics.gameStep(test5gamer5.getMyName(), 1, "yellow", false);
-        testGameMechanics.gameStep(test5gamer4.getMyName(), 1, "yellow", false);
-        testGameMechanics.gameStep(test5gamer4.getMyName(), 1, "green", false);
-        verify(testWebSocket).notifyGameStep(false, "Not your turn!", test5gamer4, false);
+        testGameMechanics.gameStep(test5gamer4.getMyName(), 2, "yellow", null);
+        testGameMechanics.gameStep(test5gamer5.getMyName(), 1, "yellow", null);
+        testGameMechanics.gameStep(test5gamer4.getMyName(), 1, "yellow", null);
+        testGameMechanics.gameStep(test5gamer4.getMyName(), 1, "green", null);
+        verify(testWebSocket).notifyGameStep(false, "Not your turn!", test5gamer4, null);
 
-        testGameMechanics.gameStep(test5.getMyName(), 0, "green", false);
-        testGameMechanics.gameStep(test5gamer2.getMyName(), 0, "yellow", false);
-        verify(testWebSocket).notifyGameStep(false, "Player has not that card!", test5gamer2, false);
+        testGameMechanics.gameStep(test5.getMyName(), 0, "green", null);
+        testGameMechanics.gameStep(test5gamer2.getMyName(), 0, "yellow", null);
+        verify(testWebSocket).notifyGameStep(false, "Player has not that card!", test5gamer2, null);
     }
 
     @Test
@@ -208,6 +208,6 @@ public class TestGameMechanics {
         assertEquals("Right card was selected", prevFocus - 1, playerArgumentCaptor.getValue().getFocusedCardId());
 
         testGameMechanics.stepByJoystick("test5gamer3", "throwCard", "red");
-        verify(testWebSocket).notifyGameStep(false, "Not your turn!", test5gamer3, false);
+        verify(testWebSocket).notifyGameStep(false, "Not your turn!", test5gamer3, null);
     }
 }

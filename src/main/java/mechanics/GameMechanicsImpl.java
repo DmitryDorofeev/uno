@@ -71,7 +71,7 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
         //TODO
     }
 
-    public void gameStep(String username, long focusOnCard, String newColor, boolean fromJoystick) {
+    public void gameStep(String username, long focusOnCard, String newColor, String fromJoystick) {
         GameSession gameSession = getPlayerGame(username);
         GameUser curPlayer = gameSession.getUser(username);
         if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
@@ -123,15 +123,15 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
         if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
             switch (action) {
                 case "throwCard":
-                    gameStep(username, curPlayer.getFocusOnCard(), newColor, true);
+                    gameStep(username, curPlayer.getFocusOnCard(), newColor, username);
                     break;
                 case "getCard":
-                    addCardsToPlayerAndStep(curPlayer, gameSession, newColor, true);
+                    addCardsToPlayerAndStep(curPlayer, gameSession, newColor, username);
                     break;
             }
         }
         else
-            notifyGameStep(false, "Not your turn!", curPlayer, true);
+            notifyGameStep(false, "Not your turn!", curPlayer, username);
     }
 
     public void doUno(String username) {
@@ -149,7 +149,7 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
         return false;
     }
 
-    private void addCardsToPlayerAndStep(GameUser player, GameSession gameSession, String newColor, boolean fromJoystick) {
+    private void addCardsToPlayerAndStep(GameUser player, GameSession gameSession, String newColor, String fromJoystick) {
         if (!gameSession.playerHasCardToSet(player)) {
             List<CardResource> cards = gameSession.generateCards(1);
             if (!cards.get(0).getColor().equals("black") && gameSession.canSetCard(cards.get(0), player)) {
@@ -191,10 +191,10 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
             card = gameSession.generateCards(1).get(0);
         gameSession.setCard(card, card.getColor());
         for (GameUser player : players)
-            notifyGameStep(true, "OK", player, false);
+            notifyGameStep(true, "OK", player, null);
     }
 
-    private void finishGameStep(GameSession gameSession, boolean fromJoystick) {
+    private void finishGameStep(GameSession gameSession, String fromJoystick) {
         List<GameUser> playersList = gameSession.getPlayersList();
         if (gameSession.getPlayerById(gameSession.getCurStepPlayerId()).getCardsCount() != 0) {
             if (gameSession.unoActionExists()) {
@@ -238,7 +238,7 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
         MessageSystem.instance().sendMessage(msgSendCards);
     }
 
-    void notifyGameStep(boolean correct, String message, GameUser user, boolean fromJoystick) {
+    void notifyGameStep(boolean correct, String message, GameUser user, String fromJoystick) {
         Msg msgNotifyGameStep = new MsgNotifyGameStep(MessageSystem.instance().getAddressService().getGameMechanics(),
                 MessageSystem.instance().getAddressService().getWebSocketService(),
                 correct, message, user, fromJoystick);
