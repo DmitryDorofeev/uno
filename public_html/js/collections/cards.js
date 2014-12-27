@@ -62,11 +62,9 @@ define([
                     stepDfd.reject();
                 }
             }
-            else {
-                if (data.joystick && data.correct) {
-                    if (this.user.orderId === prevStep) {
-                        this.remove(this.at(data.focusOnCard));
-                    }
+            if (data.joystick && data.correct) {
+                if (this.user.orderId === prevStep) {
+                    this.remove(this.at(data.focusOnCard));
                 }
             }
             prevStep = data.curStepPlayerId;

@@ -198,16 +198,16 @@ public class TestGameMechanics {
         testGameMechanics.addUser("test5gamer5", 5);
 
         long prevFocus = test5.getFocusedCardId();
-        testGameMechanics.stepByJoystick("test5", "selectRightCard", "red");
+        testGameMechanics.stepByJoystick("test5", "selectRightCard", "red", 0);
         verify(testWebSocket).notifyChangeFocus(playerArgumentCaptor.capture());
         assertEquals("Right card was selected", prevFocus + 1, playerArgumentCaptor.getValue().getFocusedCardId());
 
         prevFocus = test5.getFocusOnCard();
-        testGameMechanics.stepByJoystick("test5", "selectLeftCard", "red");
+        testGameMechanics.stepByJoystick("test5", "selectLeftCard", "red", 0);
         verify(testWebSocket).notifyChangeFocus(playerArgumentCaptor.capture());
         assertEquals("Right card was selected", prevFocus - 1, playerArgumentCaptor.getValue().getFocusedCardId());
 
-        testGameMechanics.stepByJoystick("test5gamer3", "throwCard", "red");
+        testGameMechanics.stepByJoystick("test5gamer3", "throwCard", "red", 0);
         verify(testWebSocket).notifyGameStep(false, "Not your turn!", test5gamer3, null);
     }
 }

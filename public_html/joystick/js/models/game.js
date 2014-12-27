@@ -11,9 +11,6 @@ define(['backbone'], function (Backbone) {
                 event.preventDefault();
             });
         },
-        render: function () {
-
-        },
         _onOpen: function () {
             this.ws.send(JSON.stringify({type: 'joystick', body: {message: 'init'}}));
         },
@@ -35,7 +32,7 @@ define(['backbone'], function (Backbone) {
         },
         sendCard: function (index) {
             cardsDfd = new $.Deferred();
-            this.ws.send(JSON.stringify({type: 'card', body: {focusOnCard: index}}));
+            this.ws.send(JSON.stringify({type: 'joystick', body: {message: 'throwCard', focusOnCard: index}}));
             return cardsDfd.promise();
         }
     });

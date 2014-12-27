@@ -136,7 +136,8 @@ html, body {
   text-decoration: none;
   font-size: 21px;
   cursor: pointer;
-  outline: none; }
+  outline: none;
+  text-align: center; }
   @media screen and (max-width: 480px) {
     .btn {
       display: inline-block;
@@ -203,7 +204,7 @@ html, body {
   margin-top: 3px;
   padding: 0;
   height: 200px;
-  width: 1000px; }
+  width: 1300px; }
   .cards__card {
     display: block;
     position: relative;
@@ -215,5 +216,11 @@ html, body {
       top: 0px;
       border: 3px solid #446CB3;
       border-radius: 25px; }
+
+.deck {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  margin-left: -150px; }
 
 /*# sourceMappingURL=main.css.map */

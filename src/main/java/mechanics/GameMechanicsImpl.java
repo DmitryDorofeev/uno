@@ -109,7 +109,7 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
             sendCardsToJoystick(false, "Player has not started game yet", username, -1, null);
     }
 
-    public void stepByJoystick(String username, String action, String newColor) {
+    public void stepByJoystick(String username, String action, String newColor, long focusOnCard) {
         GameSession gameSession = getPlayerGame(username);
         GameUser curPlayer = gameSession.getUser(username);
         switch (action) {
@@ -125,10 +125,10 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
         if (curPlayer.getGamePlayerId() == gameSession.getCurStepPlayerId()) {
             switch (action) {
                 case "throwCard":
-                    gameStep(username, curPlayer.getFocusOnCard(), newColor, username);
+                    gameStep(username, focusOnCard, newColor, username);
                     break;
                 case "getCard":
-                    addCardsToPlayerAndStep(curPlayer, gameSession, newColor, username);
+                    addCardsToPlayerAndStep(curPlayer, gameSession, newColor, null);
                     break;
             }
         }

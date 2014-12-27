@@ -16,7 +16,7 @@ public interface GameMechanics extends Abonent {
 
     void initJoystick(String username);
 
-    void stepByJoystick(String username, String action, String newColor);
+    void stepByJoystick(String username, String action, String newColor, long focusOnCard);
 
     void doUno(String username);
 

@@ -195,7 +195,8 @@ public class GameWebSocket {
                     initJoystick(myName);
                     return;
                 }
-                stepByJoystick(myName, (String) jsonBody.get("message"), (String) jsonBody.get("newColor"));
+                stepByJoystick(myName, (String) jsonBody.get("message"), (String) jsonBody.get("newColor"),
+                        (Long) jsonBody.get("focusOnCard"));
                 return;
             }
             if (jsonObject.get("type").equals("uno"))
@@ -289,9 +290,9 @@ public class GameWebSocket {
         MessageSystem.instance().sendMessage(msgInitJoystick);
     }
 
-    private void stepByJoystick(String username, String message, String newColor) {
+    private void stepByJoystick(String username, String message, String newColor, Long focusOnCard) {
         Msg msgStepByJoystick = new MsgStepByJoystick(null,
-                MessageSystem.instance().getAddressService().getGameMechanics(), username, message, newColor);
+                MessageSystem.instance().getAddressService().getGameMechanics(), username, message, newColor, focusOnCard);
         MessageSystem.instance().sendMessage(msgStepByJoystick);
     }
 

@@ -29,7 +29,7 @@ html, body {
   margin-top: 3px;
   padding: 0;
   height: 200px;
-  width: 1000px;
+  width: 1300px;
 
   &__card {
     display: block;
@@ -46,5 +46,12 @@ html, body {
     }
 
   }
+}
+
+.deck {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  margin-left: -150px;
 }
 
