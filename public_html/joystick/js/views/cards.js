@@ -7,6 +7,7 @@ define([
         className: 'cards',
         leftPos: 0,
         initialize: function () {
+            this.focused = 1;
             _.bindAll(this, 'onMove', 'onTouch', 'onTouchDone');
             this.el.addEventListener('touchmove', this.onMove, false);
             this.el.addEventListener('touchstart', this.onTouch, false);
@@ -15,6 +16,7 @@ define([
             this.render();
         },
         addCards: function () {
+            this.$el.html('');
             this.collection.each(function (model) {
                 var card = new CardView({model: model});
                 this.listenTo(card, 'focus', this.focus);
@@ -47,6 +49,7 @@ define([
                     model.trigger('unfocus');
                 }
             }, this);
+
         }
     });
 

@@ -11,9 +11,6 @@ define([
             this.el.addEventListener('touchend', this.onTouchDone, false);
             this.listenTo(this.model, 'unfocus', this.unfocus);
         },
-        selectCard: function (event) {
-            this.model.select();
-        },
         focus: function () {
             this.trigger('focus', this);
             this.$el.addClass('cards__card_selected');
@@ -49,11 +46,17 @@ define([
             event.preventDefault();
             if (this.bottomPos > 70) {
                 if (this.isFocused) {
-                    this.$el.removeClass('cards__card_selected').stop().animate({width: 0, border: 'none'}, 300);
-                    setTimeout(_.bind(function () {
-                        this.$el.remove();
-                    }, this), 300);
-                    this.model.select();
+                    this.$el.removeClass('cards__card_selected').stop();
+                    this.model.collection.select(this.model).done(_.bind(function () {
+                        this.$el.animate({width: 0, border: 'none'}, 300);
+                        setTimeout(_.bind(function () {
+                            this.$el.remove();
+                        }, this), 300);
+                    }, this)).fail(
+                        _.bind(function () {
+                            this.$el.stop().animate({top: 0}, 300);
+                        }, this)
+                    );
                 }
                 else {
                     this.$el.stop().animate({top: 0}, 500);

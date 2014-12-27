@@ -1,6 +1,6 @@
 define(['backbone'], function (Backbone) {
 
-    var startDfd;
+    var startDfd, cardsDfd;
     var GameModel = Backbone.Model.extend({
         initialize: function () {
             startDfd = new $.Deferred();
@@ -26,12 +26,17 @@ define(['backbone'], function (Backbone) {
             else {
                 startDfd.reject();
             }
+            if (cardsDfd && (cardsDfd.state() === 'pending') && (data.type === 'step') && data.body.correct){
+                alert('lal');
+            }
         },
         gameStart: function () {
             return startDfd.promise();
         },
-        sendCard: function () {
-
+        sendCard: function (index) {
+            cardsDfd = new $.Deferred();
+            this.ws.send(JSON.stringify({type: 'card', body: {focusOnCard: index}}));
+            return cardsDfd.promise();
         }
     });
 
