@@ -13,6 +13,7 @@
   "author": "Dmitry Dorofeev, Konstantin Kobzisty, Halaydzhi Alex",
   "license": "ISC",
   "devDependencies": {
+    "fest": "^0.8.2",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-concurrent": "^1.0.0",
