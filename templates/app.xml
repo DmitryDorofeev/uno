@@ -4,7 +4,7 @@
     <fest:get name="preloader"></fest:get>
     <div class="error">
         <div class="error__text js-text">
-            ERR
+            error
         </div>
     </div>
 </fest:template>

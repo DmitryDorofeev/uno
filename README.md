@@ -1,12 +1,10 @@
-#Технопарк@Mail.ru
+#Uno online
 
-###Курсы: Углубленное программирование на Java, Frontend
+###Многопользовательская карточная онлайн игра
 
-Учебный период: осенний семестр 2014г.
-
-##Студенты
+##Разработчики
 Дорофеев Дмитрий dmitrydorofeev me@dmitrydorofeev.ru
 
-Кобзистый Константин KPK10 k_kobzisty@mail.ru
-
 Халайджи Алексей leshiy1295 aleksei_halaidzh@mail.ru
+
+Кобзистый Константин KPK10 k_kobzisty@mail.ru
