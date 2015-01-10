@@ -1,8 +1,8 @@
 *.class
 .idea/
+target/
 .sass-cache
 node_modules/
-public_html/dz.html
 npm-debug.log
 resources/db_config.xml
 uno.iml
