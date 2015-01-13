@@ -10,6 +10,9 @@ define([
         initialize: function () {
             this.listenTo(this.model, 'change', this.render);
         },
+        events: {
+            'click .js-logout': 'logout'
+        },
         template: function () {
             return tmpl(this.model);
         },
@@ -23,6 +26,10 @@ define([
         },
         hide: function () {
             this.$el.hide();
+        },
+        logout: function (event) {
+            event.preventDefault();
+            this.model.logout();
         }
     });
 
