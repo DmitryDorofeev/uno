@@ -56,7 +56,7 @@ public class ScoreboardServletImpl extends HttpServlet implements ScoreboardServ
                 jsonObj.put("score", pair.getValue());
                 jsonArray.add(jsonObj);
             }
-            System.out.println("scores: " + jsonObject.toJSONString());
+            System.out.println("{type: \"scores\": message: " + jsonObject.toJSONString() + "}");
             response.getWriter().print(jsonObject.toJSONString());
         }
         catch (Exception e) {

@@ -44,5 +44,6 @@
     <orderEntry type="library" name="Maven: org.jboss:jandex:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.mockito:mockito-all:1.9.5" level="project" />
     <orderEntry type="library" name="uno node_modules" level="project" />
+    <orderEntry type="library" name="Node.js v0.10.35 Core Modules" level="application" />
   </component>
 </module>
