@@ -5,6 +5,8 @@ var shell = require('shelljs');
 var bodyParser = require('body-parser');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var crypto = require('crypto');
+var shasum = crypto.createHash('sha1');
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -14,7 +16,8 @@ app.post('/restart', function (req, res) {
 	console.log('request');
 	res.writeHead(200, { 'Content-Type': 'text/html' });
     var pass = req.body.pass;
-    if (pass == 'fuckMe!!') {
+    shasum.update(pass);
+    if (shasum.digest('hex') == '90c7f35fdaf7557938bf8f0d4bf85f3ea3719286') {
 	    console.log('pass ok');
         shell.cd('/var/www/uno');
         fs.unwatchFile('/var/www/uno/nohup.out');
