@@ -11,7 +11,7 @@
 		   var socket = io();
 	        socket.on('file', function (file) {
 		        console.log(file);
-		        $('pre').text(file);
+		        $('.console').text(file);
 	        });
 	        socket.emit('watch');
 		    document.getElementById('reload').addEventListener('click', function (event) {
@@ -35,9 +35,6 @@
     		<button class="button" id="clear">Очистить файл логов</button>
     	</div>
     	<div class="console">
-	    	<pre>
-    		/dev/null>
-	    	</pre>
     	</div>
 	</div>
 </body>

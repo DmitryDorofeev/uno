@@ -8,6 +8,24 @@ var io = require('socket.io')(http);
 var crypto = require('crypto');
 var shasum = crypto.createHash('sha1');
 
+var readFile = function (input) {
+    var output = '';
+    var json;
+    var index = input.indexOf('\n');
+    while (index > -1) {
+        var line = input.substring(0, index - 1);
+        input = input.substring(index + 1);
+        try {
+            json = JSON.parse(line);
+            output += line;
+        }
+        catch (e) {
+            output += "<div class=\"redline\">" + line + "</div>";
+        }
+        index = input.indexOf('\n');
+    }
+}
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -42,9 +60,9 @@ app.use('/', express.static(__dirname + '/public'));
 io.on('connection', function(socket) {
 	console.log('connected');
     socket.on('watch', function () {
-	    io.emit('file', fs.readFileSync('/var/www/uno/nohup.out', "utf8"));
+	    io.emit('file', readFile(fs.readFileSync('/var/www/uno/nohup.out', "utf8")));
 	    fs.watchFile('/var/www/uno/nohup.out', function(curr,prev) {
-	        io.emit('file', fs.readFileSync('/var/www/uno/nohup.out', "utf8"));
+	        io.emit('file', readFile(fs.readFileSync('/var/www/uno/nohup.out', "utf8")));
 	    });
     });
 });
