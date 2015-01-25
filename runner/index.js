@@ -10,30 +10,40 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.use('/', express.static(__dirname + '/public'));
-
-app.get('/', function (req, res) {
-    res.render('index')
-});
-
 app.post('/restart', function (req, res) {
+	console.log('request');
+	res.writeHead(200, { 'Content-Type': 'text/html' });
     var pass = req.body.pass;
     if (pass == 'fuckMe!!') {
+	    console.log('pass ok');
         shell.cd('/var/www/uno');
+        fs.unwatchFile('/var/www/uno/nohup.out');
         shell.exec('killall java');
-        fs.unlinkSync('/var/www/uno/nohup.out');
-        shell.exec('nohup java -cp target/uno-1.0-jar-with-dependencies.jar main.Main &');
+        if (fs.exists('/var/www/uno/nohup.out')) {
+	        console.log('stopping>>>');
+        	fs.unlinkSync('/var/www/uno/nohup.out');
+        }
+        console.log('try to start');
+        shell.exec('nohup java -cp uno-1.0-jar-with-dependencies.jar main.Main > nohup.out 2>&1&');
+        console.log('started');
     }
+    res.end('ok');
 });
 
-app.post('/remove', function () {
-
+app.post('/remove', function (req, res) {
+	res.send('ok');
 });
 
-io.on('connection', function(socket){
-    fs.watchFile('/var/www/uno/nohup.out', function(curr,prev) {
-        console.log('azaza');
+app.use('/', express.static(__dirname + '/public'));
+
+io.on('connection', function(socket) {
+	console.log('connected');
+    socket.on('watch', function () {
+	    io.emit('file', fs.readFileSync('/var/www/uno/nohup.out', "utf8"));
+	    fs.watchFile('/var/www/uno/nohup.out', function(curr,prev) {
+	        io.emit('file', fs.readFileSync('/var/www/uno/nohup.out', "utf8"));
+	    });
     });
 });
 
-http.listen(8181)
+http.listen(8181);

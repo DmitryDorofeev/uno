@@ -2,14 +2,43 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>UNO runner</title>
+    <link rel="stylesheet" href="/css/main.css" type="text/css" charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src='/socket.io/socket.io.js'></script>
     <script>
-        var socket = io();
-        socket.emit('chat message', 'azaza');
+	   $(function () {
+		   var socket = io();
+	        socket.on('file', function (file) {
+		        console.log(file);
+		        $('pre').text(file);
+	        });
+	        socket.emit('watch');
+		    document.getElementById('reload').addEventListener('click', function (event) {
+			    var pass = prompt('Что ты хочешь, чтобы я сделал?');
+			    if (pass) {
+				    $.post('/restart', {pass: pass}, function () {
+					    socket.emit('watch');
+				    });
+			    }
+		    });
+	   });
     </script>
 </head>
 <body>
-    <div class="header"></div>
+	<div class="main">
+		<div class="header">
+	    	UNO
+    	</div>
+    	<div class="buttons">
+    		<button class="button" id="reload">Перезапустить сервер</button>
+    		<button class="button" id="clear">Очистить файл логов</button>
+    	</div>
+    	<div class="console">
+	    	<pre>
+    		/dev/null>
+	    	</pre>
+    	</div>
+	</div>
 </body>
 </html>
