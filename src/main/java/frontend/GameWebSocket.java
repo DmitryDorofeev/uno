@@ -15,6 +15,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import resources.CardResource;
+import sun.rmi.runtime.Log;
+import utils.LoggerHelper;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class GameWebSocket {
     private String extra;
 
     public GameWebSocket(String myName) {
-        System.out.println("GameWebSocket()");
+        LoggerHelper.logJSON("GameWebSocket()", null);
         this.myName = myName;
     }
 
@@ -47,7 +49,7 @@ public class GameWebSocket {
                 jsonPlayer.put("id", player.getGamePlayerId());
                 jsonPlayers.add(jsonPlayer);
             }
-            System.out.println(jsonObject.toJSONString());
+            LoggerHelper.logJSON("start", jsonObject);
             session.getRemote().sendString(jsonObject.toJSONString());
         }
         catch (Exception e) {
@@ -62,7 +64,7 @@ public class GameWebSocket {
             JSONObject jsonBody = new JSONObject();
             jsonObject.put("body", jsonBody);
             jsonBody.put("cards", getJSONCardsArray(cards));
-            System.out.println(myName + jsonObject.toJSONString());
+            LoggerHelper.logJSON(myName, jsonObject);
             session.getRemote().sendString(jsonObject.toJSONString());
         }
         catch (Exception e) {
@@ -79,7 +81,7 @@ public class GameWebSocket {
             jsonBody.put("id", playerId);
             jsonBody.put("message", message);
             jsonBody.put("cardsCount", getJSONCardsCountArray(players));
-            System.out.println(myName + jsonObject.toJSONString());
+            LoggerHelper.logJSON(myName, jsonObject);
             session.getRemote().sendString(jsonObject.toJSONString());
         }
         catch (Exception e) {
@@ -105,7 +107,7 @@ public class GameWebSocket {
                 jsonBody.put("joystick", false);
             jsonBody.put("cards", getJSONCardsArray(cards));
             jsonBody.put("cardsCount", getJSONCardsCountArray(players));
-            System.out.println(myName + jsonObject.toJSONString());
+            LoggerHelper.logJSON(myName, jsonObject);
             session.getRemote().sendString(jsonObject.toJSONString());
         }
         catch (Exception e) {
@@ -120,7 +122,7 @@ public class GameWebSocket {
             JSONObject jsonBody = new JSONObject();
             jsonObject.put("body", jsonBody);
             jsonBody.put("focusOnCard", focusOnCard);
-            System.out.println(myName + (extra == null ? " player " : " joystick ") + jsonObject.toJSONString());
+            LoggerHelper.logJSON(myName + (extra == null ? " player " : " joystick "), jsonObject);
             session.getRemote().sendString(jsonObject.toJSONString());
         }
         catch (Exception e) {
@@ -140,7 +142,7 @@ public class GameWebSocket {
                 jsonBody.put("focusOnCard", focusOnCard);
                 jsonBody.put("cards", getJSONCardsArray(cards));
             }
-            System.out.println(myName + " joystick " + jsonObject.toJSONString());
+            LoggerHelper.logJSON(myName + " joystick ", jsonObject);
             session.getRemote().sendString(jsonObject.toJSONString());
         }
         catch (Exception e) {
@@ -162,7 +164,7 @@ public class GameWebSocket {
                 jsonScore.put("score", player.getScore());
                 jsonScores.add(jsonScore);
             }
-            System.out.println(myName + (extra == null ? " player " : " joystick ") + jsonObject.toJSONString());
+            LoggerHelper.logJSON(myName + (extra == null ? " player " : " joystick "), jsonObject);
             session.getRemote().sendString(jsonObject.toJSONString());
         }
         catch (Exception e) {
@@ -173,8 +175,8 @@ public class GameWebSocket {
     @OnWebSocketMessage
     public void onMessage(String data) throws ParseException {
         try {
-            System.out.println("query: " + myName + (extra == null ? " player " : " joystick ") + data);
             JSONObject jsonObject = (JSONObject)new JSONParser().parse(data);
+            LoggerHelper.logJSON("query: " + myName + (extra == null ? " player " : " joystick "), jsonObject);
             if (jsonObject.get("type").equals("gameInfo")) {
                 extra = null;
                 addUser(this, null);
@@ -211,13 +213,13 @@ public class GameWebSocket {
 
     @OnWebSocketConnect
      public void onOpen(Session session) {
-        System.out.println(myName + " onOpen()");
+        LoggerHelper.logJSON(myName + " onOpen()", null);
         this.session = session;
     }
 
     @OnWebSocketClose
     public void onClose(int statusCode, String reason) {
-        System.out.println(myName + " onClose()");
+        LoggerHelper.logJSON(myName + " onClose()", null);
         removeGameUser(myName);
         removeUser(this, extra);
     }
