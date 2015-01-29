@@ -11,7 +11,7 @@
 		   var socket = io();
 	        socket.on('file', function (file) {
 		        console.log(file);
-		        $('.console').text(file);
+		        $('.console').html(file);
 	        });
 	        socket.emit('watch');
 		    document.getElementById('reload').addEventListener('click', function (event) {
@@ -19,6 +19,14 @@
 			    if (pass) {
 				    $.post('/restart', {pass: pass}, function () {
 					    socket.emit('watch');
+				    });
+			    }
+		    });
+		    document.getElementById('deploy').addEventListener('click', function (event) {
+			    var pass = prompt('Что ты хочешь, чтобы я сделал?');
+			    if (pass) {
+				    $.post('/deploy', {pass: pass}, function (data) {
+					    $('.console').append('<pre>' + data + '</pre>');
 				    });
 			    }
 		    });
@@ -32,7 +40,7 @@
     	</div>
     	<div class="buttons">
     		<button class="button" id="reload">Перезапустить сервер</button>
-    		<button class="button" id="clear">Очистить файл логов</button>
+    		<button class="button" id="deploy">Deploy</button>
     	</div>
     	<div class="console">
     	</div>
