@@ -87,7 +87,7 @@ module.exports = function (grunt) {
             build: {
                 separator: ';\n',
                 src: [
-                    'public_html/js/lib/almond.js',
+                    'public_html/js/lib/almond/almond.js',
                     'public_html/build/dist.js'
                 ],
                 dest: 'public_html/build/build.js'
