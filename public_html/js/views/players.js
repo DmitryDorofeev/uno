@@ -18,7 +18,6 @@ define([
 				userModel.orderId = model.get('id');
 			}
 			else {
-				console.log('other');
 				var player = new PlayerView({model: model});
 				this.$el.append(player.render().$el);
 			}

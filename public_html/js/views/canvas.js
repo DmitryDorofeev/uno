@@ -3,7 +3,7 @@ define([
     'underscore',
     'backbone'
 ], function ($, _, Backbone) {
-    
+
     var CanvasView = Backbone.View.extend({
         events: {
             'click': 'click'
@@ -37,7 +37,7 @@ define([
         },
         move: function () {
             this.ctx.clearRect(0, 0, this.el.width, this.el.height);
-            
+
             if (this.lastData !== undefined) {
                 this.ctx.putImageData(this.lastData, -this.dtx, 0);
             }
@@ -57,7 +57,6 @@ define([
             setInterval(this.movethis, 30);
         },
         click: function () {
-            console.log('click');
         },
         keydown: function (event) {
             switch (event.keyCode) {
@@ -76,6 +75,6 @@ define([
             }
         }
     });
-    
+
     return new CanvasView();
 });

@@ -21,16 +21,6 @@ module.exports = function (grunt) {
                     livereload: true
                 }
             },
-            sassJ: {
-                files: [
-                    'public_html/joystick/css/scss/*.scss',
-                    'public_html/joystick/css/scss/**/*.scss'
-                ],
-                tasks: ['sass:joystick'],
-                options: {
-                    atBegin: true
-                }
-            },
             server: {
                 files: [
                     'public_html/js/**/*.js',
@@ -72,18 +62,12 @@ module.exports = function (grunt) {
                     'public_html/css/main.css': 'public_html/css/scss/main.scss'
                 }
             },
-            joystick: {
-                files: {
-                    'public_html/joystick/css/main.css': 'public_html/joystick/css/scss/main.scss'
-                }
-            },
             compress: {
                 options: {
                     style: 'compressed'
                 },
                 files: {
-                    'public_html/css/main.min.css': 'public_html/css/scss/main.scss',
-                    'public_html/joystick/css/main.min.css': 'public_html/joystick/css/scss/main.scss'
+                    'public_html/css/main.min.css': 'public_html/css/scss/main.scss'
                 }
             }
         },

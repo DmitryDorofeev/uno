@@ -10,7 +10,6 @@ define([
             this.listenTo(gameModel, 'message:step', this.step);
         },
         start: function (msg) {
-            console.log(msg);
             this.add(msg.players);
         },
         step: function (msg) {

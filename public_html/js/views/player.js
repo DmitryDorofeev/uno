@@ -13,7 +13,6 @@ define([
 			return tmpl(this.model.toJSON());
 		},
 		render: function () {
-			console.log('render');
 			this.$el.html(this.template());
 			this.$el.find('.player-cards__card').not('.player-cards__card_first').width(500/this.model.get('cardsCount'));
 			return this;

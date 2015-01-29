@@ -20,7 +20,7 @@ define([
 			this.connection.onmessage = this.onMessage;
 		},
 		send: function (data) {
-			console.log('to server: ', data);
+			console.log({type: 'TO_SERVER:', message: data});
 			this.connection.send(JSON.stringify(data));
 		},
 		onConnect: function () {
@@ -38,7 +38,7 @@ define([
 		},
 		onMessage: function (msg) {
             var data = JSON.parse(msg.data);
-            console.log('from server: ', data);
+            console.log({type: 'FROM_SERVER:', message: data});
             if (data.type === 'start') {
                 this.trigger('load:done');
 				this.trigger('cards:render');
