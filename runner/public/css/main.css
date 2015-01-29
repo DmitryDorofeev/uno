@@ -49,8 +49,20 @@ html, body {
 	overflow-y: scroll;
 }
 
+.line {
+	padding: 3px 10px;
+}
+
 .redline {
-    width: 100%;
-    padding: 3px 0;
+    padding: 3px 10px;
+    margin: 2px 0;
     background-color: #aa0000;
+}
+
+.greenline {
+
+    padding: 3px 10px;
+    margin: 2px 0;
+    margin-bottom: 12px;
+    background-color: #038d17;
 }
