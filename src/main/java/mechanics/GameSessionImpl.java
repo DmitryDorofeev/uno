@@ -201,7 +201,7 @@ public class GameSessionImpl implements GameSession {
     }
 
     private boolean isCorrectForIncFourCard(CardResource card) {
-        return !(card.getColor().equals(color) || card.getType().equals("color"));
+        return !card.getColor().equals(color);
     }
 
     private boolean playerCanSetIncFourCard(GameUser player) {

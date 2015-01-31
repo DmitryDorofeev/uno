@@ -68,9 +68,9 @@ public class WebSocketServiceImpl implements WebSocketService, Runnable {
         jsonObject.put("type", "info");
         JSONObject jsonBody = new JSONObject();
         jsonObject.put("body", jsonBody);
-        jsonBody.put("gameWebSocket", gameWebSocket == null ? "is not null" : "is null");
-        jsonBody.put("user", user == null ? "is not null" : "is null");
-        jsonBody.put("user.gameSession", user.getGameSession() == null ? "is not null" : "is null");
+        jsonBody.put("gameWebSocket", gameWebSocket != null ? "is not null" : "is null");
+        jsonBody.put("user", user != null ? "is not null" : "is null");
+        jsonBody.put("user.gameSession", user.getGameSession() != null ? "is not null" : "is null");
         LoggerHelper.logJSON("notifyStartGame", jsonObject);
         gameWebSocket.startGame(user.getGameSession().getPlayersList());
     }
