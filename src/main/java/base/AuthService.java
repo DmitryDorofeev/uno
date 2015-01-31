@@ -7,7 +7,7 @@ import java.util.Map;
 public interface AuthService {
     int signIn(String sessionId, String login, String password);
 
-    int signInByToken(String sessionId, String token);
+    int signInByToken(String sessionId, String token, String name);
 
     boolean signUp(UserProfile user);
 

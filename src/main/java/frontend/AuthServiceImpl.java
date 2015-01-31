@@ -4,6 +4,7 @@ import base.AuthService;
 import db.UserProfile;
 import db.DBService;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -34,12 +35,17 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public int signInByToken(String sessionId, String token) {
+    public int signInByToken(String sessionId, String token, String name) {
         UserProfile user = dbService.getUserDataByToken(token);
-        if (isLoggedIn(sessionId) == 500 && user != null) {
-            if (userSessions.containsKey(token))
-                logOut(userSessions.get(token));
-            sessions.put(sessionId, token);
+        if (isLoggedIn(sessionId) == 500) {
+            if (user == null) {
+                user = new UserProfile(token, name);
+                dbService.saveUser(user);
+            } else {
+                if (userSessions.containsKey(token))
+                    logOut(userSessions.get(token));
+                sessions.put(sessionId, token);
+            }
             userSessions.put(token, sessionId);
             return 200;
         }

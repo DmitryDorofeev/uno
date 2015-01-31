@@ -48,6 +48,7 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String token = request.getParameter("token");
+        String name = request.getParameter("name");
         int status;
         if (login == null) {
             login = "";
@@ -57,6 +58,9 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
         }
         if (token == null) {
             token = "";
+        }
+        if (name == null) {
+            name = "";
         }
         JSONObject jsonObj = new JSONObject();
         response.setStatus(HttpServletResponse.SC_OK);
@@ -97,7 +101,7 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
                 response.getWriter().print(jsonObj.toJSONString());
                 return;
             }
-            status = authService.signInByToken(sessionId, token);
+            status = authService.signInByToken(sessionId, token, name);
             switch (status) {
                 case 200:
                     jsonObj.put("status", 200);
