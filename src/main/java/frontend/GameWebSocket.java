@@ -15,7 +15,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import resources.CardResource;
-import sun.rmi.runtime.Log;
 import utils.LoggerHelper;
 
 import java.util.List;
@@ -232,6 +231,7 @@ public class GameWebSocket {
                 jsonCard.put("cardId", card.getCardId());
                 jsonCard.put("x", card.getX());
                 jsonCard.put("y", card.getY());
+                jsonCard.put("num", card.getNum());
                 jsonCard.put("width", card.getWidth());
                 jsonCard.put("height", card.getHeight());
                 jsonCard.put("color", card.getColor());
