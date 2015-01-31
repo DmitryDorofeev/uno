@@ -12,7 +12,7 @@ define([
         },
         events: {
             'click .js-logout': 'logout',
-            'click #login_button': 'vk_login'
+            'click .js-vk-login': 'vkLogin'
         },
         template: function () {
             return tmpl(this.model);

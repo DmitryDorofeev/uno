@@ -174,7 +174,7 @@ public class TestSignInServlet {
         when(testRequest.getSession()).thenReturn(testSession);
         when(testSession.getId()).thenReturn("5");
         when(testAuthService.isLoggedIn("5")).thenReturn(500);
-        when (testAuthService.signIn("5", "test", "test", "joystick")).thenReturn(200);
+        when (testAuthService.signIn("5", "test", "test")).thenReturn(200);
         when(testAuthService.getUserProfile("5")).thenReturn(new UserProfile("test", "test", "test"));
         when(testResponse.getWriter()).thenReturn(testPrintWriter);
 
@@ -207,7 +207,7 @@ public class TestSignInServlet {
         when(testRequest.getSession()).thenReturn(testSession);
         when(testSession.getId()).thenReturn("6");
         when(testAuthService.isLoggedIn("6")).thenReturn(500);
-        when(testAuthService.signIn("6", "test", "test", "joystick")).thenReturn(403);
+        when(testAuthService.signIn("6", "test", "test")).thenReturn(403);
         when(testAuthService.getUserProfile("6")).thenReturn(new UserProfile("test", "test", "test"));
         when(testResponse.getWriter()).thenReturn(testPrintWriter);
 
@@ -239,7 +239,7 @@ public class TestSignInServlet {
         when(testRequest.getSession()).thenReturn(testSession);
         when(testSession.getId()).thenReturn("7");
         when(testAuthService.isLoggedIn("7")).thenReturn(500);
-        when(testAuthService.signIn("7", "test", "test", "joystick")).thenReturn(404);
+        when(testAuthService.signIn("7", "test", "test")).thenReturn(404);
         when(testAuthService.getUserProfile("7")).thenReturn(new UserProfile("test", "test", "test"));
         when(testResponse.getWriter()).thenReturn(testPrintWriter);
 
