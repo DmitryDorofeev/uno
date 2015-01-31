@@ -45,11 +45,19 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
         @Override
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
-        final String login = request.getParameter("login");
-        final String password = request.getParameter("password");
-        final String token = request.getParameter("token");
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+        String token = request.getParameter("token");
         int status;
-
+        if (login == null) {
+            login = "";
+        }
+        if (password == null) {
+            password = "";
+        }
+        if (token == null) {
+            token = "";
+        }
         JSONObject jsonObj = new JSONObject();
         response.setStatus(HttpServletResponse.SC_OK);
 
@@ -83,12 +91,28 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
         }
         else if (!token.isEmpty()) {
             final String sessionId = request.getSession().getId();
-            status = authService.signInByToken(sessionId, token);
             if (authService.isLoggedIn(sessionId) != 500) {
                 jsonObj.put("status", 500);
                 jsonObj.put("message", "User has already logged in");
                 response.getWriter().print(jsonObj.toJSONString());
                 return;
+            }
+            status = authService.signInByToken(sessionId, token);
+            switch (status) {
+                case 200:
+                    jsonObj.put("status", 200);
+                    UserProfile user = authService.getUserProfile(sessionId);
+                    jsonObj.put("login", user.getLogin());
+                    jsonObj.put("email", user.getEmail());
+                    break;
+                case 403:
+                    jsonObj.put("status", 500);
+                    jsonObj.put("message", "Wrong login or password");
+                    break;
+                case 404:
+                    jsonObj.put("status", 500);
+                    jsonObj.put("message", "User has not logged in");
+                    break;
             }
         }
         jsonObj.put("status", 500);
