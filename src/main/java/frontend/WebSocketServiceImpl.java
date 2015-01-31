@@ -5,6 +5,7 @@ import MessageSystem.Address;
 import MessageSystem.MessageSystem;
 import mechanics.GameUser;
 import base.WebSocketService;
+import org.json.simple.JSONObject;
 import resources.CardResource;
 import resources.ResourceSystem;
 
@@ -50,8 +51,8 @@ public class WebSocketServiceImpl implements WebSocketService, Runnable {
     @Override
     public void run() {
         while (true) {
-            MessageSystem.instance().execForAbonent(this);
             try {
+                MessageSystem.instance().execForAbonent(this);
                 Thread.sleep(ResourceSystem.instance().getServerConfigResource().getServiceSleepTime());
             }
             catch (InterruptedException e) {
@@ -62,6 +63,13 @@ public class WebSocketServiceImpl implements WebSocketService, Runnable {
 
     public void notifyStartGame(GameUser user) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", "info");
+        JSONObject jsonBody = new JSONObject();
+        jsonObject.put("body", jsonBody);
+        jsonBody.put("gameWebSocket", gameWebSocket == null ? "is not null" : "is null");
+        jsonBody.put("user", user == null ? "is not null" : "is null");
+        jsonBody.put("user.gameSession", user.getGameSession() == null ? "is not null" : "is null");
         gameWebSocket.startGame(user.getGameSession().getPlayersList());
     }
 
