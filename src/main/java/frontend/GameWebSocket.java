@@ -106,8 +106,10 @@ public class GameWebSocket {
                 jsonBody.put("joystick", false);
             jsonBody.put("cards", getJSONCardsArray(cards));
             jsonBody.put("cardsCount", getJSONCardsCountArray(players));
-            LoggerHelper.logJSON(myName, jsonObject);
             session.getRemote().sendString(jsonObject.toJSONString());
+            List<CardResource> playerCards = players.get((int)curStepPlayerId).getCards();
+            jsonBody.put("myCards", getJSONCardsArray(playerCards));
+            LoggerHelper.logJSON(myName, jsonObject);
         }
         catch (Exception e) {
             e.printStackTrace();
