@@ -32,16 +32,8 @@ define([
             event.preventDefault();
             this.model.logout();
         },
-        vk_login: function () {
-            window["VK"].init({
-                apiId: 4758906
-            });
-            window["VK"].Auth.getLoginStatus(this.login_status);
-        },
-        login_status: function (response) {
-            if (response.session) {
-                alert('user: '+response.session.mid);
-            }
+        vkLogin: function () {
+            this.model.vkLogin();
         }
     });
 
