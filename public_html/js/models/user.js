@@ -27,7 +27,7 @@ define([
             window["VK"].init({
                 apiId: 4758906
             });
-            window["VK"].Auth.getLoginStatus(this.loginStatus);
+            window["VK"].Auth.getLoginStatus(_.bind(this.loginStatus, this));
         },
         loginStatus: function (response) {
             if (response.session) {
