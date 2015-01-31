@@ -5,6 +5,7 @@ import base.ScoreboardServlet;
 import db.DBService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import utils.LoggerHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -56,7 +57,7 @@ public class ScoreboardServletImpl extends HttpServlet implements ScoreboardServ
                 jsonObj.put("score", pair.getValue());
                 jsonArray.add(jsonObj);
             }
-            System.out.println("scores: " + jsonObject.toJSONString());
+            LoggerHelper.logJSON("scores", jsonObject);
             response.getWriter().print(jsonObject.toJSONString());
         }
         catch (Exception e) {

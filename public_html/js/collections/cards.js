@@ -18,7 +18,6 @@ define([
             _.bindAll(this, 'stepDone', 'sendCard');
         },
         addCards: function (cards) {
-            console.log('CARDS::', cards);
             this.add(cards.cards);
         },
         processCard: function (model) {
@@ -72,7 +71,6 @@ define([
         stepDone: function () {
             if (this.pending) {
                 this.remove(this.pending);
-                console.log('remove: ', this.pending);
             }
             this.pending = null;
         },

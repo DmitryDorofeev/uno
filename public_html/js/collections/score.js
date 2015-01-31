@@ -8,7 +8,6 @@ define([
   var ScoreCollection = Backbone.Collection.extend({
     sync: scoreSync,
     initialize: function () {
-        this.fetch();
     },
     model: ScoreModel
   });

@@ -7,9 +7,6 @@ define([
     initialize: function() {
         this.listenTo(this.model, 'change', this.render);
     },
-    events: {
-        'click .js-logout': 'logout'
-    },
     model: userModel,
     template: function () {
         return tmpl(this.model.toJSON());
@@ -24,10 +21,6 @@ define([
     },
     hide: function () {
         this.$el.hide();
-    },
-    logout: function (event) {
-        event.preventDefault();
-        this.model.logout();
     }
   });
 

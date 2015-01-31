@@ -1,0 +1,10 @@
+{
+  "generator-backbone": {
+    "appPath": "public_html/js",
+    "appName": "uno",
+    "coffee": false,
+    "testFramework": "mocha",
+    "templateFramework": "lodash",
+    "compassBootstrap": true
+  }
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>UNO runner</title>
+    <link rel="stylesheet" href="/css/main.css" type="text/css" charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src='/socket.io/socket.io.js'></script>
+    <script>
+	   $(function () {
+		   var socket = io();
+	        socket.on('file', function (file) {
+		        console.log(file);
+		        $('.console').html(file);
+	        });
+	        socket.emit('watch');
+		    document.getElementById('reload').addEventListener('click', function (event) {
+			    var pass = prompt('Что ты хочешь, чтобы я сделал?');
+			    if (pass) {
+				    $.post('/restart', {pass: pass}, function () {
+					    socket.emit('watch');
+				    });
+			    }
+		    });
+		    document.getElementById('deploy').addEventListener('click', function (event) {
+			    var pass = prompt('Что ты хочешь, чтобы я сделал?');
+			    if (pass) {
+				    $.post('/deploy', {pass: pass}, function (data) {
+					    $('.console').append('<pre>' + data + '</pre>');
+				    });
+			    }
+		    });
+	   });
+    </script>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+	    	UNO
+    	</div>
+    	<div class="buttons">
+    		<button class="button" id="reload">Перезапустить сервер</button>
+    		<button class="button" id="deploy">Deploy</button>
+    	</div>
+    	<div class="console">
+    	</div>
+	</div>
+</body>
+</html>

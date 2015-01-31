@@ -6,23 +6,22 @@ import base.WebSocketService;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeRequest;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeResponse;
 import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
+import utils.LoggerHelper;
 
 /**
  * @author alexey
  */
 public class CustomWebSocketCreator implements WebSocketCreator {
     private AuthService authService;
-    private GameMechanics gameMechanics;
-    private WebSocketService webSocketService;
 
     public CustomWebSocketCreator(AuthService authService) {
-        System.out.println("CustomWebSocketCreator()");
+        LoggerHelper.logJSON("CustomWebSocketCreator()", null);
         this.authService = authService;
     }
 
     @Override
     public Object createWebSocket(ServletUpgradeRequest req, ServletUpgradeResponse resp) {
-        System.out.println("createWebSocket()");
+        LoggerHelper.logJSON("createWebSocket()", null);
         String sessionId = req.getHttpServletRequest().getSession().getId();
         String name = authService.getUserProfile(sessionId).getLogin();
         return new GameWebSocket(name);

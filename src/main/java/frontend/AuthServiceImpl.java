@@ -7,12 +7,13 @@ import db.DBService;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AuthServiceImpl implements AuthService {
-    private Map<String, String> sessions = new HashMap<>(); // (id, login)
-    private Map<String, String> userSessions = new HashMap<>(); // (login, id)
-    private Map<String, String> joystickUser = new HashMap<>(); // (id, id)
-    private Map<String, String> userJoystick = new HashMap<>(); // (login, id)
+    private Map<String, String> sessions = new ConcurrentHashMap<>(); // (id, login)
+    private Map<String, String> userSessions = new ConcurrentHashMap<>(); // (login, id)
+    private Map<String, String> joystickUser = new ConcurrentHashMap<>(); // (id, id)
+    private Map<String, String> userJoystick = new ConcurrentHashMap<>(); // (login, id)
     private DBService dbService;
 
     public AuthServiceImpl(DBService dbService) {

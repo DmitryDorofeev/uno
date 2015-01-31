@@ -6,6 +6,7 @@ import base.WebSocketService;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import resources.ResourceSystem;
+import utils.LoggerHelper;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -16,17 +17,15 @@ public class WebSocketGameServlet extends WebSocketServlet {
     public final static String WebSocketGameServletURL = "/game";
     private final static int IDLE_TIME = ResourceSystem.instance().getServerConfigResource().getSocketTimeOut() * 60 * 1000;
     private AuthService authService;
-    private GameMechanics gameMechanics;
-    private WebSocketService webSocketService;
 
     public WebSocketGameServlet(AuthService authService) {
-        System.out.println("WebSocketGameServlet()");
+        LoggerHelper.logJSON("WebSocketGameServlet()", null);
         this.authService = authService;
     }
 
     @Override
     public void configure(WebSocketServletFactory factory) {
-        System.out.println("configure()");
+        LoggerHelper.logJSON("configure()", null);
         factory.getPolicy().setIdleTimeout(IDLE_TIME);
         factory.setCreator(new CustomWebSocketCreator(authService));
     }

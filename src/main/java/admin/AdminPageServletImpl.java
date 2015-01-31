@@ -5,6 +5,7 @@ import base.AuthService;
 import db.UserProfile;
 import db.DBService;
 import org.json.simple.JSONObject;
+import utils.LoggerHelper;
 import utils.TimeHelper;
 
 import javax.servlet.ServletException;
@@ -37,9 +38,9 @@ public class AdminPageServletImpl extends HttpServlet implements AdminPageServle
             final String timeString = request.getParameter("shutdown");
             if (timeString != null) {
                 final int timeMS = Integer.valueOf(timeString);
-                System.out.print("Server will be down after: " + timeMS + " ms");
+                LoggerHelper.logJSON("Server will be down after: " + timeMS + " ms", null);
                 TimeHelper.sleep(timeMS);
-                System.out.print("\nShutdown");
+                LoggerHelper.logJSON("Shutdown", null);
                 System.exit(0);
             }
 
