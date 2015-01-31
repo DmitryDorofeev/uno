@@ -12866,7 +12866,7 @@ define('views/home',[
             window["VK"].init({
                 apiId: 4758906
             });
-            window["VK"].getLoginStatus(this.login_status);
+            window["VK"].Auth.getLoginStatus(this.login_status);
         },
         login_status: function (response) {
             if (response.session) {
