@@ -44,8 +44,8 @@ public class AuthServiceImpl implements AuthService {
             } else {
                 if (userSessions.containsKey(token))
                     logOut(userSessions.get(token));
-                sessions.put(sessionId, token);
             }
+            sessions.put(sessionId, token);
             userSessions.put(token, sessionId);
             return 200;
         }
@@ -72,10 +72,6 @@ public class AuthServiceImpl implements AuthService {
                 userSessions.remove(login);
                 sessions.remove(sessionId);
                 break;
-            case 2000:
-                userJoystick.remove(sessions.get(joystickUser.get(sessionId)));
-                joystickUser.remove(sessionId);
-                break;
         }
         return true;
     }
@@ -84,8 +80,6 @@ public class AuthServiceImpl implements AuthService {
     public int isLoggedIn(String sessionId) {
         if (sessions.containsKey(sessionId))
             return 200;
-        if (joystickUser.containsKey(sessionId))
-            return 2000;
         return 500;
     }
 
