@@ -86,6 +86,8 @@
   top: 25%;
   padding: 10px;
   border: 2px solid #a00307; }
+  .color .btn {
+    margin-bottom: 20px; }
   .color__value {
     display: inline-block;
     margin: 10px;

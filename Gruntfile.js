@@ -124,7 +124,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.registerTask('default', ['concurrent']);
+    grunt.registerTask('default', ['watch']);
     grunt.registerTask('build', ['fest', 'requirejs', 'concat', 'uglify', 'sass:compress']);
 };
 
