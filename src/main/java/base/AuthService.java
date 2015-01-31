@@ -5,7 +5,9 @@ import db.UserProfile;
 import java.util.Map;
 
 public interface AuthService {
-    int signIn(String sessionId, String login, String password, String extra);
+    int signIn(String sessionId, String login, String password);
+
+    int signInByToken(String sessionId, String token);
 
     boolean signUp(UserProfile user);
 

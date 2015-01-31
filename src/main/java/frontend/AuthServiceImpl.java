@@ -21,26 +21,27 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public int signIn(String sessionId, String login, String password, String extra) {
+    public int signIn(String sessionId, String login, String password) {
         UserProfile user = dbService.getUserData(login);
         if (isLoggedIn(sessionId) == 500 && user != null && user.getPass().equals(password)) {
-            if (extra == null) {
-                if (userSessions.containsKey(login))
-                    logOut(userSessions.get(login));
-                sessions.put(sessionId, login);
-                userSessions.put(login, sessionId);
-                return 200;
-            }
-            else if (extra.equals("joystick")) {
-                if (userSessions.containsKey(login)) {
-                    if (userJoystick.containsKey(login))
-                        logOut(userJoystick.get(login));
-                    joystickUser.put(sessionId, userSessions.get(login));
-                    userJoystick.put(login, sessionId);
-                    return 200;
-                }
-                return 404;
-            }
+            if (userSessions.containsKey(login))
+                logOut(userSessions.get(login));
+            sessions.put(sessionId, login);
+            userSessions.put(login, sessionId);
+            return 200;
+        }
+        return 403;
+    }
+
+    @Override
+    public int signInByToken(String sessionId, String token) {
+        UserProfile user = dbService.getUserDataByToken(token);
+        if (isLoggedIn(sessionId) == 500 && user != null) {
+            if (userSessions.containsKey(token))
+                logOut(userSessions.get(token));
+            sessions.put(sessionId, token);
+            userSessions.put(token, sessionId);
+            return 200;
         }
         return 403;
     }

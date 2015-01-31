@@ -10,6 +10,8 @@ public interface DBService {
 
     UserProfile getUserData(String login);
 
+    UserProfile getUserDataByToken(String token);
+
     Long getUserIdByName(String login);
 
     boolean savePlayerScores(long gameId, String name, long score);

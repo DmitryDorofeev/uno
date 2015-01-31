@@ -48,6 +48,14 @@ public class DBServiceImpl implements DBService {
         return null;
     }
 
+    public UserProfile getUserDataByToken(String token) {
+        UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
+        UserDataSet userDataSet = userDataSetDAO.getUserDataByToken(token);
+        if (userDataSet != null)
+            return new UserProfile(userDataSet.getToken(), userDataSet.getName());
+        return null;
+    }
+
     public Long getUserIdByName(String login) {
         UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
         UserDataSet userDataSet = userDataSetDAO.getUserDataByLogin(login);

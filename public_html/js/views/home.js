@@ -11,7 +11,8 @@ define([
             this.listenTo(this.model, 'change', this.render);
         },
         events: {
-            'click .js-logout': 'logout'
+            'click .js-logout': 'logout',
+            'click #login_button': 'vk_login'
         },
         template: function () {
             return tmpl(this.model);
@@ -30,6 +31,17 @@ define([
         logout: function (event) {
             event.preventDefault();
             this.model.logout();
+        },
+        vk_login: function () {
+            window["VK"].init({
+                apiId: 4758906
+            });
+            window["VK"].getLoginStatus(this.login_status);
+        },
+        login_status: function (response) {
+            if (response.session) {
+                alert('user: '+response.session.mid);
+            }
         }
     });
 

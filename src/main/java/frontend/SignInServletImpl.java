@@ -47,31 +47,21 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
                        HttpServletResponse response) throws ServletException, IOException {
         final String login = request.getParameter("login");
         final String password = request.getParameter("password");
-        final String extra = request.getParameter("extra");
+        final String token = request.getParameter("token");
         int status;
 
         JSONObject jsonObj = new JSONObject();
         response.setStatus(HttpServletResponse.SC_OK);
 
-        if (extra != null && !extra.equals("joystick")) {
-            jsonObj.put("status", 500);
-            jsonObj.put("message", "Unknown device");
-            response.getWriter().print(jsonObj.toJSONString());
-            return;
-        }
-
         if (!login.isEmpty() && !password.isEmpty()) {
             final String sessionId = request.getSession().getId();
             if (authService.isLoggedIn(sessionId) != 500) {
                 jsonObj.put("status", 500);
-                if (extra == null)
-                    jsonObj.put("message", "User has already logged in");
-                else
-                    jsonObj.put("message", "Joystick for that user has already been activated");
+                jsonObj.put("message", "User has already logged in");
                 response.getWriter().print(jsonObj.toJSONString());
                 return;
             }
-            status = authService.signIn(sessionId, login, password, extra);
+            status = authService.signIn(sessionId, login, password);
             switch (status) {
                 case 200:
                     jsonObj.put("status", 200);
@@ -90,6 +80,16 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
             }
             response.getWriter().print(jsonObj.toJSONString());
             return;
+        }
+        else if (!token.isEmpty()) {
+            final String sessionId = request.getSession().getId();
+            status = authService.signInByToken(sessionId, token);
+            if (authService.isLoggedIn(sessionId) != 500) {
+                jsonObj.put("status", 500);
+                jsonObj.put("message", "User has already logged in");
+                response.getWriter().print(jsonObj.toJSONString());
+                return;
+            }
         }
         jsonObj.put("status", 500);
         jsonObj.put("message", "Not all fields are filled");

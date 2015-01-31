@@ -10,7 +10,7 @@
             </fest:when>
             <fest:otherwise>
                 <fest:get name="btn">{href: '#login', title: 'Войти'}</fest:get>
-                <fest:get name="btn">{props: {onclick: 'VK.Auth.login(authInfo);', id: 'login_button'}, title: 'Войти через VK'}</fest:get>
+                <fest:get name="btn">{props: {id: 'login_button'}, title: 'Войти через VK'}</fest:get>
                 <fest:get name="btn">{href: '#signup', title: 'Регистрация'}</fest:get>
             </fest:otherwise>
     	</fest:choose>

@@ -52,6 +52,14 @@ public class UserDataSetDAO {
         return userDataSet;
     }
 
+    public UserDataSet getUserDataByToken(String token) {
+        Session session = sessionFactory.openSession();
+        Criteria criteria = session.createCriteria(UserDataSet.class);
+        UserDataSet userDataSet = (UserDataSet) criteria.add(Restrictions.eq("token", token)).uniqueResult();
+        session.close();
+        return userDataSet;
+    }
+
     public long getUsersCount() {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(UserDataSet.class);
