@@ -31,22 +31,27 @@ define([
         },
         loginStatus: function (response) {
             if (response.session) {
-                console.log(response);
                 var id = response.session.mid;
-                window["VK"].Api.call('users.get', {uids: id}, function(r) {
+                window["VK"].Api.call('users.get', {uids: id}, _.bind(function(r) {
                     if(r.response) {
                         var name = r.response[0].first_name + ' ' + r.response[0].last_name;
                         var api = new API();
                         api.send('post', '/api/v1/auth/signin', {token: id, name: name}).then(
-                            function (data) {
-                                this.trigger('signup:ok');
-                            },
-                            function () {
-                                this.trigger('signup:bad');
-                            }
+                            _.bind(function (data) {
+                                this.trigger('login:ok');
+                            }, this),
+                            _.bind(function () {
+                                this.trigger('login:bad');
+                            }, this)
                         );
                     }
-                });
+                    else {
+                        this.trigger('login:bad');
+                    }
+                }, this));
+            }
+            else {
+                this.trigger('login:error');
             }
         }
     });
