@@ -13364,8 +13364,9 @@ define('views/color',[
             this.show();
             colorDfd = new $.Deferred();
             colorDfd.done(function (color) {
-                model.set('color', color);
-                cardsCollection.sendCard(model);
+                cardsCollection.sendCard(model).done(function () {
+                    model.set('color', color);
+                });
             });
         },
         render: function () {
