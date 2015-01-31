@@ -84,6 +84,7 @@
   left: 50%;
   margin-left: -200px;
   top: 25%;
+  padding: 10px;
   border: 2px solid #a00307; }
   .color__value {
     display: inline-block;

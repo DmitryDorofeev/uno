@@ -1,32 +1,33 @@
 .color {
-  display: none;
-  position: absolute;
-  background-color: $mainColor;
-  z-index: 1000;
-  width: 420px;
-  left: 50%;
-  margin-left: -200px;
-  top: 25%;
-  border: 2px solid $secondaryColor;
-
-  &__value {
-    display: inline-block;
-    margin: 10px;
-    width: 80px;
-    height: 80px;
+    display: none;
+    position: absolute;
+    background-color: $mainColor;
+    z-index: 1000;
+    width: 420px;
+    left: 50%;
+    margin-left: -200px;
+    top: 25%;
+    padding: 10px;
     border: 2px solid $secondaryColor;
 
-    &_red {
-      background-color: $mainColor;
+    &__value {
+        display: inline-block;
+        margin: 10px;
+        width: 80px;
+        height: 80px;
+        border: 2px solid $secondaryColor;
+
+        &_red {
+            background-color: $mainColor;
+        }
+        &_yellow {
+            background-color: $yellowColor;
+        }
+        &_green {
+            background-color: $greenColor;
+        }
+        &_blue {
+            background-color: $blueColor;
+        }
     }
-    &_yellow {
-      background-color: $yellowColor;
-    }
-    &_green {
-      background-color: $greenColor;
-    }
-    &_blue {
-      background-color: $blueColor;
-    }
-  }
 }
