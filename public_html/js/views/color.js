@@ -21,8 +21,9 @@ define([
             this.show();
             colorDfd = new $.Deferred();
             colorDfd.done(function (color) {
-                cardsCollection.sendCard(model).done(function () {
-                    model.set('color', color);
+                model.set('color', color);
+                cardsCollection.sendCard(model).fail(function () {
+                    model.set('color', 'black');
                 });
             });
         },
