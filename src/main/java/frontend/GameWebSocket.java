@@ -19,7 +19,7 @@ import utils.LoggerHelper;
 
 import java.util.List;
 
-@WebSocket(maxIdleTime = 600000)
+@WebSocket
 public class GameWebSocket {
     private String myName;
     private Session session;
