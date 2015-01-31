@@ -36,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public int signInByToken(String sessionId, String token, String name) {
-        UserProfile user = dbService.getUserDataByToken(token);
+        UserProfile user = dbService.getUserData(token);
         if (isLoggedIn(sessionId) == 500) {
             if (user == null) {
                 user = new UserProfile(token, name);
@@ -87,11 +87,6 @@ public class AuthServiceImpl implements AuthService {
     public UserProfile getUserProfile(String sessionId) {
         if (isLoggedIn(sessionId) == 200)
             return dbService.getUserData(sessions.get(sessionId));
-        else {
-            String userSessionId = joystickUser.get(sessionId);
-            if (isLoggedIn(userSessionId) == 200)
-                return dbService.getUserData(sessions.get(userSessionId));
-        }
         return null;
     }
 

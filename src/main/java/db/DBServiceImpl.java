@@ -40,19 +40,16 @@ public class DBServiceImpl implements DBService {
         return userDataSetDAO.save(user);
     }
 
-    public UserProfile getUserData(String login) {
+    public UserProfile getUserData(String loginOrToken) {
         UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
-        UserDataSet userDataSet = userDataSetDAO.getUserDataByLogin(login);
+        UserDataSet userDataSet = userDataSetDAO.getUserDataByLogin(loginOrToken);
         if (userDataSet != null)
             return new UserProfile(userDataSet.getLogin(), userDataSet.getPassword(), userDataSet.getEmail());
-        return null;
-    }
-
-    public UserProfile getUserDataByToken(String token) {
-        UserDataSetDAO userDataSetDAO = new UserDataSetDAO(sessionFactory);
-        UserDataSet userDataSet = userDataSetDAO.getUserDataByToken(token);
-        if (userDataSet != null)
-            return new UserProfile(userDataSet.getToken(), userDataSet.getName());
+        else {
+            UserDataSet userDataSetToken = userDataSetDAO.getUserDataByToken(loginOrToken);
+            if (userDataSetToken != null)
+                return new UserProfile(userDataSetToken.getToken(), userDataSetToken.getName());
+        }
         return null;
     }
 
