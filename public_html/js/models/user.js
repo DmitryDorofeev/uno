@@ -38,7 +38,7 @@ define([
                         var api = new API();
                         api.send('post', '/api/v1/auth/signin', {token: id, name: name}).then(
                             _.bind(function (data) {
-                                this.trigger('login:ok');
+                                location.reload();
                             }, this),
                             _.bind(function () {
                                 this.trigger('login:bad');
