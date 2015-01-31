@@ -114,6 +114,8 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
                     jsonObj.put("message", "User has not logged in");
                     break;
             }
+            response.getWriter().print(jsonObj.toJSONString());
+            return;
         }
         jsonObj.put("status", 500);
         jsonObj.put("message", "Not all fields are filled");
