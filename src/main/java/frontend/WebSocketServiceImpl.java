@@ -8,6 +8,7 @@ import base.WebSocketService;
 import org.json.simple.JSONObject;
 import resources.CardResource;
 import resources.ResourceSystem;
+import utils.LoggerHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +71,7 @@ public class WebSocketServiceImpl implements WebSocketService, Runnable {
         jsonBody.put("gameWebSocket", gameWebSocket == null ? "is not null" : "is null");
         jsonBody.put("user", user == null ? "is not null" : "is null");
         jsonBody.put("user.gameSession", user.getGameSession() == null ? "is not null" : "is null");
+        LoggerHelper.logJSON("notifyStartGame", jsonObject);
         gameWebSocket.startGame(user.getGameSession().getPlayersList());
     }
 
