@@ -13640,16 +13640,16 @@ define('views/profile',[
 define('models/score',[
     'backbone'
 ], function (Backbone) {
-    
+
     var ScoreModel = Backbone.Model.extend({
         initialize: function () {
-            
         }
     });
-    
+
     return ScoreModel;
 
 });
+
 define('scoreSync',[
     'jquery',
     'backbone'
@@ -13718,7 +13718,6 @@ define('collections/score',[
   var ScoreCollection = Backbone.Collection.extend({
     sync: scoreSync,
     initialize: function () {
-        this.fetch();
     },
     model: ScoreModel
   });
