@@ -1,8 +1,11 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
+    <fest:include src="blocks/btn.xml"/>
     <div class="color">
         <div class="color__value color__value_red js-color" data-color="red"></div>
         <div class="color__value color__value_yellow js-color" data-color="yellow"></div>
         <div class="color__value color__value_green js-color" data-color="green"></div>
         <div class="color__value color__value_blue js-color" data-color="blue"></div>
+
+        <fest:get name="btn">{title: 'Закрыть', classes:['js-close']}</fest:get>
     </div>
 </fest:template>

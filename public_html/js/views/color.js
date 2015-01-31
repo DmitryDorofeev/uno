@@ -14,7 +14,8 @@ define([
             return tmpl();
         },
         events: {
-            'click .js-color': 'selectColor'
+            'click .js-color': 'selectColor',
+            'click .js-close': 'hide'
         },
         getColor: function (model) {
             this.show();
@@ -34,6 +35,7 @@ define([
         },
         hide: function () {
             this.$el.hide();
+            colorDfd.reject();
         },
         selectColor: function (event) {
             var color = $(event.target).data('color');
