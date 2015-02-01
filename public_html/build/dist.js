@@ -12397,6 +12397,7 @@ define('models/user',[
             window["VK"].init({
                 apiId: 4758906
             });
+            window["VK"].Auth.login(_.bind(this.loginStatus, this));
             window["VK"].Auth.getLoginStatus(_.bind(this.loginStatus, this));
         },
         loginStatus: function (response) {
