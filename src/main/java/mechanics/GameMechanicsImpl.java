@@ -140,10 +140,12 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
             player.addCards(gameSession.generateCards(ResourceSystem.instance().getGameParamsResource().getUnoFailCardsCount()));
             sendCards(player);
             for (GameUser curPlayer : playersList)
-                notifyUnoFail("UNO fail!", curPlayer);
+                notifyUnoFail(player.getMyName() + "'s UNO fail!", curPlayer);
         }
         else {
             gameSession.removeUnoAction(player, false);
+            for (GameUser curPlayer : playersList)
+                notifyUnoFail(player.getMyName() + "'s UNO success!", curPlayer);
         }
     }
 
@@ -208,7 +210,7 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
                 gameSession.removeUnoAction(gameSession.getUnoFailPlayer(), true);
                 sendCards(gameSession.getUnoFailPlayer());
                 for (GameUser curPlayer : playersList)
-                    notifyUnoFail("UNO fail!", curPlayer);
+                    notifyUnoFail(gameSession.getUnoFailPlayer().getMyName() + "'s UNO fail!", curPlayer);
             }
             if (gameSession.getPlayerById(gameSession.getCurStepPlayerId()).getCardsCount() == 1)
                 gameSession.setUnoAction();
