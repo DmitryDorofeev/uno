@@ -10,7 +10,7 @@
             </fest:when>
             <fest:otherwise>
                 <fest:get name="btn">{href: '#login', title: 'Войти'}</fest:get>
-                <fest:get name="btn">{title: 'Войти через Вконтакте', classes: ['js-vk-login']}</fest:get>
+                <!--<fest:get name="btn">{title: 'Войти через Вконтакте', classes: ['js-vk-login']}</fest:get>-->
                 <fest:get name="btn">{href: '#signup', title: 'Регистрация'}</fest:get>
             </fest:otherwise>
     	</fest:choose>
