@@ -20,30 +20,35 @@ public class GameUser {
     private long focusOnCard;
     private List<CardResource> newCards = new ArrayList<>();
     private long score;
+    private long mySum;
 
     public GameUser(String myName, long playersCount) {
         this.myName = myName;
         this.playersCount = playersCount;
         setScore(0);
+        setMySum(-1);
     }
 
     public long getSumOfCards() {
-        long sum = 0;
-        for (CardResource card : cards)
-            if (card.getType().equals("number"))
-                sum += card.getNum();
-            else if (card.getColor().equals("black"))
-                sum += ResourceSystem.instance().getGameParamsResource().getBlackCardPrice();
-            else
-                sum += ResourceSystem.instance().getGameParamsResource().getColoredActionCardPrice();
-        return sum;
+        if (mySum == -1) {
+            mySum = 0;
+            for (CardResource card : cards)
+                if (card.getType().equals("number"))
+                    mySum += card.getNum();
+                else if (card.getColor().equals("black"))
+                    mySum += ResourceSystem.instance().getGameParamsResource().getBlackCardPrice();
+                else
+                    mySum += ResourceSystem.instance().getGameParamsResource().getColoredActionCardPrice();
+        }
+        return mySum;
     }
 
     public void calculateScore() {
         long score = 0;
+        long mySum = getSumOfCards();
         List<GameUser> players = gameSession.getPlayersList();
         for (GameUser player : players) {
-            if (!player.getMyName().equals(myName))
+            if (!player.getMyName().equals(myName) && player.getSumOfCards() > mySum)
                 score += player.getSumOfCards();
         }
         setScore(score);
@@ -55,6 +60,14 @@ public class GameUser {
 
     public void setScore(long score) {
         this.score = score;
+    }
+
+    public long getMySum() {
+        return mySum;
+    }
+
+    public void setMySum(long mySum) {
+        this.mySum = mySum;
     }
 
     public void addCards(List<CardResource> cards) {
