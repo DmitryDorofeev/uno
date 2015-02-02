@@ -213,6 +213,8 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
                     notifyGameStep(true, "newCards", curPlayer, fromJoystick);
             }
         } else {
+            for (GameUser curPlayer : playersList)
+                notifyGameStep(true, "OK", curPlayer, fromJoystick);
             playersList.forEach(mechanics.GameUser::calculateScore);
             for (GameUser curPlayer : playersList) {
                 sendScores(curPlayer);

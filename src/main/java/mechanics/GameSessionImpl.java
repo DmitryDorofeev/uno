@@ -11,6 +11,8 @@ import java.util.*;
 public class GameSessionImpl implements GameSession {
     private Set<String> actions = new HashSet<>();
     private Map<String, GameUser> users = new HashMap<>();
+    private List<Long> unusedCardsId = new ArrayList<>();
+    private List<Long> usedCardsId = new ArrayList<>();
     private boolean direction;
     private long curStepPlayerId;
     private CardResource card;
@@ -30,6 +32,9 @@ public class GameSessionImpl implements GameSession {
         actions.add("incTwo");
         actions.add("incFour");
         actions.add("skip");
+        List<Long> cardsIdList = ResourceSystem.instance().getCardsResource().getCardsIdList();
+        usedCardsId.addAll(cardsIdList);
+        setupUnusedCards();
     }
 
     public long getGameId() {
@@ -103,6 +108,8 @@ public class GameSessionImpl implements GameSession {
     }
 
     public void setCard(CardResource card, String newColor) {
+        if (this.card != null)
+            usedCardsId.add(this.card.getCardId());
         this.card = card;
         setColor(card.getColor().equals("black") ? newColor : card.getColor());
         if (card.getType().equals("reverse"))
@@ -172,8 +179,13 @@ public class GameSessionImpl implements GameSession {
     public List<CardResource> generateCards(long count) {
         List<CardResource> cards = new ArrayList<>();
         for (int i = 0; i < count; ++i) {
-            CardResource temp = ResourceSystem.instance().getCardsResource().getCard(
-                    rnd.nextInt(ResourceSystem.instance().getCardsResource().CardsCount()));
+            if (unusedCardsId.size() == 0) {
+                setupUnusedCards();
+            }
+            int index = rnd.nextInt(unusedCardsId.size());
+            CardResource temp = ResourceSystem.instance().getCardsResource().getCard(unusedCardsId.get(index));
+            unusedCardsId.remove(index);
+
             cards.add(new CardResource(temp.getCardId(), temp.getColor(), temp.getType(), temp.getNum(),
                     temp.getWidth(), temp.getHeight(), temp.getX(), temp.getY()));
         }
@@ -214,5 +226,10 @@ public class GameSessionImpl implements GameSession {
                 incFourFound = true;
         }
         return incFourFound;
+    }
+
+    private void setupUnusedCards() {
+        unusedCardsId.addAll(usedCardsId);
+        usedCardsId.clear();
     }
 }

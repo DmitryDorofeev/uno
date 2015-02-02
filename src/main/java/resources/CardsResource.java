@@ -1,6 +1,8 @@
 package resources;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,5 +25,13 @@ public class CardsResource implements Resource {
 
     public int CardsCount() {
         return cardResourceMap.size();
+    }
+
+    public List<Long> getCardsIdList() {
+        List<Long> result = new ArrayList<>();
+        for (Long key : cardResourceMap.keySet()) {
+            result.add(key);
+        }
+        return result;
     }
 }
