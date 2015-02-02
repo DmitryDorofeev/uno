@@ -177,7 +177,7 @@ public class GameWebSocket {
     public void onMessage(String data) throws ParseException {
         try {
             JSONObject jsonObject = (JSONObject)new JSONParser().parse(data);
-            LoggerHelper.logJSON("query: " + myName + (extra == null ? " player " : " joystick "), jsonObject);
+            LoggerHelper.logJSON("query: " + myName, jsonObject);
             if (jsonObject.get("type").equals("gameInfo")) {
                 extra = null;
                 addUser(this, null);
@@ -188,20 +188,6 @@ public class GameWebSocket {
             if (jsonObject.get("type").equals("card")) {
                 JSONObject jsonBody = (JSONObject)jsonObject.get("body");
                 gameStep(myName, (Long) jsonBody.get("focusOnCard"), (String) jsonBody.get("newColor"), null);
-                return;
-            }
-            if (jsonObject.get("type").equals("joystick")) {
-                JSONObject jsonBody = (JSONObject)jsonObject.get("body");
-                if (jsonBody.get("message").equals("init")) {
-                    extra = "joystick";
-                    addUser(this, "joystick");
-                    initJoystick(myName);
-                    return;
-                }
-                Long tmp = (Long) jsonBody.get("focusOnCard");
-                if (tmp == null)
-                    tmp = (long)0;
-                stepByJoystick(myName, (String) jsonBody.get("message"), (String) jsonBody.get("newColor"), tmp);
                 return;
             }
             if (jsonObject.get("type").equals("uno"))

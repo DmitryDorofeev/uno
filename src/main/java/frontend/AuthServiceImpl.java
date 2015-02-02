@@ -4,6 +4,7 @@ import base.AuthService;
 import db.UserProfile;
 import db.DBService;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,26 +22,32 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public int signIn(String sessionId, String login, String password, String extra) {
+    public int signIn(String sessionId, String login, String password) {
         UserProfile user = dbService.getUserData(login);
         if (isLoggedIn(sessionId) == 500 && user != null && user.getPass().equals(password)) {
-            if (extra == null) {
-                if (userSessions.containsKey(login))
-                    logOut(userSessions.get(login));
-                sessions.put(sessionId, login);
-                userSessions.put(login, sessionId);
-                return 200;
+            if (userSessions.containsKey(login))
+                logOut(userSessions.get(login));
+            sessions.put(sessionId, login);
+            userSessions.put(login, sessionId);
+            return 200;
+        }
+        return 403;
+    }
+
+    @Override
+    public int signInByToken(String sessionId, String token, String name) {
+        UserProfile user = dbService.getUserData(token);
+        if (isLoggedIn(sessionId) == 500) {
+            if (user == null) {
+                user = new UserProfile(token, name);
+                dbService.saveUser(user);
+            } else {
+                if (userSessions.containsKey(token))
+                    logOut(userSessions.get(token));
             }
-            else if (extra.equals("joystick")) {
-                if (userSessions.containsKey(login)) {
-                    if (userJoystick.containsKey(login))
-                        logOut(userJoystick.get(login));
-                    joystickUser.put(sessionId, userSessions.get(login));
-                    userJoystick.put(login, sessionId);
-                    return 200;
-                }
-                return 404;
-            }
+            sessions.put(sessionId, token);
+            userSessions.put(token, sessionId);
+            return 200;
         }
         return 403;
     }
@@ -65,10 +72,6 @@ public class AuthServiceImpl implements AuthService {
                 userSessions.remove(login);
                 sessions.remove(sessionId);
                 break;
-            case 2000:
-                userJoystick.remove(sessions.get(joystickUser.get(sessionId)));
-                joystickUser.remove(sessionId);
-                break;
         }
         return true;
     }
@@ -77,8 +80,6 @@ public class AuthServiceImpl implements AuthService {
     public int isLoggedIn(String sessionId) {
         if (sessions.containsKey(sessionId))
             return 200;
-        if (joystickUser.containsKey(sessionId))
-            return 2000;
         return 500;
     }
 
@@ -86,11 +87,6 @@ public class AuthServiceImpl implements AuthService {
     public UserProfile getUserProfile(String sessionId) {
         if (isLoggedIn(sessionId) == 200)
             return dbService.getUserData(sessions.get(sessionId));
-        else {
-            String userSessionId = joystickUser.get(sessionId);
-            if (isLoggedIn(userSessionId) == 200)
-                return dbService.getUserData(sessions.get(userSessionId));
-        }
         return null;
     }
 

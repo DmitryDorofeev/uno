@@ -45,33 +45,63 @@ public class SignInServletImpl extends HttpServlet implements SignInServlet {
         @Override
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
-        final String login = request.getParameter("login");
-        final String password = request.getParameter("password");
-        final String extra = request.getParameter("extra");
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+        String token = request.getParameter("token");
+        String name = request.getParameter("name");
         int status;
-
+        if (login == null) {
+            login = "";
+        }
+        if (password == null) {
+            password = "";
+        }
+        if (token == null) {
+            token = "";
+        }
+        if (name == null) {
+            name = "";
+        }
         JSONObject jsonObj = new JSONObject();
         response.setStatus(HttpServletResponse.SC_OK);
-
-        if (extra != null && !extra.equals("joystick")) {
-            jsonObj.put("status", 500);
-            jsonObj.put("message", "Unknown device");
-            response.getWriter().print(jsonObj.toJSONString());
-            return;
-        }
 
         if (!login.isEmpty() && !password.isEmpty()) {
             final String sessionId = request.getSession().getId();
             if (authService.isLoggedIn(sessionId) != 500) {
                 jsonObj.put("status", 500);
-                if (extra == null)
-                    jsonObj.put("message", "User has already logged in");
-                else
-                    jsonObj.put("message", "Joystick for that user has already been activated");
+                jsonObj.put("message", "User has already logged in");
                 response.getWriter().print(jsonObj.toJSONString());
                 return;
             }
-            status = authService.signIn(sessionId, login, password, extra);
+            status = authService.signIn(sessionId, login, password);
+            switch (status) {
+                case 200:
+                    jsonObj.put("status", 200);
+                    UserProfile user = authService.getUserProfile(sessionId);
+                    jsonObj.put("login", user.getLogin());
+                    jsonObj.put("email", user.getEmail());
+                    break;
+                case 403:
+                    jsonObj.put("status", 500);
+                    jsonObj.put("message", "Wrong login or password");
+                    break;
+                case 404:
+                    jsonObj.put("status", 500);
+                    jsonObj.put("message", "User has not logged in");
+                    break;
+            }
+            response.getWriter().print(jsonObj.toJSONString());
+            return;
+        }
+        else if (!token.isEmpty()) {
+            final String sessionId = request.getSession().getId();
+            if (authService.isLoggedIn(sessionId) != 500) {
+                jsonObj.put("status", 500);
+                jsonObj.put("message", "User has already logged in");
+                response.getWriter().print(jsonObj.toJSONString());
+                return;
+            }
+            status = authService.signInByToken(sessionId, token, name);
             switch (status) {
                 case 200:
                     jsonObj.put("status", 200);

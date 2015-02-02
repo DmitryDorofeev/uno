@@ -29,6 +29,12 @@ public class UserDataSet implements Serializable { // Serializable Important to 
     @Column(name = "password")
     private String password;
 
+    @Column(name = "token")
+    private String token;
+
+    @Column(name = "name")
+    private String name;
+
     //Important to Hibernate!
     public UserDataSet() {
     }
@@ -38,6 +44,8 @@ public class UserDataSet implements Serializable { // Serializable Important to 
         setLogin(user.getLogin());
         setEmail(user.getEmail());
         setPassword(user.getPass());
+        setToken(user.getToken());
+        setName(user.getName());
     }
 
     public UserDataSet(UserProfile user){
@@ -45,6 +53,8 @@ public class UserDataSet implements Serializable { // Serializable Important to 
         setLogin(user.getLogin());
         setEmail(user.getEmail());
         setPassword(user.getPass());
+        setToken(user.getToken());
+        setName(user.getName());
     }
 
     public long getId() {
@@ -77,5 +87,21 @@ public class UserDataSet implements Serializable { // Serializable Important to 
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

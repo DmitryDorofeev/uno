@@ -11,7 +11,8 @@ define([
             this.listenTo(this.model, 'change', this.render);
         },
         events: {
-            'click .js-logout': 'logout'
+            'click .js-logout': 'logout',
+            'click .js-vk-login': 'vkLogin'
         },
         template: function () {
             return tmpl(this.model);
@@ -30,6 +31,9 @@ define([
         logout: function (event) {
             event.preventDefault();
             this.model.logout();
+        },
+        vkLogin: function () {
+            this.model.vkLogin();
         }
     });
 

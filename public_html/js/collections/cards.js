@@ -18,7 +18,9 @@ define([
             _.bindAll(this, 'stepDone', 'sendCard');
         },
         addCards: function (cards) {
+            console.log('ADDING CARDS: ', cards.cards);
             this.add(cards.cards);
+            console.log('CURRENT CARDS: ', this.toJSON());
         },
         processCard: function (model) {
             if (model.get('color') === 'black') {

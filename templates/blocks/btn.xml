@@ -2,10 +2,27 @@
     <fest:set name="btn">
         <fest:choose>
             <fest:when test="params.href">
-                <a href="{params.href}" class="btn"><fest:value>params.title</fest:value></a>
+                <a href="{params.href}" class="btn">
+                    <fest:attributes>
+                        <fest:if test="params.props">
+                            <fest:each iterate="params.props" index="i" value="prop">
+                                <fest:attribute name="{i}"><fest:value>prop</fest:value></fest:attribute>
+                            </fest:each>
+                        </fest:if>
+                    </fest:attributes>
+                    <fest:value>params.title</fest:value></a>
             </fest:when>
             <fest:otherwise>
-                <button class="btn {params.classes &amp;&amp; params.classes.length ? params.classes.join(' ') : ''}"><fest:value>params.title</fest:value></button>
+                <button class="btn {params.classes &amp;&amp; params.classes.length ? params.classes.join(' ') : ''}">
+                    <fest:attributes>
+                        <fest:if test="params.props">
+                            <fest:each iterate="params.props" index="i" value="prop">
+                                <fest:attribute name="{i}"><fest:value>prop</fest:value></fest:attribute>
+                            </fest:each>
+                        </fest:if>
+                    </fest:attributes>
+                    <fest:value>params.title</fest:value>
+                </button>
             </fest:otherwise>
         </fest:choose>
     </fest:set>

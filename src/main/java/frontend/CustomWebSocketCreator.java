@@ -24,6 +24,9 @@ public class CustomWebSocketCreator implements WebSocketCreator {
         LoggerHelper.logJSON("createWebSocket()", null);
         String sessionId = req.getHttpServletRequest().getSession().getId();
         String name = authService.getUserProfile(sessionId).getLogin();
+        if (name.isEmpty()) {
+            name = authService.getUserProfile(sessionId).getName();
+        }
         return new GameWebSocket(name);
     }
 }
