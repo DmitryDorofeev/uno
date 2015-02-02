@@ -134,9 +134,17 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
 
     public synchronized void doUno(String username) {
         GameSession gameSession = getPlayerGame(username);
-        GameUser curPlayer = gameSession.getUser(username);
-        if (gameSession.unoActionExists())
-            gameSession.removeUnoAction(curPlayer, false);
+        GameUser player = gameSession.getUser(username);
+        List<GameUser> playersList = gameSession.getPlayersList();
+        if (player.getCardsCount() != 1) {
+            player.addCards(gameSession.generateCards(ResourceSystem.instance().getGameParamsResource().getUnoFailCardsCount()));
+            sendCards(player);
+            for (GameUser curPlayer : playersList)
+                notifyUnoFail("UNO fail!", curPlayer);
+        }
+        else {
+            gameSession.removeUnoAction(player, false);
+        }
     }
 
     public synchronized boolean isPlayerInWaiters(String login) {
@@ -156,10 +164,12 @@ public class GameMechanicsImpl implements GameMechanics, Runnable {
                 return;
             }
             player.addCards(cards);
-            if (!cards.get(0).getColor().equals("black"))
-                gameSession.updateCurStepPlayerId();
-            List<GameUser> playersList = gameSession.getPlayersList();
             sendCards(player);
+            if (!cards.get(0).getColor().equals("black")) {
+                finishGameStep(gameSession, fromJoystick);
+                return;
+            }
+            List<GameUser> playersList = gameSession.getPlayersList();
             for (GameUser curPlayer : playersList)
                 notifyGameStep(true, "newCards", curPlayer, fromJoystick);
         } else

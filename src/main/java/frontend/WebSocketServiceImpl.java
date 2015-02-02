@@ -64,15 +64,12 @@ public class WebSocketServiceImpl implements WebSocketService, Runnable {
 
     public void notifyStartGame(GameUser user) {
         GameWebSocket gameWebSocket = userSockets.get(user.getMyName());
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "info");
-        JSONObject jsonBody = new JSONObject();
-        jsonObject.put("body", jsonBody);
-        jsonBody.put("gameWebSocket", gameWebSocket != null ? "is not null" : "is null");
-        jsonBody.put("user", user != null ? "is not null" : "is null");
-        jsonBody.put("user.gameSession", user.getGameSession() != null ? "is not null" : "is null");
-        LoggerHelper.logJSON("notifyStartGame", jsonObject);
-        gameWebSocket.startGame(user.getGameSession().getPlayersList());
+        if (gameWebSocket == null) {
+            System.out.print("AAAAAAA, gameWebSocket for " + user.getMyName() + " is null");
+        }
+        else {
+            gameWebSocket.startGame(user.getGameSession().getPlayersList());
+        }
     }
 
     public void sendCards(GameUser user) {

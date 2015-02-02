@@ -15,6 +15,7 @@ public class GameSessionImpl implements GameSession {
     private List<Long> usedCardsId = new ArrayList<>();
     private boolean direction;
     private long curStepPlayerId;
+    private long unoPlayerId;
     private CardResource card;
     private String color;
     private Random rnd;
@@ -59,6 +60,7 @@ public class GameSessionImpl implements GameSession {
 
     public void setUnoAction() {
         uno = true;
+        unoPlayerId = getCurStepPlayerId();
     }
 
     public boolean unoActionExists() {
@@ -66,12 +68,9 @@ public class GameSessionImpl implements GameSession {
     }
 
     public void removeUnoAction(GameUser player, boolean late) {
-        if (player.getCardsCount() == 1) {
-            if (late)
-                getUnoFailPlayer().addCards(
-                        generateCards(ResourceSystem.instance().getGameParamsResource().getUnoFailCardsCount()));
-            uno = false;
-        }
+        if (late)
+            player.addCards(generateCards(ResourceSystem.instance().getGameParamsResource().getUnoFailCardsCount()));
+        uno = false;
     }
 
     public void doAction() {
@@ -102,9 +101,7 @@ public class GameSessionImpl implements GameSession {
     }
 
     public boolean canSetCard(CardResource card, GameUser player) {
-        return this.card == null
-                || isCorrectNotIncFourCard(card)
-                || playerCanSetIncFourCard(player) && card.getType().equals("incFour");
+        return isCorrectNotIncFourCard(card) || playerCanSetIncFourCard(player);
     }
 
     public void setCard(CardResource card, String newColor) {
@@ -157,17 +154,17 @@ public class GameSessionImpl implements GameSession {
     }
 
     public GameUser getPlayerById(long id) {
-        return getPlayersList().get((int)id);
+        GameUser foundPlayer = null;
+        List<GameUser> players = getPlayersList();
+        for (GameUser player : players) {
+            if (player.getGamePlayerId() == id)
+                foundPlayer = player;
+        }
+        return foundPlayer;
     }
 
     public GameUser getUnoFailPlayer() {
-        return getPlayerById((int) getPrevStepPlayerId());
-    }
-
-    private long getPrevStepPlayerId() {
-        return !direction ?
-                (curStepPlayerId + 1) % users.size() :
-                (curStepPlayerId == 0 ? users.size() - 1 : curStepPlayerId - 1);
+        return getPlayerById((int)unoPlayerId);
     }
 
     private long getNextStepPlayerId() {
@@ -197,10 +194,12 @@ public class GameSessionImpl implements GameSession {
     }
 
     private boolean isCorrectNotIncFourCard(CardResource card) {
-        return card.getType().equals("number") && this.card.getType().equals("number") && card.getNum() == this.card.getNum()
+        return !card.getType().equals("incFour") && (
+                card.getType().equals("number") && this.card.getType().equals("number") && card.getNum() == this.card.getNum()
                 || card.getColor().equals(color)
                 || !card.getType().equals("number") && card.getType().equals(getCardType())
-                || card.getType().equals("color");
+                || card.getType().equals("color")
+        );
     }
 
     private boolean playerHasCardNotIncFourToSet(GameUser player) {
