@@ -31,7 +31,8 @@
   .game-settings__title {
     font-size: 22px;
     margin-top: 20px;
-    color: #ffffff; }
+    color: #ffffff;
+    text-align: center; }
 
 @media screen and (max-width: 480px) {
   .game-settings {
@@ -432,6 +433,34 @@ html, body {
     font-size: 25px;
     text-shadow: 1px 0 0 #ffda2f, -1px 0 0 #ffda2f, 0 1px 0 #ffda2f, 0 -1px 0 #ffda2f, 1px 1px #ffda2f, -1px -1px 0 #ffda2f, 1px -1px 0 #ffda2f, -1px 1px 0 #ffda2f;
     color: #D91E18; }
+
+.b-select {
+  margin: 0 auto;
+  width: 300px;
+  margin-bottom: 40px;
+  margin-top: 40px; }
+  .b-select__btn {
+    width: 300px;
+    border: 1px solid #a00307;
+    background-color: #CF000F;
+    margin: 10px 0;
+    cursor: pointer;
+    text-align: center; }
+    .b-select__btn:nth-child(1) .b-select__img {
+      width: 100px; }
+    .b-select__btn:nth-child(2) .b-select__img {
+      width: 150px; }
+    .b-select__btn:nth-child(3) .b-select__img {
+      width: 200px; }
+    .b-select__btn:nth-child(4) .b-select__img {
+      width: 250px; }
+    .b-select__btn_selected {
+      background-color: #a00307; }
+  .b-select__img {
+    display: inline-block;
+    height: 50px;
+    background-image: url("/images/baby.png");
+    background-size: auto 100%; }
 
 .main {
   text-align: center; }

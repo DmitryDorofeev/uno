@@ -5,7 +5,8 @@ define([
 ], function (Backbone, tmpl, gameModel) {
 	var GameSettings = Backbone.View.extend({
 	    events: {
-			'click .js-send': 'sendSettings'
+			'click .js-send': 'sendSettings',
+			'click .b-select__btn': 'select'
 	    },
 		initialize: function () {
 			this.listenTo(gameModel, 'message:start', this.hide);
@@ -26,10 +27,17 @@ define([
 			this.$el.hide();
 		},
 		sendSettings: function () {
-			this.val = +this.$el.find('.js-select').val();
-			this.trigger('game:connect', this.val);
-			this.hide();
-		}
+            if (this.val) {
+                this.trigger('game:connect', this.val);
+                this.hide();
+            }
+		},
+        select: function (event) {
+            var $this = $(event.currentTarget);
+            this.val = parseInt(event.currentTarget.dataset.val);
+            this.$('.b-select__btn_selected').removeClass('b-select__btn_selected');
+            $this.addClass('b-select__btn_selected');
+        }
 	});
 
 	return new GameSettings();

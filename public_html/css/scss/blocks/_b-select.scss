@@ -1,0 +1,52 @@
+.b-select {
+    margin: 0 auto;
+    width: 300px;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    &__btn {
+        width: 300px;
+        border: 1px solid rgb(160,3,7);
+        background-color: #CF000F;
+        margin: 10px 0;
+        cursor: pointer;
+        text-align: center;
+        &:nth-child(1) {
+            .b-select__img {
+                width: 100px;
+            }
+        }
+
+        &:nth-child(2) {
+            .b-select__img {
+                width: 150px;
+            }
+        }
+
+        &:nth-child(3) {
+            .b-select__img {
+                width: 200px;
+            }
+        }
+
+        &:nth-child(4) {
+            .b-select__img {
+                width: 250px;
+            }
+        }
+
+        &_selected {
+            background-color: $secondaryColor;
+        }
+    }
+
+    &__img {
+        display: inline-block;
+        height: 50px;
+        background-image: url("/images/baby.png");
+        background-size: auto 100%;
+    }
+
+    &__text {
+
+    }
+}

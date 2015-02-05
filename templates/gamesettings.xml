@@ -2,12 +2,28 @@
 	<fest:include src="blocks/btn.xml"/>
 	<div class="game-settings">
 		<div class="game-settings__title">Выберите желаемое количество игроков</div>
-		<select name="select" id="select" class="game-settings__select js-select">
-			<option value="2">2 игрока</option>
-			<option value="3">3 игрока</option>
-			<option value="4">4 игрока</option>
-			<option value="5">5 игроков</option>
-		</select>
+        <div class="b-select">
+            <div class="b-select__btn b-select__btn_selected" data-val="2">
+                <div class="b-select__img">
+                </div>
+                <div class="b-select__text"></div>
+            </div>
+            <div class="b-select__btn" data-val="3">
+                <div class="b-select__img">
+                </div>
+                <div class="b-select__text"></div>
+            </div>
+            <div class="b-select__btn" data-val="4">
+                <div class="b-select__img">
+                </div>
+                <div class="b-select__text"></div>
+            </div>
+            <div class="b-select__btn" data-val="5">
+                <div class="b-select__img">
+                </div>
+                <div class="b-select__text"> </div>
+            </div>
+        </div>
 		<fest:get name="btn">{classes: ['js-send'], title: 'Готово'}</fest:get>
 		<fest:get name="btn">{title: 'Назад', href: '#'}</fest:get>
 	</div>
