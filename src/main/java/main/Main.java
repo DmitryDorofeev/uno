@@ -88,7 +88,7 @@ public class Main {
                     StringBuilder stackTraceStr = new StringBuilder();
                     StackTraceElement[] stack = threadArray[i].getStackTrace();
                     for (int j = 0; j < stack.length; ++j) {
-                        stackTraceStr.append(stack[j].toString() + "\n");
+                        stackTraceStr.append(stack[j].toString() + "<br>");
                     }
                     jsonBody.put("trace", stackTraceStr);
                     LoggerHelper.logJSON(threadArray[i].toString(), jsonBody);
