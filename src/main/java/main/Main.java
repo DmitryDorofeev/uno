@@ -85,12 +85,12 @@ public class Main {
                 Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]);
                 for (int i = 0; i < threadArray.length; ++i) {
                     JSONObject jsonBody = new JSONObject();
-                    StringBuilder stackTraceStr = new StringBuilder();
+                    StringBuilder stackTraceStr = new StringBuilder("<br>");
                     StackTraceElement[] stack = threadArray[i].getStackTrace();
                     for (int j = 0; j < stack.length; ++j) {
                         stackTraceStr.append(stack[j].toString() + "<br>");
                     }
-                    jsonBody.put("trace", stackTraceStr);
+                    jsonBody.put("trace", stackTraceStr.toString());
                     LoggerHelper.logJSON(threadArray[i].toString(), jsonBody);
                 }
             }
