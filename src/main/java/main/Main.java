@@ -14,9 +14,15 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.json.simple.JSONObject;
 import resources.ResourceSystem;
+import utils.LoggerHelper;
+import utils.TimeService;
 
 import javax.servlet.Servlet;
+import java.sql.Time;
+import java.util.Set;
+import java.util.TimerTask;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -35,8 +41,10 @@ public class Main {
         messageSystem.setAddressService(addressService);
 
         final Thread webSocketServiceThread = new Thread(new WebSocketServiceImpl());
+        webSocketServiceThread.setName("webSocketServiceThread");
         webSocketServiceThread.setDaemon(true);
         final Thread gameMechanicsThread = new Thread(new GameMechanicsImpl(dbService));
+        gameMechanicsThread.setName("gameMechanicsThread");
         gameMechanicsThread.setDaemon(true);
 
         webSocketServiceThread.start();
@@ -67,6 +75,26 @@ public class Main {
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]{resource_handler, context});
         server.setHandler(handlers);
+
+        final int timeMs = 60000;
+        TimeService.instance().start();
+        TimeService.instance().schedulePeriodicTask(new TimerTask() {
+            @Override
+            public void run() {
+                Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
+                Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]);
+                for (int i = 0; i < threadArray.length; ++i) {
+                    JSONObject jsonBody = new JSONObject();
+                    StringBuilder stackTraceStr = new StringBuilder();
+                    StackTraceElement[] stack = threadArray[i].getStackTrace();
+                    for (int j = 0; j < stack.length; ++j) {
+                        stackTraceStr.append(stack[j].toString() + "\n");
+                    }
+                    jsonBody.put("trace", stackTraceStr);
+                    LoggerHelper.logJSON(threadArray[i].toString(), jsonBody);
+                }
+            }
+        }, timeMs);
 
         server.start();
     }
