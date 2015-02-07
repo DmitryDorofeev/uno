@@ -76,7 +76,6 @@ public class Main {
         handlers.setHandlers(new Handler[]{resource_handler, context});
         server.setHandler(handlers);
 
-        final int timeMs = 60000;
         TimeService.instance().start();
         TimeService.instance().schedulePeriodicTask(new TimerTask() {
             @Override
@@ -94,7 +93,7 @@ public class Main {
                     LoggerHelper.logJSON(threadArray[i].toString(), jsonBody);
                 }
             }
-        }, timeMs);
+        }, ResourceSystem.instance().getServerConfigResource().getLogPeriod() * 1000);
 
         server.start();
     }

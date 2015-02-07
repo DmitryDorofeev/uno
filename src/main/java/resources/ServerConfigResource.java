@@ -4,16 +4,28 @@ public class ServerConfigResource implements Resource {
     private int port;
     private int socketTimeOut;
     private int serviceSleepTime;
+    private int logPeriod;
 
     public ServerConfigResource() {
         setPort(9000);
         setSocketTimeOut(10);
         setServiceSleepTime(100);
+        setLogPeriod(60);
     }
 
-    public ServerConfigResource(int port, int socketTimeOut, int serviceSleepTime) {
+    public ServerConfigResource(int port, int socketTimeOut, int serviceSleepTime, int logPeriod) {
         setPort(port);
         setSocketTimeOut(socketTimeOut);
+        setServiceSleepTime(serviceSleepTime);
+        setLogPeriod(logPeriod);
+    }
+
+    public int getLogPeriod() {
+        return logPeriod;
+    }
+
+    public void setLogPeriod(int logPeriod) {
+        this.logPeriod = logPeriod;
     }
 
     public int getServiceSleepTime() {
