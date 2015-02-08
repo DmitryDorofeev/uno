@@ -17,6 +17,13 @@ define([
             this.render(msg);
             this.$('.overlay').css('display', 'block');
             this.$el.show();
+        },
+
+        /**
+         * @override
+         */
+        close: function () {
+            location.href = '/';
         }
     });
 

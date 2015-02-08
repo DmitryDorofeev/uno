@@ -92,6 +92,19 @@
             <artifactId>mockito-all</artifactId>
             <version>1.9.5</version>
         </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.6.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ovea</groupId>
+            <artifactId>jetty-session-redis</artifactId>
+            <version>2.3.ga</version>
+        </dependency>
+
     </dependencies>
 
 </project>

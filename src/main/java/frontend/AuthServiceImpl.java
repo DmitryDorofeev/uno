@@ -3,6 +3,7 @@ package frontend;
 import base.AuthService;
 import db.UserProfile;
 import db.DBService;
+import redis.clients.jedis.Jedis;
 
 import javax.jws.soap.SOAPBinding;
 import java.util.HashMap;
@@ -13,10 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AuthServiceImpl implements AuthService {
     private Map<String, String> sessions = new ConcurrentHashMap<>(); // (id, login)
     private Map<String, String> userSessions = new ConcurrentHashMap<>(); // (login, id)
-    private Map<String, String> joystickUser = new ConcurrentHashMap<>(); // (id, id)
-    private Map<String, String> userJoystick = new ConcurrentHashMap<>(); // (login, id)
     private DBService dbService;
-
+    private Jedis storage = new Jedis("127.0.0.1");
     public AuthServiceImpl(DBService dbService) {
         this.dbService = dbService;
     }
@@ -25,10 +24,10 @@ public class AuthServiceImpl implements AuthService {
     public int signIn(String sessionId, String login, String password) {
         UserProfile user = dbService.getUserData(login);
         if (isLoggedIn(sessionId) == 500 && user != null && user.getPass().equals(password)) {
-            if (userSessions.containsKey(login))
-                logOut(userSessions.get(login));
-            sessions.put(sessionId, login);
-            userSessions.put(login, sessionId);
+            if (storage.hexists("userSessions", login))
+                logOut(storage.hget("userSessions", login));
+            storage.hset("sessions", sessionId, login);
+            storage.hset("userSessions", login, sessionId);
             return 200;
         }
         return 403;
@@ -42,11 +41,11 @@ public class AuthServiceImpl implements AuthService {
                 user = new UserProfile(token, name);
                 dbService.saveUser(user);
             } else {
-                if (userSessions.containsKey(token))
-                    logOut(userSessions.get(token));
+                if (storage.hexists("userSessions", token))
+                    logOut(storage.hget("userSessions", token));
             }
-            sessions.put(sessionId, token);
-            userSessions.put(token, sessionId);
+            storage.hset("sessions", sessionId, token);
+            storage.hset("userSessions", token, sessionId);
             return 200;
         }
         return 403;
@@ -64,13 +63,9 @@ public class AuthServiceImpl implements AuthService {
             case 500:
                 return false;
             case 200:
-                String login = sessions.get(sessionId);
-                if (userJoystick.containsKey(login)) {
-                    joystickUser.remove(userJoystick.get(login));
-                    userJoystick.remove(login);
-                }
-                userSessions.remove(login);
-                sessions.remove(sessionId);
+                String login = storage.hget("sessions", sessionId);
+                storage.hdel("userSessions", login);
+                storage.hdel("sessions", sessionId);
                 break;
         }
         return true;
@@ -78,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public int isLoggedIn(String sessionId) {
-        if (sessions.containsKey(sessionId))
+        if (storage.hexists("sessions", sessionId))
             return 200;
         return 500;
     }
@@ -86,7 +81,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserProfile getUserProfile(String sessionId) {
         if (isLoggedIn(sessionId) == 200)
-            return dbService.getUserData(sessions.get(sessionId));
+            return dbService.getUserData(storage.hget("sessions", sessionId));
         return null;
     }
 
@@ -97,6 +92,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public long getAmountOfUsersOnline() {
-        return sessions.size();
+        return storage.hlen("sessions");
+    }
+
+    public void finalize() {
+        storage.disconnect();
     }
 }
