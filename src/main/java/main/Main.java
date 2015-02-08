@@ -12,6 +12,7 @@ import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.server.session.HashSessionIdManager;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.json.simple.JSONObject;
@@ -33,6 +34,7 @@ public class Main {
             System.exit(1);
         }
         Server server = new Server(resourceSystem.getServerConfigResource().getPort());
+        server.setSessionIdManager(new HashSessionIdManager());
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
         AddressService addressService = new AddressService();

@@ -5,15 +5,7 @@ import db.UserProfile;
 import db.DBService;
 import redis.clients.jedis.Jedis;
 
-import javax.jws.soap.SOAPBinding;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 public class AuthServiceImpl implements AuthService {
-    private Map<String, String> sessions = new ConcurrentHashMap<>(); // (id, login)
-    private Map<String, String> userSessions = new ConcurrentHashMap<>(); // (login, id)
     private DBService dbService;
     private Jedis storage = new Jedis("127.0.0.1");
     public AuthServiceImpl(DBService dbService) {
@@ -95,7 +87,4 @@ public class AuthServiceImpl implements AuthService {
         return storage.hlen("sessions");
     }
 
-    public void finalize() {
-        storage.disconnect();
-    }
 }
