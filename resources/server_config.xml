@@ -2,5 +2,5 @@
    <port>9000</port>
    <socketTimeOut>10</socketTimeOut>
    <serviceSleepTime>100</serviceSleepTime>
-   <logPeriod>60</logPeriod>
+   <logPeriod>1200</logPeriod>
 </class>
