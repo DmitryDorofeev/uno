@@ -1,21 +1,21 @@
 define([
-    'backbone',
+    'views/base/overlay',
     'models/game',
     'tmpl/end'
-], function (Backbone, gameModel, tmpl) {
-    var EndView = Backbone.View.extend({
+], function (OverlayView, gameModel, tmpl) {
+    var EndView = OverlayView.extend({
+
         initialize: function () {
             this.listenTo(gameModel, 'message:end', this.show);
         },
+
         template: function (ctx) {
             return tmpl(ctx || {});
         },
-        render: function (msg) {
-            this.$el.html(this.template(msg));
-            return this;
-        },
+
         show: function (msg) {
             this.render(msg);
+            this.$('.overlay').css('display', 'block');
             this.$el.show();
         }
     });

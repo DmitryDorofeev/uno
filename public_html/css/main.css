@@ -321,6 +321,9 @@ button {
   height: 100%;
   background-color: #D91E18;
   z-index: 99; }
+  .overlay_transparent {
+    display: block;
+    background: transparent; }
 
 .preload-text {
   display: none;

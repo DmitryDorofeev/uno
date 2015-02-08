@@ -15,4 +15,4 @@ require.config({
     }
 });
 
-    require(['main']);
+require(['main']);
