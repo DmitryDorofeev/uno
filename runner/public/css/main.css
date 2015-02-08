@@ -66,3 +66,10 @@ html, body {
     margin-bottom: 12px;
     background-color: #038d17;
 }
+
+.yellowline {
+	background-color: #ffa000;
+	padding: 3px 10px;
+    margin: 2px 0;
+    margin-bottom: 12px;
+}

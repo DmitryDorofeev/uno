@@ -15,10 +15,15 @@ var readFile = function (input) {
         var line = input.substring(0, index);
         input = input.substring(index + 1);
         try {
-	        console.log(line);
             json = JSON.parse(line);
-            output += "<div class=\"line\">" + (json.type || json.title) + "</div>\n";
-            output += "<div class=\"greenline\">" + JSON.stringify((json.message || json.body)) + "</div>\n";
+            if ((json.message && json.message.trace) || (json.body && json.body.trace)) {
+	            output += "<div class=\"line\">" + (json.type || json.title) + "</div>\n";
+				output += "<div class=\"yellowline\">" + JSON.stringify((json.message || json.body.trace)) + "</div>\n";
+            }
+            else {
+	            output += "<div class=\"line\">" + (json.type || json.title) + "</div>\n";
+				output += "<div class=\"greenline\">" + JSON.stringify((json.message || json.body)) + "</div>\n";
+            }
         }
         catch (e) {
             output += "<div class=\"redline\">" + line + "</div>\n";
@@ -47,9 +52,7 @@ app.post('/restart', function (req, res) {
 	        console.log('stopping>>>');
         	fs.unlinkSync('/var/www/uno/nohup.out');
         }
-        console.log('try to start');
-        shell.exec('nohup java -cp uno-1.0-jar-with-dependencies.jar main.Main > nohup.out 2>&1&');
-        console.log('started');
+        shell.exec('nohup java -server -Xmx512m -cp uno-1.0-jar-with-dependencies.jar main.Main > nohup.out 2>&1&');
     }
     res.end('ok');
 });
@@ -57,14 +60,11 @@ app.post('/restart', function (req, res) {
 app.post('/deploy', function (req, res) {
 	res.writeHead(200, { 'Content-Type': 'text/html' });
     var pass = req.body.pass;
-    console.log('PASS', pass);
     var shasum = crypto.createHash('sha1');
     shasum.update(pass);
     if (shasum.digest('hex') == '90c7f35fdaf7557938bf8f0d4bf85f3ea3719286') {
-	    console.log('pass ok');
         shell.cd('/var/www/uno');
         var info = shell.exec('git pull origin master');
-        console.log('GIT OUT ', info);
         res.end(info.output);
     }
     else {
