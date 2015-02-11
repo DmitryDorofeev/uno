@@ -1,0 +1,7 @@
+Package: uno
+Depends: java
+Description: Mail Portal of mail.tp-dev.ru
+Version: 0.0.1
+Architecture: all
+Maintainer: Dmitry Dorofeev <me@dmitrydorofeev.ru>
+

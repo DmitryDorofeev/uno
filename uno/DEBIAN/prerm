@@ -1,0 +1,38 @@
+#!/bin/sh
+
+set -e
+
+
+case "$1" in
+
+remove|upgrade|deconfigure)
+
+echo '----------------------------'
+
+echo 'Stop service'
+
+service mail-app stop || true
+
+echo '----------------------------'
+
+;;
+
+
+failed-upgrade)
+
+;;
+
+
+*)
+
+echo "prerm called with unknown argument \`$1'" >&2
+
+exit 1
+
+;;
+
+esac
+
+
+exit 0
+

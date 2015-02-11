@@ -6,3 +6,4 @@ node_modules/
 npm-debug.log
 resources/db_config.xml
 uno.iml
+.vagrant
