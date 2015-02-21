@@ -1,9 +1,0 @@
-<class type = "resources.DBConfigResource">
-    <dialect>org.hibernate.dialect.MySQLDialect</dialect>
-    <driver>com.mysql.jdbc.Driver</driver>
-    <url>jdbc:mysql://127.0.0.1:3306/uno_db</url>
-    <username>uno_admin</username>
-    <password>password</password>
-    <show_sql>false</show_sql>
-    <hbm2ddl>update</hbm2ddl>
-</class>
