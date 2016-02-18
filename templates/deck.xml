@@ -1,8 +1,10 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-    <div class="b-table js-table">
-        <div class="b-table__deck js-deck"></div>
-        <div class="b-table__current"></div>
-        <div class="b-table__uno js-uno">UNO!</div>
-        <div class="b-table__new"></div>
-    </div>
+    <fest:set name="deck">
+        <div class="b-table js-table">
+            <div class="b-table__deck js-deck"></div>
+            <div class="b-table__current"></div>
+            <div class="b-table__uno js-uno">UNO!</div>
+            <div class="b-table__new"></div>
+        </div>
+    </fest:set>
 </fest:template>

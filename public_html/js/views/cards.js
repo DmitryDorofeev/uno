@@ -2,9 +2,9 @@ define([
     'backbone',
     'collections/cards',
     'views/card',
-    'tmpl/cards'
-], function (Backbone, cardsCollection, CardView, tmpl) {
-    
+    'tmpl/all'
+], function (Backbone, cardsCollection, CardView, template) {
+
     var CardsView = Backbone.View.extend({
         collection: cardsCollection,
         initialize: function () {
@@ -14,7 +14,7 @@ define([
             this.listenTo(this.collection, 'cards:enable', this.enable);
         },
         template: function () {
-            return tmpl();
+            return template({ block: 'cards' });
         },
         addCard: function (model) {
             var card = new CardView({model: model});
@@ -36,6 +36,6 @@ define([
             this.$cards.removeClass('cards_disabled');
         }
     });
-    
+
     return new CardsView();
 });

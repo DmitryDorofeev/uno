@@ -1,9 +1,9 @@
 define([
     'jquery',
     'backbone',
-    'tmpl/main',
+    'tmpl/all',
     'models/user'
-], function ($, Backbone, tmpl, userModel) {
+], function ($, Backbone, template, userModel) {
 
     var HomeView = Backbone.View.extend({
         model: userModel,
@@ -15,7 +15,10 @@ define([
             'click .js-vk-login': 'vkLogin'
         },
         template: function () {
-            return tmpl(this.model);
+            return template({
+                block: 'main',
+                user: this.model
+            });
         },
         render: function () {
             this.$el.html(this.template());

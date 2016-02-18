@@ -1,4 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-    <div class="game">
-	</div>
+    <fest:set name="game">
+        <div class="game">
+        </div>
+    </fest:set>
 </fest:template>

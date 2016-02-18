@@ -1,4 +1,6 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="players">
-	<div class="players">
-	</div>
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <fest:set name="players">
+        <div class="players">
+        </div>
+    </fest:set>
 </fest:template>

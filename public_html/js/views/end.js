@@ -1,16 +1,20 @@
 define([
-    'views/base/overlay',
+    'views/base/layer',
     'models/game',
-    'tmpl/end'
-], function (OverlayView, gameModel, tmpl) {
-    var EndView = OverlayView.extend({
+    'tmpl/all'
+], function (Layer, gameModel, template) {
+
+    var EndView = Layer.extend({
 
         initialize: function () {
             this.listenTo(gameModel, 'message:end', this.show);
         },
 
         template: function (ctx) {
-            return tmpl(ctx || {});
+            return template({
+                block: 'end',
+                scores: ctx || {}
+            });
         },
 
         show: function (msg) {
@@ -25,6 +29,7 @@ define([
         close: function () {
             location.href = '/';
         }
+
     });
 
     return new EndView();

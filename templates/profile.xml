@@ -1,17 +1,18 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="profile">
-    <fest:include src="blocks/btn.xml"/>
-  <div class="profile">
-      <div class="profile__title"> Профиль </div>
-        <div class="email-field">
-            <div class="email-field__title"> E-mail: </div>
-            <div class="email-field__value"> <fest:value>profile.email</fest:value> </div>
-        </div>
-        <form method="POST">
-            <div class="login-field">
-                <div class="login-field__title"> Логин: </div>
-                <div class="email-field__value"><fest:value>profile.login</fest:value></div>
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <fest:set name="profile">
+        <div class="profile">
+          <div class="profile__title"> Профиль </div>
+            <div class="email-field">
+                <div class="email-field__title"> E-mail: </div>
+                <div class="email-field__value"> <fest:value>params.user.email</fest:value> </div>
             </div>
-            <fest:get name="btn">{title: 'Назад', href: '#'}</fest:get>
-        </form>
-  </div>
+            <form method="POST">
+                <div class="login-field">
+                    <div class="login-field__title"> Логин: </div>
+                    <div class="email-field__value"><fest:value>params.user.login</fest:value></div>
+                </div>
+                <fest:get name="btn">{title: 'Назад', href: '#'}</fest:get>
+            </form>
+        </div>
+    </fest:set>
 </fest:template>

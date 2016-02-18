@@ -2,8 +2,8 @@ define([
     'jquery',
     'backbone',
     'models/deck',
-    'tmpl/deck'
-], function ($, Backbone, deckModel, tmpl) {
+    'tmpl/all'
+], function ($, Backbone, deckModel, template) {
 
     var colors = {
         green: 'rgb(0,178, 87)',
@@ -13,23 +13,29 @@ define([
     };
 
     var DeckView = Backbone.View.extend({
+
         model: deckModel,
+
         events: {
             'click .js-deck': 'getCards',
             'click .js-uno': 'sayUno'
         },
+
         initialize: function () {
             this.isFirst = true;
             this.listenTo(this.model, 'add change', this.changeCard);
             this.$el.hide();
         },
+
         template: function () {
-            return tmpl();
+            return template({ block: 'deck' });
         },
+
         render: function () {
             this.$el.html(this.template());
             return this;
         },
+
         changeCard: function () {
             var time = this.isFirst ? 0 : 300;
             this.isFirst = false;
@@ -46,16 +52,20 @@ define([
                 this.$('.b-table__new').css({top: -30, opacity: 0});
             }, this));
         },
+
         show: function () {
             this.$el.show();
         },
+
         getCards: function () {
             this.model.getCard();
         },
+
         sayUno: function () {
             Backbone.Events.trigger('error', 'UNO!');
             this.model.sayUno();
         }
+
     });
 
     return new DeckView();

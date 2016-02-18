@@ -1,8 +1,8 @@
 define([
     'jquery',
     'backbone',
-    'tmpl/overlay'
-], function ($, Backbone, tmpl) {
+    'tmpl/all'
+], function ($, Backbone, template) {
 
     /**
      * Base view for overlay dialogs
@@ -10,7 +10,7 @@ define([
      * @implements {Backbone}
      * @abstract
      */
-    var OverlayView = Backbone.View.extend({
+    var LayerView = Backbone.View.extend({
 
         baseEvents: {
             'click .overlay': 'close'
@@ -24,13 +24,13 @@ define([
 
         },
 
-        overlay: function () {
-            return tmpl();
+        template: function () {
+            return template({ block: 'layer' });
         },
 
         render: function (params) {
             this.$el.html(this.template(params));
-            this.$el.prepend(this.overlay());
+            this.$el.prepend(this.template());
             return this;
         },
 
@@ -40,5 +40,5 @@ define([
 
     });
 
-    return OverlayView;
+    return LayerView;
 });

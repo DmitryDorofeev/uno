@@ -1,10 +1,11 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-    <fest:include src="blocks/preloader.xml"/>
-    <div class="app"></div>
-    <fest:get name="preloader"></fest:get>
-    <div class="error">
-        <div class="error__text js-text">
-            error
+    <fest:set name="app">
+        <div class="app"></div>
+        <fest:get name="preloader"></fest:get>
+        <div class="error">
+            <div class="error__text js-text">
+                error
+            </div>
         </div>
-    </div>
+    </fest:set>
 </fest:template>

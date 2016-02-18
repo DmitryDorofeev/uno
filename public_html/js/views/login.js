@@ -1,9 +1,9 @@
 define([
   'jquery',
   'backbone',
-  'tmpl/login',
+  'tmpl/all',
   'models/user'
-], function ($, Backbone, tmpl, userModel) {
+], function ($, Backbone, template, userModel) {
   var LoginView = Backbone.View.extend({
     model: userModel,
     initialize: function() {
@@ -14,20 +14,23 @@ define([
       'submit #signin-form': 'login'
     },
     template: function () {
-      return tmpl();
+      return template({ block: 'login' });
     },
     render: function() {
       this.$el.html(this.template());
+
       return this;
     },
     login: function(event) {
-      event.preventDefault();
-      this.trigger('error:hide');
-      var form = this.$('#signin-form');
-      this.model.login({
-        login: form.find('input[name=login]').val(),
-        password: form.find('input[name=password]').val()
-      });
+        var form = this.$('#signin-form');
+        event.preventDefault();
+
+        this.trigger('error:hide');
+
+        this.model.login({
+            login: form.find('input[name=login]').val(),
+            password: form.find('input[name=password]').val()
+        });
     },
     renderServerError: function() {
       Backbone.Events.trigger('error', 'Ошибка соединения с сервером');

@@ -1,6 +1,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-	<fest:include src="blocks/form.xml"/>
-	<div class="login">
-		<fest:get name="form">{type: 'signin'}</fest:get>
-	</div>
+    <fest:set name="login">
+        <div class="login">
+            <fest:get name="form">{type: 'signin'}</fest:get>
+        </div>
+    </fest:set>
 </fest:template>

@@ -1,7 +1,7 @@
 define([
     'jquery',
     'backbone',
-    'tmpl/game',
+    'tmpl/all',
     'models/user',
     'models/game',
     'views/gamesettings',
@@ -10,7 +10,19 @@ define([
     'views/deck',
     'views/color',
     'views/end'
-], function ($, Backbone, tmpl, userModel, gameModel, settingsView, playersView, cardsView, deckView, colorView, endView) {
+], function (
+    $,
+    Backbone,
+    template,
+    userModel,
+    gameModel,
+    settingsView,
+    playersView,
+    cardsView,
+    deckView,
+    colorView,
+    endView
+) {
     var first = true;
   var GameView = Backbone.View.extend({
     model: userModel,
@@ -41,15 +53,17 @@ define([
         this.trigger('load:done');
     },
     template: function () {
-      return tmpl();
+      return template({ block: 'game' });
     },
     render: function() {
         this.$el.html(this.template());
         this.$game = this.$('.game');
+
         _.forEach(this.views, function(view) {
             this.$game.append(view.render().$el);
             view.$el.hide();
         }, this);
+
         return this;
     },
     show: function () {

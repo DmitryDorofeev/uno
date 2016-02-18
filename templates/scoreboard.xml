@@ -1,13 +1,14 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="scores">
-    <fest:include src="blocks/btn.xml"/>
-    <div class="scoreboard">
-        <div class="scoreboard__title">Рейтинг игроков</div>
-        <fest:each iterate="scores" index="i" value="score">
-          <div class="score">
-            <div class="score__login"><fest:value>score.login</fest:value></div>
-            <div class="score__value"><fest:value>score.score</fest:value></div>
-          </div>
-        </fest:each>
-        <fest:get name="btn">{title: 'Назад', href: '#'}</fest:get>
-    </div>
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <fest:set name="scoreboard">
+        <div class="scoreboard">
+            <div class="scoreboard__title">Рейтинг игроков</div>
+            <fest:each iterate="params.scores" index="i" value="score">
+              <div class="score">
+                <div class="score__login"><fest:value>score.login</fest:value></div>
+                <div class="score__value"><fest:value>score.score</fest:value></div>
+              </div>
+            </fest:each>
+            <fest:get name="btn">{title: 'Назад', href: '#'}</fest:get>
+        </div>
+    </fest:set>
 </fest:template>

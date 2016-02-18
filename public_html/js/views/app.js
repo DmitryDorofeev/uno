@@ -1,10 +1,10 @@
 define([
   'jquery',
   'backbone',
-  'tmpl/app',
+  'tmpl/all',
   'models/user',
   'models/game'
-], function ($, Backbone, tmpl, userModel, gameView, gameModel) {
+], function ($, Backbone, template, userModel, gameView, gameModel) {
 
     var AppView = Backbone.View.extend({
         model: userModel,
@@ -16,7 +16,7 @@ define([
             this.inLoad = false;
         },
         template: function () {
-            return tmpl();
+            return template({ block: 'app' });
         },
         render: function () {
             this.$el.html(this.template());

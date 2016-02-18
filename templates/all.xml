@@ -1,0 +1,24 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <fest:include src="blocks/btn.xml"/>
+    <fest:include src="blocks/preloader.xml"/>
+    <fest:include src="blocks/form.xml"/>
+    <fest:include src="app.xml"/>
+    <fest:include src="layer.xml"/>
+    <fest:include src="cards.xml"/>
+    <fest:include src="color.xml"/>
+    <fest:include src="deck.xml"/>
+    <fest:include src="end.xml"/>
+    <fest:include src="game.xml"/>
+    <fest:include src="gamesettings.xml"/>
+    <fest:include src="header.xml"/>
+    <fest:include src="login.xml"/>
+    <fest:include src="main.xml"/>
+    <fest:include src="page404.xml"/>
+    <fest:include src="player.xml"/>
+    <fest:include src="players.xml"/>
+    <fest:include src="profile.xml"/>
+    <fest:include src="scoreboard.xml"/>
+    <fest:include src="signup.xml"/>
+
+    <fest:get name="{params.block}">params</fest:get>
+</fest:template>

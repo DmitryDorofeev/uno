@@ -1,19 +1,20 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="user">
-    <fest:include src="blocks/btn.xml"/>
-    <div class="main">
-    	<div class="title">UNO</div>
-    	<fest:choose>
-            <fest:when test="user.isLogined()">
-                <fest:get name="btn">{href: '#game', title: 'Играть'}</fest:get>
-                <fest:get name="btn">{href: '#profile', title: 'Профиль'}</fest:get>
-                <fest:get name="btn">{title: 'Выйти', classes: ['js-logout']}</fest:get>
-            </fest:when>
-            <fest:otherwise>
-                <fest:get name="btn">{href: '#login', title: 'Войти'}</fest:get>
-                <!--<fest:get name="btn">{title: 'Войти через Вконтакте', classes: ['js-vk-login']}</fest:get>-->
-                <fest:get name="btn">{href: '#signup', title: 'Регистрация'}</fest:get>
-            </fest:otherwise>
-    	</fest:choose>
-        <fest:get name="btn">{href: '#scoreboard', title: 'Рейтинг'}</fest:get>
-    </div>
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <fest:set name="main">
+        <div class="main">
+            <div class="title">UNO</div>
+            <fest:choose>
+                <fest:when test="params.user.isLogined()">
+                    <fest:get name="btn">{href: '#game', title: 'Играть'}</fest:get>
+                    <fest:get name="btn">{href: '#profile', title: 'Профиль'}</fest:get>
+                    <fest:get name="btn">{title: 'Выйти', classes: ['js-logout']}</fest:get>
+                </fest:when>
+                <fest:otherwise>
+                    <fest:get name="btn">{href: '#login', title: 'Войти'}</fest:get>
+                    <!--<fest:get name="btn">{title: 'Войти через Вконтакте', classes: ['js-vk-login']}</fest:get>-->
+                    <fest:get name="btn">{href: '#signup', title: 'Регистрация'}</fest:get>
+                </fest:otherwise>
+            </fest:choose>
+            <fest:get name="btn">{href: '#scoreboard', title: 'Рейтинг'}</fest:get>
+        </div>
+    </fest:set>
 </fest:template>
