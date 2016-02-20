@@ -8,3 +8,5 @@ resources/db_config.xml
 uno.iml
 .vagrant
 runner/
+.DS_Store
+public_html/js/lib
