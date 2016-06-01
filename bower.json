@@ -19,9 +19,9 @@
     "jquery": "~2.1.3",
     "backbone": "~1.1.2",
     "almond": "latest",
-    "atom": "https://github.com/theshock/atomjs.git",
     "jquery-mockjax": "latest",
     "mock-socket": "latest",
-    "libcanvas": "https://github.com/theshock/libcanvas.git"
+    "pixi.js": "latest",
+    "tink": "git@github.com:kittykatattack/tink.git"
   }
 }

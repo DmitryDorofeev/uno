@@ -3,8 +3,9 @@ require.config({
         'jquery': 'lib/jquery/dist/jquery',
         'underscore': 'lib/underscore/underscore',
         'backbone': 'lib/backbone/backbone',
-        'libcanvas': 'lib/libcanvas/libcanvas-full-compiled',
-        'atom': 'lib/atom/atom-full-compiled'
+        'createjs': 'lib/easeljs/lib/easeljs-NEXT.min',
+        'pixi': 'lib/pixi.js/bin/pixi',
+        'tink': 'lib/tink/bin/tink'
     },
     shim: {
         'backbone': {
@@ -14,9 +15,11 @@ require.config({
         'underscore': {
             exports: '_'
         },
-        'libcanvas': {
-            deps: ['atom'],
-            exports: 'LibCanvas'
+        'pixi': {
+            exports: 'PIXI'
+        },
+        'tink': {
+            exports: 'Tink'
         }
     }
 });

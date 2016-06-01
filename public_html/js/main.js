@@ -1,7 +1,6 @@
 define([
   'backbone',
-  'routes',
-  'libcanvas'
+  'routes'
 ], function (Backbone, router) {
     Backbone.history.start({ pushState: true });
 });
